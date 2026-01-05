@@ -5,7 +5,7 @@ import { ChevronDownIcon, ChevronUpIcon, ChevronLeftIcon, ChevronRightIcon, MapP
 const churches = [{
   name: 'Bantinan Church',
   image: "/old_bantinan.jpg",
-  year: '2015',
+  year: '1992',
   description: 'Our mother church and spiritual home, where it all began with a vision to transform communities through faith.',
   route: '/churches/bantinan',
   featured: true
@@ -80,14 +80,14 @@ const pastors = [{
 }, {
   name: 'Jether Hulay',
   displayName: 'Ptr. Jether Hulay',
-  church: 'Aasin Church',
+  church: 'Yabbi Dupax Del Sur',
   image: "/faf3f250-5413-4599-9b64-8c9ab0c305c3-removebg-preview.png",
   specialization: 'Evangelism',
   shortBio: 'A dedicated servant with a heart for evangelism and community transformation, reaching the lost with the Gospel.'
 }, {
   name: 'Louie Silan',
   displayName: 'Ptr. Louie Silan',
-  church: 'Lower Kiskis Church',
+  church: 'Fellowship Pastor',
   image: "/496941650_9986446918087623_5321505900457071114_n.jpg",
   specialization: 'Fellowship Ministry',
   shortBio: 'Passionate about creating welcoming environments where believers can connect, grow, and support one another in faith.'
