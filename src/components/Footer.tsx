@@ -118,7 +118,7 @@ export const Footer = () => {
             {/* Social links */}
             <div className="flex gap-3">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/profile.php?id=61579488509313"
                 id="footer-facebook"
                 target="_blank"
                 rel="noopener noreferrer"
