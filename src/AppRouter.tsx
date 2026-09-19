@@ -22,6 +22,7 @@ import { OurChurchesPage } from './pages/OurChurchesPage';
 import { GefmiStoryPage } from './pages/GefmiStoryPage';
 import { ScrollToTop } from './components/ScrollToTop';
 // Affiliate Pages
+import { AffiliateComingSoonPage } from './pages/AffiliateComingSoonPage';
 import { LhgcfFellowship } from './pages/affiliate/LhgcfFellowship';
 import { PutlanChurch } from './pages/affiliate/PutlanChurch';
 import { IkapitoChurch } from './pages/affiliate/IkapitoChurch';
@@ -379,160 +380,119 @@ function AnimatedRoutes() {
           } />
         
 
-        {/* Affiliate Church Routes */}
+        {/* Affiliate Church Routes - Animated Coming Soon Experience */}
         <Route
           path="/churches/affiliate/lhgcf"
           element={
-          <motion.div
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}>
-            
-              <LhgcfFellowship />
+            <motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+              <AffiliateComingSoonPage />
             </motion.div>
-          } />
-        
+          }
+        />
         <Route
           path="/churches/affiliate/lhgcf/putlan"
           element={
-          <motion.div
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}>
-            
-              <PutlanChurch />
+            <motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+              <AffiliateComingSoonPage />
             </motion.div>
-          } />
-        
+          }
+        />
+        <Route
+          path="/churches/affiliate/putlan"
+          element={
+            <motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+              <AffiliateComingSoonPage />
+            </motion.div>
+          }
+        />
         <Route
           path="/churches/affiliate/lhgcf/ikapito"
           element={
-          <motion.div
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}>
-            
-              <IkapitoChurch />
+            <motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+              <AffiliateComingSoonPage />
             </motion.div>
-          } />
-        
+          }
+        />
+        <Route
+          path="/churches/affiliate/ikapito"
+          element={
+            <motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+              <AffiliateComingSoonPage />
+            </motion.div>
+          }
+        />
         <Route
           path="/churches/affiliate/lhgcf/manicla"
           element={
-          <motion.div
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}>
-            
-              <ManiclaChurch />
+            <motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+              <AffiliateComingSoonPage />
             </motion.div>
-          } />
-        
+          }
+        />
         <Route
           path="/churches/affiliate/lhgcf/bambang"
           element={
-          <motion.div
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}>
-            
-              <BambangLhgcfChurch />
+            <motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+              <AffiliateComingSoonPage />
             </motion.div>
-          } />
-        
+          }
+        />
         <Route
           path="/churches/affiliate/psalms23"
           element={
-          <motion.div
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}>
-            
-              <Psalms23Church />
+            <motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+              <AffiliateComingSoonPage />
             </motion.div>
-          } />
-        
+          }
+        />
         <Route
           path="/churches/affiliate/ctl"
           element={
-          <motion.div
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}>
-            
-              <CtlFellowship />
+            <motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+              <AffiliateComingSoonPage />
             </motion.div>
-          } />
-        
+          }
+        />
         <Route
           path="/churches/affiliate/ctl/calaocan"
           element={
-          <motion.div
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}>
-            
-              <CalaocanChurch />
+            <motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+              <AffiliateComingSoonPage />
             </motion.div>
-          } />
-        
+          }
+        />
         <Route
           path="/churches/affiliate/ctl/toytoyan"
           element={
-          <motion.div
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}>
-            
-              <ToytoyanChurch />
+            <motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+              <AffiliateComingSoonPage />
             </motion.div>
-          } />
-        
+          }
+        />
         <Route
           path="/churches/affiliate/ctl/borlongan"
           element={
-          <motion.div
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}>
-            
-              <BorlonganChurch />
+            <motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+              <AffiliateComingSoonPage />
             </motion.div>
-          } />
-        
+          }
+        />
         <Route
           path="/churches/affiliate/ctl/baler"
           element={
-          <motion.div
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageVariants}
-            transition={pageTransition}>
-            
-              <BalerChurch />
+            <motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+              <AffiliateComingSoonPage />
             </motion.div>
-          } />
+          }
+        />
+        <Route
+          path="/churches/affiliate/*"
+          element={
+            <motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+              <AffiliateComingSoonPage />
+            </motion.div>
+          }
+        />
         
       </Routes>
     </AnimatePresence>);
