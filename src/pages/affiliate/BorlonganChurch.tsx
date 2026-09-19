@@ -1,21 +1,23 @@
 import React from 'react';
 import { AffiliateChurchTemplate } from '../../components/AffiliateChurchTemplate';
+
 export function BorlonganChurch() {
   return (
     <AffiliateChurchTemplate
-      name="Borlongan Church"
+      name="CTL Borlongan Church"
       location="Borlongan, Dipaculao, Aurora"
       pastor="Ptr. Teodoro"
       fellowship="Christ The Lord Fellowship"
       fellowshipAbbreviation="CTL"
-      tagline="Hope Rising in Dipaculao"
-      description="Borlongan Church serves the community of Dipaculao with a message of hope and redemption. As part of the CTL Fellowship, we are committed to sound biblical teaching and authentic Christian living."
-      mission="To reach the lost in Borlongan and Dipaculao, equipping saints for the work of ministry and building up the body of Christ."
-      vision="To see a revival in Dipaculao where families are restored and the community is united under the lordship of Christ."
-      accentGradient="from-blue-500 to-indigo-500"
+      tagline="Sharing the Transforming Gospel in Dipaculao"
+      description="CTL Borlongan Church is steadfast in sharing the transforming Gospel of Jesus Christ to Dipaculao and establishing lasting spiritual foundations for families and the next generation."
+      mission="To preach the word of God, make faithful disciples, and demonstrate Christ's compassion in Borlongan."
+      vision="A beacon of hope and revival in Dipaculao, Aurora, inspiring believers to shine for Christ."
+      image="/teodoro1.webp"
+      accentGradient="from-sky-400 via-blue-300 to-indigo-400"
       accentColor="blue"
-      backLink="/churches/affiliate/ctl"
-      backLabel="Back to CTL" />);
-
-
+      backLink="/churches"
+      backLabel="Back to Our Churches"
+    />
+  );
 }

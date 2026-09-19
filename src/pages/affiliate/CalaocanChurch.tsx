@@ -1,21 +1,23 @@
 import React from 'react';
 import { AffiliateChurchTemplate } from '../../components/AffiliateChurchTemplate';
+
 export function CalaocanChurch() {
   return (
     <AffiliateChurchTemplate
-      name="Calaocan Church"
+      name="CTL Calaocan Church"
       location="Calaocan, Aurora"
       pastor="Ptr. Sonny Boy"
       fellowship="Christ The Lord Fellowship"
       fellowshipAbbreviation="CTL"
-      tagline="Proclaiming Christ in Calaocan"
-      description="Calaocan Church is a vibrant part of the Christ The Lord Fellowship in Aurora. We are dedicated to proclaiming the lordship of Jesus Christ and serving our local community through faith, hope, and love."
-      mission="To make Christ known in Calaocan and to raise up a generation of believers who are passionate about His Kingdom."
-      vision="To see the community of Calaocan transformed by the power of the Gospel, with Christ reigning in every heart."
-      accentGradient="from-blue-500 to-indigo-500"
+      tagline="Proclaiming the Lordship of Christ in Calaocan"
+      description="CTL Calaocan Church is an affiliate branch committed to bringing the Gospel to Aurora province. We believe in living an active, Christ-centered life through prayer, community fellowship, and vibrant worship."
+      mission="To declare the Lordship of Christ across Calaocan and build strong disciples through biblical teaching and active fellowship."
+      vision="A transformed community in Calaocan where families thrive spiritually and experience God's miraculous love."
+      image="/600226379_122193353540449557_1592564097436516824_n.webp"
+      accentGradient="from-blue-400 via-indigo-300 to-purple-400"
       accentColor="blue"
-      backLink="/churches/affiliate/ctl"
-      backLabel="Back to CTL" />);
-
-
+      backLink="/churches"
+      backLabel="Back to Our Churches"
+    />
+  );
 }

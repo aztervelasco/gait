@@ -1,21 +1,23 @@
 import React from 'react';
 import { AffiliateChurchTemplate } from '../../components/AffiliateChurchTemplate';
+
 export function BalerChurch() {
   return (
     <AffiliateChurchTemplate
-      name="Baler Church"
+      name="CTL Baler Church"
       location="Baler, Aurora"
       pastor="Ptr. Joseph"
       fellowship="Christ The Lord Fellowship"
       fellowshipAbbreviation="CTL"
-      tagline="Shining Light in Baler"
-      description="In the historic town of Baler, our church stands as a beacon of God's truth and love. We are passionate about worship, discipleship, and reaching out to our neighbors with the transforming message of the Gospel."
-      mission="To be a witness for Christ in Baler, engaging the culture with the truth of Scripture and the love of the Father."
-      vision="A Spirit-filled church in Baler that impacts the entire province of Aurora for the glory of God."
-      accentGradient="from-blue-500 to-indigo-500"
-      accentColor="blue"
-      backLink="/churches/affiliate/ctl"
-      backLabel="Back to CTL" />);
-
-
+      tagline="Bringing the Light of Christ to Baler"
+      description="CTL Baler Church is dedicated to bringing the light and love of Jesus Christ to the scenic town of Baler. With vibrant youth ministry, faithful leadership, and dynamic outreach, we are reaching hearts for God."
+      mission="To impact Baler with the Gospel through intentional evangelism, loving fellowship, and biblically sound teaching."
+      vision="A passionate church community in Baler raising a generation of godly disciples and leaders."
+      image="/501169598_10228891022641155_7598878957010397695_n.webp"
+      accentGradient="from-violet-400 via-purple-300 to-pink-400"
+      accentColor="purple"
+      backLink="/churches"
+      backLabel="Back to Our Churches"
+    />
+  );
 }

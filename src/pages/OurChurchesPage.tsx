@@ -802,6 +802,10 @@ export function OurChurchesPage() {
                               <span className="text-xs text-slate-400 font-medium tracking-wide">
                                 {church.fellowship}
                               </span>
+                              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 border border-amber-500/20 text-amber-300">
+                                <SparklesIcon className="w-3 h-3" />
+                                Coming Soon
+                              </span>
                             </div>
                             <div>
                               <h3 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-emerald-400 group-hover:to-cyan-400 transition-all duration-300 font-display">
@@ -822,9 +826,12 @@ export function OurChurchesPage() {
                             <p className="text-xl text-slate-300 leading-relaxed font-light">
                               {church.description}
                             </p>
-                            <div className="inline-flex items-center gap-3 text-emerald-400 font-bold text-lg group-hover:gap-4 transition-all duration-300 pt-4 font-display">
-                              <span>Learn More</span>
-                              <ArrowRightIcon className="w-5 h-5" />
+                            <div className="pt-4">
+                              <div className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 font-bold text-base group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-300 shadow-lg font-display">
+                                <SparklesIcon className="w-4 h-4 text-amber-300 group-hover:text-slate-950" />
+                                <span>Preview Church & Coming Soon</span>
+                                <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                              </div>
                             </div>
                           </div>
                         </div>
