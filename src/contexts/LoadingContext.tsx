@@ -9,9 +9,7 @@ interface LoadingContextType {
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 export const LoadingProvider: React.FC<{
   children: React.ReactNode;
-}> = ({
-  children
-}) => {
+}> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   useEffect(() => {
@@ -34,15 +32,19 @@ export const LoadingProvider: React.FC<{
       setIsLoading(false);
     }
   };
-  return <LoadingContext.Provider value={{
-    isLoading,
-    setIsLoading,
-    startLoading,
-    stopLoading,
-    isInitialLoad
-  }}>
+  return (
+    <LoadingContext.Provider
+      value={{
+        isLoading,
+        setIsLoading,
+        startLoading,
+        stopLoading,
+        isInitialLoad
+      }}>
+      
       {children}
-    </LoadingContext.Provider>;
+    </LoadingContext.Provider>);
+
 };
 export const useLoading = () => {
   const context = useContext(LoadingContext);

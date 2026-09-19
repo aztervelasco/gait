@@ -1,128 +1,153 @@
-import React, { useEffect, useState, Component } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { XIcon, ChevronRightIcon } from 'lucide-react';
+
+// Map pathname to a display label for the compact indicator
+const getPageLabel = (pathname: string): string => {
+  if (pathname === '/') return 'Home';
+  if (pathname === '/ministry') return 'Our Ministries';
+  if (pathname.startsWith('/about')) return 'About Us';
+  if (pathname.startsWith('/churches')) return 'Our Churches';
+  if (pathname === '/pastors') return 'Our Pastors';
+  if (pathname === '/sponsorship') return 'Sponsorship';
+  if (pathname === '/contact') return 'Contact';
+  if (pathname === '/gefmi-story') return 'Our Story';
+  return 'GEFMI';
+};
+
+const navItems = [
+  { href: '/', label: 'Home', match: (p: string) => p === '/' },
+  { href: '/ministry', label: 'Ministry', match: (p: string) => p === '/ministry' },
+  { href: '/about', label: 'About', match: (p: string) => p.startsWith('/about') },
+  { href: '/churches', label: 'Churches', match: (p: string) => p.startsWith('/churches') },
+  { href: '/pastors', label: 'Pastors', match: (p: string) => p === '/pastors' },
+  { href: '/sponsorship', label: 'Sponsorship', match: (p: string) => p === '/sponsorship' },
+  { href: '/contact', label: 'Contact', match: (p: string) => p === '/contact' },
+];
+
 export const Navbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('up');
   const [isHovered, setIsHovered] = useState(false);
+  const lastScrollY = useRef(0);
   const location = useLocation();
+
   useEffect(() => {
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      const currentY = window.scrollY;
+      setScrollDirection(currentY > lastScrollY.current ? 'down' : 'up');
+      lastScrollY.current = currentY;
+      setScrollY(currentY);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  const isCompact = scrollY > 100 && !isHovered;
-  return <>
-      {/* Desktop Navigation (above 768px) */}
-      <motion.nav initial={{
-      y: -100,
-      opacity: 0
-    }} animate={{
-      y: 0,
-      opacity: 1
-    }} transition={{
-      type: 'spring',
-      stiffness: 100,
-      damping: 20,
-      delay: 0.2
-    }} className="hidden md:flex fixed top-0 left-0 right-0 z-40 justify-center px-4 pt-4 pointer-events-none" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-        <motion.div animate={{
-        scale: scrollY > 20 ? 0.95 : 1,
-        y: scrollY > 20 ? -4 : 0
-      }} transition={{
-        duration: 0.3,
-        ease: 'easeOut'
-      }} className="pointer-events-auto relative w-full max-w-fit">
-          <motion.div animate={{
-          paddingTop: isCompact ? '0.5rem' : '1rem',
-          paddingBottom: isCompact ? '0.5rem' : '1rem',
-          paddingLeft: isCompact ? '1.5rem' : '2rem',
-          paddingRight: isCompact ? '1.5rem' : '2rem',
-          borderRadius: isCompact ? '9999px' : '9999px'
-        }} transition={{
-          type: 'spring',
-          stiffness: 300,
-          damping: 30
-        }} className={`
+
+  // Expanded when: at top of page, OR scrolling up, OR hovered
+  // Compact when: scrolled past 100px AND scrolling down AND not hovered
+  const isCompact = scrollY > 100 && scrollDirection === 'down' && !isHovered;
+  const pageLabel = getPageLabel(location.pathname);
+
+  return (
+    <>
+      {/* ─── Desktop Navigation (≥768px) ─── */}
+      <motion.nav
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: 'spring', stiffness: 100, damping: 20, delay: 0.2 }}
+        className="hidden md:flex fixed top-0 left-0 right-0 z-40 flex-col items-center px-4 pt-4 pointer-events-none"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}>
+
+        {/* Main pill container */}
+        <motion.div
+          layout
+          transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+          className="pointer-events-auto relative">
+
+          <motion.div
+            layout
+            transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+            className={`
               relative
-              bg-slate-900/80 backdrop-blur-xl
+              bg-slate-800/90 backdrop-blur-xl
               border border-white/10
               shadow-2xl
-              flex items-center gap-8
+              flex items-center
+              rounded-full
               transition-shadow duration-300
-              ${scrollY > 20 ? 'shadow-[0_8px_32px_rgba(0,0,0,0.4)]' : 'shadow-[0_4px_24px_rgba(0,0,0,0.3)]'}
-            `}>
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-blue-600/5 rounded-full pointer-events-none"></div>
+              ${scrollY > 20 ? 'shadow-[0_8px_32px_rgba(0,0,0,0.5)]' : 'shadow-[0_4px_24px_rgba(0,0,0,0.3)]'}
+            `}
+            style={{
+              padding: isCompact ? '0.5rem 1.25rem' : '0.625rem 1.5rem',
+              gap: isCompact ? '0.75rem' : '0.5rem',
+            }}>
 
-            <Link to="/" className="relative flex items-center gap-3 group flex-shrink-0">
-              <motion.div animate={{
-              scale: isCompact ? 1 : 1.2,
-              rotate: scrollY > 100 ? 360 : 0
-            }} transition={{
-              scale: {
-                type: 'spring',
-                stiffness: 300,
-                damping: 30
-              },
-              rotate: {
-                duration: 0.8,
-                ease: [0.22, 1, 0.36, 1]
-              }
-            }} className="bg-white rounded-full p-2 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
-                <img src="/553179066_3773471999619593_8381726180407782571_n-Picsart-AiImageEnhancer-removebg-preview.png" alt="GEFMI Logo" className="w-10 h-10 object-contain" />
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-blue-600/5 rounded-full pointer-events-none" />
+
+            {/* Logo + GEFMI text (always visible) */}
+            <Link
+              to="/"
+              className="relative flex items-center gap-2.5 group flex-shrink-0">
+              <motion.div
+                layout
+                transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+                className="bg-white rounded-full shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 flex-shrink-0"
+                style={{
+                  padding: isCompact ? '0.25rem' : '0.375rem',
+                }}>
+                <img
+                  src="/553179066_3773471999619593_8381726180407782571_n-Picsart-AiImageEnhancer-removebg-preview.webp"
+                  alt="GEFMI Logo"
+                  className="object-contain transition-all duration-300"
+                  style={{
+                    width: isCompact ? '1.75rem' : '2rem',
+                    height: isCompact ? '1.75rem' : '2rem',
+                  }}
+                />
               </motion.div>
-              <motion.span animate={{
-              opacity: isCompact ? 1 : 1,
-              width: isCompact ? 'auto' : 'auto'
-            }} transition={{
-              type: 'spring',
-              stiffness: 300,
-              damping: 30
-            }} className="text-white font-bold text-2xl tracking-wider group-hover:text-blue-300 transition-colors duration-300 whitespace-nowrap">
+              <span className="text-white font-bold text-lg tracking-wider group-hover:text-blue-300 transition-colors duration-300 whitespace-nowrap">
                 GEFMI
-              </motion.span>
+              </span>
             </Link>
 
-            <motion.div animate={{
-            opacity: isCompact ? 0 : 1,
-            width: isCompact ? 0 : 'auto',
-            marginLeft: isCompact ? 0 : '2rem',
-            marginRight: isCompact ? 0 : 0
-          }} transition={{
-            type: 'spring',
-            stiffness: 300,
-            damping: 30
-          }} className="hidden lg:flex items-center gap-1 overflow-hidden">
-              <NavLink href="/" active={location.pathname === '/'}>
-                Home
-              </NavLink>
-              <NavLink href="/ministry" active={location.pathname === '/ministry'}>
-                Ministry
-              </NavLink>
-              <NavLink href="/about" active={location.pathname.startsWith('/about')}>
-                About
-              </NavLink>
-              <NavLink href="/sponsorship" active={location.pathname === '/sponsorship'}>
-                Sponsorship
-              </NavLink>
-              <NavLink href="/contact" active={location.pathname === '/contact'}>
-                Contact
-              </NavLink>
-            </motion.div>
+            {/* Desktop nav links — animate in/out */}
+            <AnimatePresence mode="wait">
+              {!isCompact && (
+                <motion.div
+                  key="nav-links"
+                  initial={{ opacity: 0, width: 0 }}
+                  animate={{ opacity: 1, width: 'auto' }}
+                  exit={{ opacity: 0, width: 0 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+                  className="hidden lg:flex items-center gap-0.5 overflow-hidden ml-3">
+                  {navItems.map((item) => (
+                    <NavLink
+                      key={item.href}
+                      href={item.href}
+                      active={item.match(location.pathname)}>
+                      {item.label}
+                    </NavLink>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            <motion.button animate={{
-            scale: isCompact ? 0.85 : 1
-          }} transition={{
-            type: 'spring',
-            stiffness: 300,
-            damping: 30
-          }} whileTap={{
-            scale: 0.9
-          }} onClick={() => setSidebarOpen(true)} className="lg:hidden relative bg-gradient-to-br from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white p-3 rounded-full transition-all duration-300 hover:scale-110 group" aria-label="Open menu">
-              <div className="flex flex-col gap-1 w-5 h-5 items-center justify-center">
+            {/* Hamburger for md–lg screens (tablet: nav links hidden, pill visible) */}
+            <motion.button
+              layout
+              transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden relative bg-gradient-to-br from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white rounded-full transition-all duration-300 hover:scale-110 group flex-shrink-0"
+              style={{
+                padding: isCompact ? '0.5rem' : '0.625rem',
+              }}
+              aria-label="Open menu">
+              <div className="flex flex-col gap-0.5 w-4 h-4 items-center justify-center">
                 <span className="w-full h-0.5 bg-white rounded-full" />
                 <span className="w-full h-0.5 bg-white rounded-full" />
                 <span className="w-full h-0.5 bg-white rounded-full" />
@@ -130,134 +155,187 @@ export const Navbar = () => {
             </motion.button>
           </motion.div>
         </motion.div>
+
+        {/* Current page indicator — only shows in compact mode */}
+        <AnimatePresence>
+          {isCompact && (
+            <motion.div
+              initial={{ opacity: 0, y: -8, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.9 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+              className="pointer-events-none mt-1.5">
+              <span className="text-blue-400 text-xs font-semibold tracking-wide flex items-center gap-1.5">
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg>
+                {pageLabel}
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.nav>
 
-      {/* Mobile/Tablet Navigation (768px and below) - Sticky Right Button */}
-      <motion.button initial={{
-      x: 100,
-      opacity: 0
-    }} animate={{
-      x: 0,
-      opacity: 1
-    }} transition={{
-      type: 'spring',
-      stiffness: 100,
-      damping: 20,
-      delay: 0.2
-    }} whileTap={{
-      scale: 0.9
-    }} onClick={() => setSidebarOpen(true)} className="md:hidden fixed top-6 right-6 z-40 bg-gradient-to-br from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 touch-manipulation" aria-label="Open menu">
-        <div className="flex flex-col gap-1.5 w-6 h-6 items-center justify-center">
-          <span className="w-full h-0.5 bg-white rounded-full" />
-          <span className="w-full h-0.5 bg-white rounded-full" />
-          <span className="w-full h-0.5 bg-white rounded-full" />
-        </div>
-      </motion.button>
+      {/* ─── Mobile Navigation (< 768px) — Clean App Top Bar ─── */}
+      <motion.div
+        initial={{ y: -60, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: 'spring', stiffness: 100, damping: 20, delay: 0.1 }}
+        className="md:hidden fixed top-0 left-0 right-0 z-40 bg-slate-900/85 backdrop-blur-xl border-b border-white/10 px-4 py-2.5 flex items-center justify-between shadow-xl">
+        <Link to="/" className="flex items-center gap-2.5">
+          <div className="bg-white rounded-full p-1 shadow-md">
+            <img
+              src="/553179066_3773471999619593_8381726180407782571_n-Picsart-AiImageEnhancer-removebg-preview.webp"
+              alt="GEFMI Logo"
+              className="w-7 h-7 object-contain"
+            />
+          </div>
+          <span className="text-white font-bold text-base tracking-wider font-display">
+            GEFMI
+          </span>
+        </Link>
 
+        <motion.button
+          whileTap={{ scale: 0.9 }}
+          onClick={() => setSidebarOpen(true)}
+          className="bg-gradient-to-br from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white p-2.5 rounded-full shadow-lg transition-all duration-300 active:scale-95 touch-manipulation"
+          aria-label="Open menu">
+          <div className="flex flex-col gap-1 w-4 h-4 items-center justify-center">
+            <span className="w-full h-0.5 bg-white rounded-full" />
+            <span className="w-full h-0.5 bg-white rounded-full" />
+            <span className="w-full h-0.5 bg-white rounded-full" />
+          </div>
+        </motion.button>
+      </motion.div>
+
+      {/* ─── Sidebar Drawer ─── */}
       <AnimatePresence>
-        {sidebarOpen && <>
-            <motion.div initial={{
-          opacity: 0
-        }} animate={{
-          opacity: 1
-        }} exit={{
-          opacity: 0
-        }} transition={{
-          duration: 0.3
-        }} className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" onClick={() => setSidebarOpen(false)} />
+        {sidebarOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
+              onClick={() => setSidebarOpen(false)}
+            />
 
-            <motion.div initial={{
-          x: '100%'
-        }} animate={{
-          x: 0
-        }} exit={{
-          x: '100%'
-        }} transition={{
-          type: 'spring',
-          damping: 25,
-          stiffness: 200
-        }} className="fixed top-0 right-0 bottom-0 w-full sm:w-96 bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 z-50 shadow-2xl overflow-y-auto">
-              <motion.button whileTap={{
-            scale: 0.9
-          }} onClick={() => setSidebarOpen(false)} className="absolute top-6 right-6 text-white/80 hover:text-white p-3 rounded-full hover:bg-white/10 transition-all duration-300 touch-manipulation" aria-label="Close menu">
-                <XIcon className="w-7 h-7" />
-              </motion.button>
+            {/* Panel */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 bottom-0 w-full sm:w-96 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 z-50 shadow-2xl overflow-y-auto flex flex-col justify-between">
 
-              <div className="p-8 border-b border-white/10">
-                <Link to="/" onClick={() => setSidebarOpen(false)} className="flex items-center gap-3 group">
-                  <div className="bg-white rounded-full p-2 shadow-lg group-hover:shadow-xl transition-all duration-300">
-                    <img src="/553179066_3773471999619593_8381726180407782571_n-Picsart-AiImageEnhancer-removebg-preview.png" alt="GEFMI Logo" className="w-12 h-12 object-contain" />
+              <div>
+                {/* Close button */}
+                <div className="p-6 flex items-center justify-between border-b border-white/10">
+                  <Link
+                    to="/"
+                    onClick={() => setSidebarOpen(false)}
+                    className="flex items-center gap-3">
+                    <div className="bg-white rounded-full p-1.5 shadow-md">
+                      <img
+                        src="/553179066_3773471999619593_8381726180407782571_n-Picsart-AiImageEnhancer-removebg-preview.webp"
+                        alt="GEFMI Logo"
+                        className="w-8 h-8 object-contain"
+                      />
+                    </div>
+                    <span className="text-white font-bold text-xl tracking-wider font-display">
+                      GEFMI
+                    </span>
+                  </Link>
+
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setSidebarOpen(false)}
+                    className="text-white/80 hover:text-white p-2 rounded-full hover:bg-white/10 transition-all duration-300 touch-manipulation"
+                    aria-label="Close menu">
+                    <XIcon className="w-6 h-6" />
+                  </motion.button>
+                </div>
+
+                {/* Navigation links */}
+                <nav className="p-4 sm:p-6">
+                  <div className="space-y-1.5">
+                    {navItems.map((item) => (
+                      <SidebarLink
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setSidebarOpen(false)}>
+                        {item.label}
+                      </SidebarLink>
+                    ))}
                   </div>
-                  <span className="text-white font-bold text-2xl tracking-wider group-hover:text-blue-300 transition-colors duration-300">
-                    GEFMI
-                  </span>
-                </Link>
+                </nav>
               </div>
 
-              <nav className="p-6">
-                <div className="space-y-2">
-                  <SidebarLink href="/" onClick={() => setSidebarOpen(false)}>
-                    Home
-                  </SidebarLink>
-                  <SidebarLink href="/ministry" onClick={() => setSidebarOpen(false)}>
-                    Ministry
-                  </SidebarLink>
-                  <SidebarLink href="/about" onClick={() => setSidebarOpen(false)}>
-                    About
-                  </SidebarLink>
-                  <SidebarLink href="/sponsorship" onClick={() => setSidebarOpen(false)}>
-                    Sponsorship
-                  </SidebarLink>
-                  <SidebarLink href="/contact" onClick={() => setSidebarOpen(false)}>
-                    Contact
-                  </SidebarLink>
-                </div>
-              </nav>
-
-              <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10 bg-black/20">
-                <p className="text-white/60 text-sm text-center">
+              {/* Footer */}
+              <div className="p-6 border-t border-white/10 bg-black/20">
+                <p className="text-white/50 text-xs text-center">
                   © 2025 GEFMI. All rights reserved.
                 </p>
               </div>
             </motion.div>
-          </>}
+          </>
+        )}
       </AnimatePresence>
-    </>;
+    </>
+  );
 };
+
+/* ─── Sub-components ─── */
+
 const NavLink = ({
   href,
   children,
-  active
+  active,
 }: {
   href: string;
   children: React.ReactNode;
   active: boolean;
-}) => <Link to={href} className="relative group px-4 py-2 rounded-full transition-all duration-300">
-    <span className={`relative z-10 text-sm font-medium transition-colors duration-300 ${active ? 'text-white' : 'text-gray-300 group-hover:text-white'}`}>
+}) => (
+  <Link
+    to={href}
+    className="relative group px-3 py-1.5 rounded-full transition-all duration-300">
+    <span
+      className={`relative z-10 text-xs font-medium transition-colors duration-300 whitespace-nowrap ${
+        active ? 'text-white' : 'text-gray-300 group-hover:text-white'
+      }`}>
       {children}
     </span>
 
-    {active && <motion.div layoutId="activeNav" className="absolute inset-0 bg-white/10 rounded-full" transition={{
-    type: 'spring',
-    stiffness: 300,
-    damping: 30
-  }} />}
+    {active && (
+      <motion.div
+        layoutId="activeNav"
+        className="absolute inset-0 bg-white/15 rounded-full"
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      />
+    )}
 
     <div className="absolute inset-0 bg-white/5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-  </Link>;
+  </Link>
+);
+
 const SidebarLink = ({
   href,
   children,
-  onClick
+  onClick,
 }: {
   href: string;
   children: React.ReactNode;
   onClick: () => void;
-}) => <motion.div whileTap={{
-  scale: 0.97
-}}>
-    <Link to={href} onClick={onClick} className="group flex items-center justify-between px-4 py-4 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium text-lg touch-manipulation">
+}) => (
+  <motion.div whileTap={{ scale: 0.97 }}>
+    <Link
+      to={href}
+      onClick={onClick}
+      className="group flex items-center justify-between px-4 py-4 text-white hover:bg-white/10 rounded-xl transition-all duration-300 font-medium text-lg touch-manipulation">
       <span>{children}</span>
       <ChevronRightIcon className="w-5 h-5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
     </Link>
-  </motion.div>;
+  </motion.div>
+);

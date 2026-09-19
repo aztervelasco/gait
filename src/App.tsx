@@ -1,7 +1,9 @@
 import React from 'react';
 import { Home } from './pages/Home';
 export function App() {
-  return <div className="w-full min-h-screen">
+  return (
+    <div className="w-full min-h-screen">
       <Home />
-    </div>;
+    </div>);
+
 }

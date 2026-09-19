@@ -1,8 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { AppRouter } from './AppRouter';
+import { CustomCursor } from './components/CustomCursor';
+import { ScrollProgressBar } from './components/ScrollProgressBar';
 import './index.css';
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-root.render(<React.StrictMode>
+root.render(
+  <React.StrictMode>
+    <ScrollProgressBar />
+    <CustomCursor />
     <AppRouter />
-  </React.StrictMode>);
+  </React.StrictMode>
+);

@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 export const ScrollToTop = () => {
-  const {
-    pathname
-  } = useLocation();
+  const { pathname } = useLocation();
   useEffect(() => {
     // Instant scroll to top on route change to prevent jumps
     // This ensures pages always load at the first section/top

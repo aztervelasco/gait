@@ -1,99 +1,145 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ChevronDownIcon, ChevronUpIcon, ChevronLeftIcon, ChevronRightIcon, MapPinIcon, CalendarIcon, SparklesIcon, ArrowRightIcon, BookOpenIcon, HeartIcon, UsersIcon, TargetIcon, EyeIcon, XIcon } from 'lucide-react';
-const churches = [{
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  MapPinIcon,
+  CalendarIcon,
+  SparklesIcon,
+  ArrowRightIcon,
+  BookOpenIcon,
+  HeartIcon,
+  UsersIcon,
+  TargetIcon,
+  EyeIcon,
+  XIcon } from
+'lucide-react';
+const churches = [
+{
   name: 'Bantinan Church',
-  image: "/old_bantinan.jpg",
-  year: '1992',
-  description: 'Our mother church and spiritual home, where it all began with a vision to transform communities through faith.',
+  image: "/old_bantinan.webp",
+
+  year: '2015',
+  description:
+  'Our mother church and spiritual home, where it all began with a vision to transform communities through faith.',
   route: '/churches/bantinan',
   featured: true
-}, {
+},
+{
   name: 'Kiskis Church',
-  image: "/kiskis.jpg",
+  image: "/kiskis.webp",
+
   year: '2018',
-  description: 'A vibrant community bringing the Gospel to life through worship, fellowship, and dedicated service to our neighbors.',
+  description:
+  'A vibrant community bringing the Gospel to life through worship, fellowship, and dedicated service to our neighbors.',
   route: '/churches/kiskis'
-}, {
+},
+{
   name: 'Tactac Church',
-  image: "/Tactac.jpg",
+  image: "/Tactac.webp",
+
   year: '2019',
-  description: 'A growing congregation dedicated to spreading hope and building lasting relationships within the Tactac community.',
+  description:
+  'A growing congregation dedicated to spreading hope and building lasting relationships within the Tactac community.',
   route: '/churches/tactac'
-}, {
+},
+{
   name: 'Atbu Church',
-  image: "/atbu.jpg",
+  image: "/atbu.webp",
+
   year: '2020',
-  description: 'Empowering the next generation with dynamic ministry and contemporary worship experiences that transform lives.',
+  description:
+  'Empowering the next generation with dynamic ministry and contemporary worship experiences that transform lives.',
   route: '/churches/atbu'
 }];
+
 const headPastor = {
   name: 'Rev. Movel B. Velasco',
   title: 'Head Pastor & Founder',
-  image: "/517112793_10229821241296040_7747544348507949052_n.jpg",
-  description: 'Pioneer and founder of GEFMI, leading the ministry with unwavering vision and dedication to spreading the Gospel and establishing churches across the region.',
+  image: "/517112793_10229821241296040_7747544348507949052_n.webp",
+
+  description:
+  'Pioneer and founder of GEFMI, leading the ministry with unwavering vision and dedication to spreading the Gospel and establishing churches across the region.',
   specialization: 'Visionary Leadership'
 };
-const pastors = [{
+const pastors = [
+{
   name: 'Jerry Nobres',
   displayName: 'Ptr. Jerry Nobres',
   church: 'Beti Church',
-  image: "/038c6588-1445-473e-9640-378b702bbc97.jpg",
+  image: "/038c6588-1445-473e-9640-378b702bbc97.webp",
+
   specialization: 'Teaching Ministry',
-  shortBio: 'Known for his passionate preaching and deep love for Scripture, inspiring believers to live boldly for Christ.'
-}, {
+  shortBio:
+  'Known for his passionate preaching and deep love for Scripture, inspiring believers to live boldly for Christ.'
+},
+{
   name: 'Rudy Tindaan',
   displayName: 'Ptr. Rudy Tindaan',
-  church: 'Atbu Church',
-  image: "/Ptr_Rudy-removebg-preview.png",
+  church: 'Aasin Church',
+  image: "/Ptr_Rudy-removebg-preview.webp",
+
   specialization: 'Pastoral Care',
-  shortBio: 'With a gift for pastoral care and counseling, walking alongside believers in their spiritual journey.'
-}, {
+  shortBio:
+  'With a gift for pastoral care and counseling, walking alongside believers in their spiritual journey.'
+},
+{
   name: 'Moris Velasco',
   displayName: 'Ptr. Moris Velasco',
   church: 'Villa Flores Church',
-  image: "/514414300_10229639822320679_5865684077610383712_n.jpg",
+  image: "/514414300_10229639822320679_5865684077610383712_n.webp",
+
   specialization: 'Church Planting',
-  shortBio: "With a heart for evangelism and church planting, passionate about reaching the lost and expanding God's Kingdom."
-}, {
+  shortBio:
+  "With a heart for evangelism and church planting, passionate about reaching the lost and expanding God's Kingdom."
+},
+{
   name: 'Vergilio Lamsis',
   displayName: 'Ptr. Vergilio Lamsis',
   church: 'Bantinan Church',
-  image: "/561149741_122184417068449557_3419564386070091008_n.jpg",
+  image: "/561149741_122184417068449557_3419564386070091008_n.webp",
+
   specialization: 'Worship & Prayer',
-  shortBio: 'A dynamic leader with a passion for worship and prayer, leading congregations into powerful encounters with God.'
-}, {
+  shortBio:
+  'A dynamic leader with a passion for worship and prayer, leading congregations into powerful encounters with God.'
+},
+{
   name: 'Roves Abalos',
   displayName: 'Ptr. Roves Abalos',
   church: "Orchid's Church",
-  image: "/521953240_122169464594567446_7082549070398521511_n.jpg",
+  image: "/521953240_122169464594567446_7082549070398521511_n.webp",
+
   specialization: 'Leadership Development',
-  shortBio: 'Dedicated to equipping the next generation, combining biblical truth with practical application.'
-}, {
+  shortBio:
+  'Dedicated to equipping the next generation, combining biblical truth with practical application.'
+},
+{
   name: 'June Matedio',
   displayName: 'Ptr. June Matedio',
-  church: 'Upper Kiskis Church',
-  image: "/june_matedio-removebg-preview.png",
+  church: 'Lower Kiskis Church',
+  image: "/june_matedio-removebg-preview.webp",
+
   specialization: 'Youth Ministry',
-  shortBio: 'A gifted communicator with a heart for youth ministry, connecting with the next generation through relevant teaching.'
-}, {
-  name: 'Jether Hulay',
-  displayName: 'Ptr. Jether Hulay',
-  church: 'Yabbi Dupax Del Sur',
-  image: "/faf3f250-5413-4599-9b64-8c9ab0c305c3-removebg-preview.png",
-  specialization: 'Evangelism',
-  shortBio: 'A dedicated servant with a heart for evangelism and community transformation, reaching the lost with the Gospel.'
-}, {
+  shortBio:
+  'A gifted communicator with a heart for youth ministry, connecting with the next generation through relevant teaching.'
+},
+{
   name: 'Louie Silan',
   displayName: 'Ptr. Louie Silan',
   church: 'Fellowship Pastor',
-  image: "/496941650_9986446918087623_5321505900457071114_n.jpg",
+  image: "/496941650_9986446918087623_5321505900457071114_n.webp",
+
   specialization: 'Fellowship Ministry',
-  shortBio: 'Passionate about creating welcoming environments where believers can connect, grow, and support one another in faith.'
+  shortBio:
+  'Passionate about creating welcoming environments where believers can connect, grow, and support one another in faith.'
 }];
+
 const gefmiStory = {
-  shortStory: 'Gait Evangelical Fellowship Ministry Inc. (GEFMI) was officially registered on May 17, 2004, at the Security and Exchange Commission (SEC) Baguio City Branch. Born as a seed ministry inspired by the late Rev. PrinceBen C. Hernandez, GEFMI began when four small groups from Bantinan, Kiskis, Aritao, and Villa Flores congregated as incorporators with the blessing of Rev. Paul Hernandez.',
+  shortStory:
+  'Gait Evangelical Fellowship Ministry Inc. (GEFMI) was officially registered on May 17, 2004, at the Security and Exchange Commission (SEC) Baguio City Branch. Born as a seed ministry inspired by the late Rev. PrinceBen C. Hernandez, GEFMI began when four small groups from Bantinan, Kiskis, Aritao, and Villa Flores congregated as incorporators with the blessing of Rev. Paul Hernandez.',
   fullStory: `Gait Evangelical Fellowship Ministry Inc. (GEFMI) was officially registered on May 17, 2004, at the Security and Exchange Commission (SEC) Baguio City Branch. Born as a seed ministry inspired by the late Rev. PrinceBen C. Hernandez, the founding director of the Fellowship for Rural Evangelization and Expansion (FREE Mission Philippines), GEFMI began when four small groups from Bantinan, Kiskis, Aritao, and Villa Flores fellowships congregated themselves as incorporators with the blessing of the new FREE Mission Director, Rev. Paul Hernandez.
 
 The group rented an old house at the Poblacion of Aritao, Nueva Vizcaya, serving as the main office and training center. Three full-time pastors formed the initial team: Pas. Movel B. Velasco, who became the Executive Director, Pas. Hermogenes A. Andrada Jr., and Pas. Rolando P. Abalos. This humble beginning laid the foundation for what would become a thriving ministry reaching across multiple provinces.
@@ -112,31 +158,33 @@ export const AboutSection = () => {
       document.body.style.overflow = 'unset';
     };
   }, [showStoryModal]);
-  return <section className="relative w-full bg-white overflow-hidden">
+  return (
+    <section className="relative w-full bg-slate-950 overflow-hidden text-slate-100">
       {/* Our Foundation Section */}
-      <div className="relative w-full py-20 md:py-32 px-6 md:px-12 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-white via-gray-50 to-amber-50/30" />
-        <div className="absolute inset-0 opacity-[0.02] bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.1),transparent_50%)]" />
+      <div className="relative w-full py-20 md:py-32 px-6 md:px-12 overflow-hidden bg-dark-premium">
+        {/* Ambient glow blobs */}
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-[120px] pointer-events-none animate-glow-slow" />
+        <div className="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-yellow-600/10 rounded-full blur-[120px] pointer-events-none animate-glow-slower" />
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-amber-100/80 backdrop-blur-sm px-6 py-3 rounded-full border border-amber-200/50 mb-6">
-              <SparklesIcon className="w-5 h-5 text-amber-700" />
-              <span className="text-amber-900 font-semibold tracking-wide">
+            <div className="inline-flex items-center gap-2 bg-amber-500/10 backdrop-blur-sm px-6 py-3 rounded-full border border-amber-500/20 mb-6">
+              <SparklesIcon className="w-5 h-5 text-amber-400" />
+              <span className="text-amber-200 font-semibold tracking-wide font-display text-sm uppercase">
                 Our Foundation
               </span>
             </div>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-4 tracking-tight">
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 tracking-tight font-display">
               From{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-700 to-amber-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-500">
                 Vision
               </span>{' '}
               to{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-700 to-amber-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-500">
                 Reality
               </span>
             </h2>
-            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto">
               A journey of faith, purpose, and transformation
             </p>
           </div>
@@ -144,34 +192,38 @@ export const AboutSection = () => {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-center">
             <div className="lg:col-span-3">
               <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-200/40 via-amber-300/20 to-amber-400/40 rounded-3xl blur-3xl scale-105 opacity-60" />
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 via-yellow-500/10 to-orange-500/20 rounded-3xl blur-3xl scale-105 opacity-60 pointer-events-none" />
 
-                <div className="relative bg-gradient-to-br from-amber-50 via-white to-gray-50 p-6 md:p-8 rounded-3xl shadow-2xl border border-amber-100/50">
-                  <div className="absolute inset-6 md:inset-8 border-2 border-amber-200/30 rounded-2xl pointer-events-none" />
+                <div className="relative bg-white/[0.03] backdrop-blur-md p-6 md:p-8 rounded-3xl shadow-2xl border border-white/10 hover:border-amber-500/35 transition-colors duration-500">
+                  <div className="absolute inset-6 md:inset-8 border border-amber-500/10 rounded-2xl pointer-events-none" />
 
-                  <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-amber-300/50 rounded-tl-xl" />
-                  <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-amber-300/50 rounded-tr-xl" />
-                  <div className="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-amber-300/50 rounded-bl-xl" />
-                  <div className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-amber-300/50 rounded-br-xl" />
+                  <div className="absolute top-4 left-4 w-12 h-12 border-t border-l border-amber-500/30 rounded-tl-xl" />
+                  <div className="absolute top-4 right-4 w-12 h-12 border-t border-r border-amber-500/30 rounded-tr-xl" />
+                  <div className="absolute bottom-4 left-4 w-12 h-12 border-b border-l border-amber-500/30 rounded-bl-xl" />
+                  <div className="absolute bottom-4 right-4 w-12 h-12 border-b border-r border-amber-500/30 rounded-br-xl" />
 
-                  <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-6 rounded-2xl shadow-inner">
-                    <div className="relative overflow-hidden rounded-xl shadow-2xl group-hover:scale-[1.02] transition-transform duration-400">
-                      <img src="/old_bantinan.jpg" alt="GEFMI Mother Church" className="w-full h-auto rounded-xl" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative bg-slate-900/60 p-4 md:p-6 rounded-2xl shadow-inner">
+                    <div className="relative overflow-hidden rounded-xl shadow-2xl group-hover:scale-[1.02] transition-transform duration-550">
+                      <img
+                        src="/old_bantinan.webp"
+                        alt="GEFMI Mother Church"
+                        className="w-full h-auto rounded-xl" />
+                      
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-500" />
                     </div>
 
                     <div className="mt-6 text-center">
-                      <p className="text-gray-800 font-serif text-2xl md:text-3xl font-semibold mb-2">
+                      <p className="text-white font-display text-2xl md:text-3xl font-bold mb-2">
                         GEFMI Mother Church
                       </p>
-                      <div className="flex items-center justify-center gap-2 text-gray-600 mb-3">
-                        <CalendarIcon className="w-4 h-4" />
+                      <div className="flex items-center justify-center gap-2 text-slate-300 mb-3">
+                        <CalendarIcon className="w-4 h-4 text-amber-400" />
                         <p className="text-base font-medium">
-                          Established 2015
+                          Established 1992
                         </p>
                       </div>
-                      <div className="pt-3 border-t border-gray-300">
-                        <p className="text-sm text-gray-500 italic">
+                      <div className="pt-3 border-t border-white/10">
+                        <p className="text-sm text-slate-400 italic">
                           Where it all began
                         </p>
                       </div>
@@ -182,42 +234,52 @@ export const AboutSection = () => {
             </div>
 
             <div className="lg:col-span-2 space-y-6">
-              <div className="group relative bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="group relative bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-2xl transition-all duration-300 border border-white/10 hover:border-amber-500/30">
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                 <div className="relative">
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-md">
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
                       <TargetIcon className="w-6 h-6 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                      <h3 className="text-2xl font-bold text-white mb-2 font-display">
                         Our Mission
                       </h3>
-                      <p className="text-gray-700 leading-relaxed">
-                        To proclaim the Gospel of Jesus Christ, establish
-                        vibrant faith communities, and equip believers to
-                        transform their world through the power of God's Word.
+                      <p className="text-slate-300 leading-relaxed text-sm md:text-base">
+                        To proclaim the Gospel of Jesus Christ to rural
+                        communities across the Philippines, establishing vibrant
+                        faith communities and equipping believers to transform
+                        their world through the power of God's Word. We are
+                        committed to planting churches, establishing
+                        church-based Bible Training Centers, and serving
+                        communities with compassion and excellence through
+                        volunteerism activated by God's grace and provision.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="group relative bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="group relative bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-2xl transition-all duration-300 border border-white/10 hover:border-amber-500/30">
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                 <div className="relative">
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-md">
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
                       <EyeIcon className="w-6 h-6 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                      <h3 className="text-2xl font-bold text-white mb-2 font-display">
                         Our Vision
                       </h3>
-                      <p className="text-gray-700 leading-relaxed">
-                        To see every community transformed by the Gospel, with
-                        thriving churches in every neighborhood and the love of
-                        Christ evident in every life we touch.
+                      <p className="text-slate-300 leading-relaxed text-sm md:text-base">
+                        To see every rural community in the Philippines
+                        transformed by the Gospel, with thriving churches in
+                        every neighborhood, empowered believers in every sphere
+                        of influence, and the love of Christ evident in every
+                        life we touch. We envision a movement of faith reaching
+                        out to rural people for Christ, transcending borders and
+                        generations, as we fulfill our calling to "Save Other
+                        Souls."
                       </p>
                     </div>
                   </div>
@@ -225,21 +287,25 @@ export const AboutSection = () => {
               </div>
 
               <div>
-                <button onClick={() => setShowStoryModal(true)} className="group relative w-full bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 text-left">
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <button
+                  onClick={() => setShowStoryModal(true)}
+                  data-cursor-text="READ"
+                  className="group relative w-full bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-2xl transition-all duration-300 border border-white/10 hover:border-amber-500/30 text-left">
+                  
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                   <div className="relative">
                     <div className="flex items-start gap-4 mb-4">
-                      <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-md">
+                      <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
                         <BookOpenIcon className="w-6 h-6 text-white" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                        <h3 className="text-2xl font-bold text-white mb-2 font-display">
                           Our Story
                         </h3>
-                        <p className="text-gray-700 leading-relaxed mb-4">
+                        <p className="text-slate-300 leading-relaxed mb-4 text-sm md:text-base">
                           {gefmiStory.shortStory.substring(0, 120)}...
                         </p>
-                        <div className="inline-flex items-center gap-2 text-amber-700 font-semibold group-hover:gap-3 transition-all duration-300">
+                        <div className="inline-flex items-center gap-2 text-amber-400 font-semibold group-hover:gap-3 transition-all duration-300">
                           <span>Read Full Story</span>
                           <ArrowRightIcon className="w-4 h-4" />
                         </div>
@@ -250,8 +316,11 @@ export const AboutSection = () => {
               </div>
 
               <div className="pt-4">
-                <Link to="/about" className="group inline-flex items-center gap-3 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
-                  <span className="text-base">Discover Our Full Journey</span>
+                <Link
+                  to="/about"
+                  className="group inline-flex items-center gap-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                  
+                  <span className="text-base font-display">Discover Our Full Journey</span>
                   <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                 </Link>
               </div>
@@ -262,25 +331,35 @@ export const AboutSection = () => {
 
       {/* Story Modal */}
       <AnimatePresence>
-        {showStoryModal && <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4" onClick={() => setShowStoryModal(false)}>
-            <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl border border-white/10 flex flex-col" onClick={e => e.stopPropagation()}>
-              <div className="relative h-48 bg-gradient-to-br from-slate-800 to-slate-900 flex-shrink-0">
+        {showStoryModal &&
+        <div
+          className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
+          onClick={() => setShowStoryModal(false)}>
+          
+            <div
+            className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl border border-white/10 flex flex-col"
+            onClick={(e) => e.stopPropagation()}>
+            
+              <div className="relative h-40 sm:h-48 bg-gradient-to-br from-slate-800 to-slate-900 flex-shrink-0">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600/30 via-purple-600/20 to-pink-600/30" />
 
-                <button onClick={() => setShowStoryModal(false)} className="absolute top-6 right-6 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110 z-10 border border-white/20">
-                  <XIcon className="w-6 h-6" />
+                <button
+                onClick={() => setShowStoryModal(false)}
+                className="absolute top-4 right-4 sm:top-6 sm:right-6 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white p-2.5 sm:p-3 rounded-full transition-all duration-300 hover:scale-110 z-10 border border-white/20">
+                
+                  <XIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
 
-                <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent">
-                  <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-lg">
-                      <BookOpenIcon className="w-8 h-8 text-white" />
+                <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-lg flex-shrink-0">
+                      <BookOpenIcon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-4xl font-bold text-white mb-1">
+                      <h3 className="text-2xl sm:text-4xl font-bold text-white mb-1">
                         The GEFMI Story
                       </h3>
-                      <p className="text-blue-300 text-lg font-semibold">
+                      <p className="text-blue-300 text-sm sm:text-lg font-semibold">
                         A Journey of Faith & Transformation
                       </p>
                     </div>
@@ -288,21 +367,32 @@ export const AboutSection = () => {
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-8 md:p-12">
+              <div className="flex-1 overflow-y-auto p-5 sm:p-8 md:p-12">
                 <div className="prose prose-lg prose-invert max-w-none">
-                  {gefmiStory.fullStory.split('\n\n').map((paragraph, index) => <p key={index} className="text-gray-300 leading-relaxed mb-6 text-lg">
+                  {gefmiStory.fullStory.
+                split('\n\n').
+                map((paragraph, index) =>
+                <p
+                  key={index}
+                  className="text-gray-300 leading-relaxed mb-6 text-lg">
+                  
                         {paragraph}
-                      </p>)}
+                      </p>
+                )}
                 </div>
 
                 <div className="mt-8 text-center">
-                  <button onClick={() => setShowStoryModal(false)} className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg">
+                  <button
+                  onClick={() => setShowStoryModal(false)}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg">
+                  
                     Close
                   </button>
                 </div>
               </div>
             </div>
-          </div>}
+          </div>
+        }
       </AnimatePresence>
 
       {/* Church Expansion Section */}
@@ -352,32 +442,28 @@ export const AboutSection = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-              {churches.filter(c => c.featured).map(church => <div key={church.name} className="lg:col-span-7 group relative">
+              {churches.
+              filter((c) => c.featured).
+              map((church) =>
+              <div
+                key={church.name}
+                className="lg:col-span-7 group relative">
+                
                     <Link to={church.route} className="block h-full">
                       <div className="relative h-full min-h-[600px] lg:min-h-[700px] overflow-hidden rounded-3xl bg-stone-900">
                         <div className="absolute inset-0 shadow-2xl"></div>
                         <div className="absolute inset-0 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)]"></div>
 
                         <div className="absolute inset-0 overflow-hidden">
-                          <img src={church.image} alt={church.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                          <img
+                        src={church.image}
+                        alt={church.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                      
                         </div>
 
                         <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-stone-900/60 to-transparent"></div>
                         <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 via-transparent to-stone-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-
-                        <div className="absolute top-8 left-8">
-                          <div className="relative">
-                            <div className="absolute inset-0 bg-gradient-to-br from-amber-400 to-amber-600 blur-lg opacity-60"></div>
-                            <div className="relative bg-gradient-to-br from-amber-50 via-white to-amber-50 px-6 py-3 rounded-2xl border-2 border-amber-300/50 shadow-2xl backdrop-blur-sm">
-                              <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div>
-                                <span className="text-sm font-bold text-amber-900 tracking-wider">
-                                  EST. {church.year}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
 
                         <div className="absolute inset-0 flex flex-col justify-end p-10 lg:p-12">
                           <div>
@@ -406,31 +492,28 @@ export const AboutSection = () => {
                         </div>
                       </div>
                     </Link>
-                  </div>)}
+                  </div>
+              )}
 
               <div className="lg:col-span-5 grid grid-cols-1 gap-8 lg:gap-10">
-                {churches.filter(c => !c.featured).map(church => <div key={church.name} className="group relative">
+                {churches.
+                filter((c) => !c.featured).
+                map((church) =>
+                <div key={church.name} className="group relative">
                       <Link to={church.route} className="block h-full">
                         <div className="relative h-full min-h-[280px] overflow-hidden rounded-2xl bg-stone-900">
                           <div className="absolute inset-0 shadow-xl"></div>
 
                           <div className="absolute inset-0 overflow-hidden">
-                            <img src={church.image} alt={church.name} className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-600" />
+                            <img
+                          src={church.image}
+                          alt={church.name}
+                          className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-600" />
+                        
                           </div>
 
                           <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-stone-900/50 to-transparent"></div>
                           <div className="absolute inset-0 bg-gradient-to-br from-amber-900/10 via-transparent to-stone-900/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                          <div className="absolute top-5 right-5">
-                            <div className="relative">
-                              <div className="absolute inset-0 bg-amber-400 blur-md opacity-40"></div>
-                              <div className="relative bg-white/95 backdrop-blur-sm px-4 py-2 rounded-xl border border-amber-200/50 shadow-lg">
-                                <span className="text-xs font-bold text-amber-900 tracking-wide">
-                                  {church.year}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
 
                           <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-8">
                             <div>
@@ -454,7 +537,8 @@ export const AboutSection = () => {
                           </div>
                         </div>
                       </Link>
-                    </div>)}
+                    </div>
+                )}
               </div>
             </div>
 
@@ -464,12 +548,16 @@ export const AboutSection = () => {
 
                 <div className="relative bg-gradient-to-br from-white via-amber-50/30 to-white rounded-3xl p-10 lg:p-12 border border-amber-200/30 shadow-2xl hover:shadow-3xl transition-all duration-500">
                   <div className="grid grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-12">
-                    <motion.div whileHover={{
-                    scale: 1.05
-                  }} transition={{
-                    type: 'spring',
-                    stiffness: 300
-                  }} className="text-center">
+                    <motion.div
+                      whileHover={{
+                        scale: 1.05
+                      }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 300
+                      }}
+                      className="text-center">
+                      
                       <div className="text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-amber-700 to-amber-900 mb-2">
                         11
                       </div>
@@ -477,12 +565,16 @@ export const AboutSection = () => {
                         Churches
                       </div>
                     </motion.div>
-                    <motion.div whileHover={{
-                    scale: 1.05
-                  }} transition={{
-                    type: 'spring',
-                    stiffness: 300
-                  }} className="text-center">
+                    <motion.div
+                      whileHover={{
+                        scale: 1.05
+                      }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 300
+                      }}
+                      className="text-center">
+                      
                       <div className="text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-amber-700 to-amber-900 mb-2">
                         21+
                       </div>
@@ -531,14 +623,19 @@ export const AboutSection = () => {
               <div className="absolute top-0 left-0 w-40 h-40 border-t-4 border-l-4 border-blue-400 rounded-tl-3xl opacity-50"></div>
               <div className="absolute bottom-0 right-0 w-40 h-40 border-b-4 border-r-4 border-purple-400 rounded-br-3xl opacity-50"></div>
 
-              <div className="relative p-8 md:p-12 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+              <div className="relative p-6 sm:p-8 md:p-12 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
                 <div className="flex flex-col items-center lg:items-start justify-center">
-                  <div className="relative group">
+                  <div className="relative group max-w-full">
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400 rounded-3xl blur-3xl opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
-                    <div className="relative w-80 h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] rounded-3xl overflow-hidden shadow-2xl ring-4 ring-white/20 group-hover:ring-white/40 transition-all duration-500">
-                      <img src={headPastor.image} alt={headPastor.name} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" style={{
-                      objectPosition: 'center 25%'
-                    }} />
+                    <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] max-w-full rounded-3xl overflow-hidden shadow-2xl ring-4 ring-white/20 group-hover:ring-white/40 transition-all duration-500">
+                      <img
+                        src={headPastor.image}
+                        alt={headPastor.name}
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                        style={{
+                          objectPosition: 'center 25%'
+                        }} />
+                      
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
                   </div>
@@ -570,10 +667,23 @@ export const AboutSection = () => {
                     {headPastor.description}
                   </p>
 
-                  <Link to="/pastors" className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl self-start group">
+                  <Link
+                    to="/pastors"
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl self-start group">
+                    
                     <span>Learn More</span>
-                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    <svg
+                      className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24">
+                      
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      
                     </svg>
                   </Link>
                 </div>
@@ -597,33 +707,54 @@ export const AboutSection = () => {
 
             {/* Desktop: Continuous Carousel with Hover Pause */}
             <div className="hidden lg:block relative overflow-hidden group/carousel">
-              <motion.div className="flex gap-6" animate={{
-              x: [0, -2560]
-            }} transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: 'loop',
-                duration: 60,
-                ease: 'linear'
-              }
-            }} style={{
-              animationPlayState: 'running'
-            }} whileHover={{
-              animationPlayState: 'paused'
-            }}>
-                {[...pastors, ...pastors].map((pastor, index) => <div key={`${pastor.name}-${index}`} className="group flex-shrink-0 w-80">
+              <motion.div
+                className="flex gap-6"
+                animate={{
+                  x: [0, -2560]
+                }}
+                transition={{
+                  x: {
+                    repeat: Infinity,
+                    repeatType: 'loop',
+                    duration: 60,
+                    ease: 'linear'
+                  }
+                }}
+                style={{
+                  animationPlayState: 'running'
+                }}
+                whileHover={{
+                  animationPlayState: 'paused'
+                }}>
+                
+                {[...pastors, ...pastors].map((pastor, index) =>
+                <div
+                  key={`${pastor.name}-${index}`}
+                  className="group flex-shrink-0 w-80">
+                  
                     <div className="relative h-full">
                       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-pink-500/0 group-hover:from-blue-500/30 group-hover:via-purple-500/30 group-hover:to-pink-500/30 rounded-2xl blur-2xl transition-all duration-500"></div>
                       <div className="relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl border border-white/10 group-hover:border-purple-400/50 transition-all duration-500 h-full flex flex-col">
                         <div className="relative h-80 overflow-hidden">
-                          {pastor.image ? <>
-                              <img src={pastor.image} alt={pastor.displayName} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                          {pastor.image ?
+                        <>
+                              <img
+                            src={pastor.image}
+                            alt={pastor.displayName}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                          
                               <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
-                            </> : <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-900/30 to-purple-900/30">
+                            </> :
+
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-900/30 to-purple-900/30">
                               <div className="text-white text-6xl font-bold opacity-30">
-                                {pastor.name.split(' ').map(n => n[0]).join('')}
+                                {pastor.name.
+                            split(' ').
+                            map((n) => n[0]).
+                            join('')}
                               </div>
-                            </div>}
+                            </div>
+                        }
                         </div>
                         <div className="p-5 flex-1 flex flex-col justify-center bg-gradient-to-br from-slate-900/90 to-black/90 backdrop-blur-sm">
                           <h4 className="text-xl font-bold text-white mb-1 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-300 group-hover:to-purple-300 transition-all duration-300">
@@ -635,31 +766,51 @@ export const AboutSection = () => {
                         </div>
                       </div>
                     </div>
-                  </div>)}
+                  </div>
+                )}
               </motion.div>
             </div>
 
             {/* Mobile/Tablet: Horizontal Scroll */}
             <div className="lg:hidden relative">
-              <div className="overflow-x-auto scrollbar-hide -mx-4 px-4" style={{
-              scrollSnapType: 'x mandatory'
-            }}>
-                <div className="flex gap-4 pb-4">
-                  {pastors.map(pastor => <div key={pastor.name} className="group flex-shrink-0 w-[280px] md:w-[320px]" style={{
-                  scrollSnapAlign: 'start'
+              <div
+                className="overflow-x-auto scrollbar-hide -mx-4 px-4"
+                style={{
+                  scrollSnapType: 'x mandatory'
                 }}>
+                
+                <div className="flex gap-4 pb-4">
+                  {pastors.map((pastor) =>
+                  <div
+                    key={pastor.name}
+                    className="group flex-shrink-0 w-[280px] md:w-[320px]"
+                    style={{
+                      scrollSnapAlign: 'start'
+                    }}>
+                    
                       <div className="relative h-full">
                         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-pink-500/0 active:from-blue-500/20 active:via-purple-500/20 active:to-pink-500/20 rounded-2xl blur-2xl transition-all duration-500"></div>
                         <div className="relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl border border-white/10 active:border-purple-400/50 transition-all duration-500 h-full flex flex-col">
                           <div className="relative h-72 md:h-80 overflow-hidden">
-                            {pastor.image ? <>
-                                <img src={pastor.image} alt={pastor.displayName} className="w-full h-full object-cover transition-transform duration-700" />
+                            {pastor.image ?
+                          <>
+                                <img
+                              src={pastor.image}
+                              alt={pastor.displayName}
+                              className="w-full h-full object-cover transition-transform duration-700" />
+                            
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
-                              </> : <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-900/30 to-purple-900/30">
+                              </> :
+
+                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-900/30 to-purple-900/30">
                                 <div className="text-white text-5xl font-bold opacity-30">
-                                  {pastor.name.split(' ').map(n => n[0]).join('')}
+                                  {pastor.name.
+                              split(' ').
+                              map((n) => n[0]).
+                              join('')}
                                 </div>
-                              </div>}
+                              </div>
+                          }
                           </div>
                           <div className="p-5 flex-1 flex flex-col justify-center bg-gradient-to-br from-slate-900/90 to-black/90 backdrop-blur-sm">
                             <h4 className="text-lg font-bold text-white mb-1">
@@ -672,7 +823,8 @@ export const AboutSection = () => {
                           </div>
                         </div>
                       </div>
-                    </div>)}
+                    </div>
+                  )}
                 </div>
               </div>
               {/* Scroll indicator */}
@@ -684,10 +836,23 @@ export const AboutSection = () => {
 
           {/* View More Button */}
           <div className="text-center mt-12">
-            <Link to="/pastors" className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl border border-white/20">
+            <Link
+              to="/pastors"
+              className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl border border-white/20">
+              
               <span>View Full Pastoral Team</span>
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              <svg
+                className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24">
+                
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                
               </svg>
             </Link>
           </div>
@@ -702,5 +867,6 @@ export const AboutSection = () => {
           </div>
         </div>
       </div>
-    </section>;
+    </section>);
+
 };

@@ -19,7 +19,11 @@ export const Container: React.FC<ContainerProps> = ({
     full: 'max-w-full'
   };
   const paddingClasses = noPadding ? '' : 'px-4 sm:px-6 md:px-8 lg:px-12';
-  return <div className={`w-full ${sizeClasses[size]} mx-auto ${paddingClasses} ${className}`}>
+  return (
+    <div
+      className={`w-full ${sizeClasses[size]} mx-auto ${paddingClasses} ${className}`}>
+      
       {children}
-    </div>;
+    </div>);
+
 };

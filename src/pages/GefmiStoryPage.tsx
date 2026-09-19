@@ -3,7 +3,13 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Footer } from '../components/Footer';
 import { BackButton } from '../components/BackButton';
-import { BookOpenIcon, CalendarIcon, SparklesIcon, HeartIcon, ChurchIcon } from 'lucide-react';
+import {
+  BookOpenIcon,
+  CalendarIcon,
+  SparklesIcon,
+  HeartIcon,
+  ChurchIcon } from
+'lucide-react';
 import { useSmoothScroll } from '../hooks/useSmoothScroll';
 const gefmiStory = {
   fullStory: `Gait Evangelical Fellowship Ministry Inc. (GEFMI) was officially registered on May 17, 2004, at the Security and Exchange Commission (SEC) Baguio City Branch. Born as a seed ministry inspired by the late Rev. PrinceBen C. Hernandez, the founding director of the Fellowship for Rural Evangelization and Expansion (FREE Mission Philippines), GEFMI began when four small groups from Bantinan, Kiskis, Aritao, and Villa Flores fellowships congregated themselves as incorporators with the blessing of the new FREE Mission Director, Rev. Paul Hernandez.
@@ -38,65 +44,83 @@ export function GefmiStoryPage() {
     wheelMultiplier: 0.8,
     touchMultiplier: 1.5
   });
-  return <div className="w-full min-h-screen bg-white">
+  return (
+    <div className="w-full min-h-screen bg-dark-premium text-slate-100">
       {/* NO NAVBAR - Only Back Button */}
       <BackButton to="/about" label="Back" />
 
       {/* Hero Section */}
-      <section className="relative w-full min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900">
+      <section className="relative w-full min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
         {/* Animated Background */}
-        <div className="absolute inset-0 opacity-20">
-          <motion.div animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3]
-        }} transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: 'easeInOut'
-        }} className="absolute top-0 left-0 w-[600px] h-[600px] bg-blue-500 rounded-full blur-3xl" />
-          <motion.div animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.2, 0.4, 0.2]
-        }} transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: 'easeInOut'
-        }} className="absolute bottom-0 right-0 w-[700px] h-[700px] bg-purple-500 rounded-full blur-3xl" />
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3]
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: 'easeInOut'
+            }}
+            className="absolute top-0 left-0 w-[600px] h-[600px] bg-blue-500 rounded-full blur-[100px]" />
+          
+          <motion.div
+            animate={{
+              scale: [1.2, 1, 1.2],
+              opacity: [0.2, 0.4, 0.2]
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: 'easeInOut'
+            }}
+            className="absolute bottom-0 right-0 w-[700px] h-[700px] bg-purple-500 rounded-full blur-[100px]" />
+          
         </div>
 
         {/* Hero Content */}
         <div className="relative z-10 max-w-5xl mx-auto px-6 py-20 text-center">
-          <motion.div initial={{
-          opacity: 0,
-          y: 30
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.8
-        }}>
-            <motion.div initial={{
-            scale: 0
-          }} animate={{
-            scale: 1
-          }} transition={{
-            duration: 0.6,
-            delay: 0.2
-          }} className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 mb-8">
-              <BookOpenIcon className="w-5 h-5 text-blue-300" />
-              <span className="text-white font-semibold tracking-wide">
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 30
+            }}
+            animate={{
+              opacity: 1,
+              y: 0
+            }}
+            transition={{
+              duration: 0.8
+            }}>
+            
+            <motion.div
+              initial={{
+                scale: 0
+              }}
+              animate={{
+                scale: 1
+              }}
+              transition={{
+                duration: 0.6,
+                delay: 0.2
+              }}
+              className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-6 py-3 rounded-full mb-8 text-blue-400">
+              
+              <BookOpenIcon className="w-5 h-5" />
+              <span className="font-semibold text-xs tracking-widest uppercase font-display">
                 Our Story
               </span>
             </motion.div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight font-display">
               The{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-300 to-pink-400">
                 GEFMI Story
               </span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto font-light leading-relaxed">
               A Journey of Faith & Transformation
             </p>
           </motion.div>
@@ -104,126 +128,178 @@ export function GefmiStoryPage() {
       </section>
 
       {/* Story Content */}
-      <section className="py-20 px-6 md:px-12 lg:px-16 bg-gradient-to-br from-gray-50 via-white to-gray-100">
-        <div className="max-w-5xl mx-auto">
-          <motion.div initial={{
-          opacity: 0,
-          y: 30
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.8,
-          delay: 0.3
-        }}>
-            {/* Story Text */}
-            <div className="prose prose-lg max-w-none mb-16">
-              {gefmiStory.fullStory.split('\n\n').map((paragraph, index) => <motion.p key={index} initial={{
+      <section className="py-20 px-6 md:px-12 lg:px-16 bg-slate-900/30 relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute top-1/3 left-10 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-1/3 right-10 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-5xl mx-auto relative z-10">
+          <motion.div
+            initial={{
               opacity: 0,
-              y: 20
-            }} animate={{
+              y: 30
+            }}
+            animate={{
               opacity: 1,
               y: 0
-            }} transition={{
-              duration: 0.5,
-              delay: 0.4 + index * 0.1
-            }} className="text-gray-700 leading-relaxed mb-6 text-xl">
+            }}
+            transition={{
+              duration: 0.8,
+              delay: 0.3
+            }}>
+            
+            {/* Story Text */}
+            <div className="prose prose-lg max-w-none mb-16">
+              {gefmiStory.fullStory.split('\n\n').map((paragraph, index) =>
+              <motion.p
+                key={index}
+                initial={{
+                  opacity: 0,
+                  y: 20
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0
+                }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.4 + index * 0.1
+                }}
+                className="text-slate-300 leading-relaxed mb-8 text-lg md:text-xl font-light font-display">
+                
                   {paragraph}
-                </motion.p>)}
+                </motion.p>
+              )}
             </div>
 
             {/* Key Milestones */}
-            <motion.div initial={{
-            opacity: 0,
-            y: 30
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            duration: 0.8,
-            delay: 1
-          }} className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-3xl p-10 border border-blue-100 shadow-xl">
-              <h4 className="text-3xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-lg">
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 30
+              }}
+              animate={{
+                opacity: 1,
+                y: 0
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 1
+              }}
+              className="bg-white/5 backdrop-blur-md rounded-3xl p-8 md:p-10 border border-white/10 shadow-2xl">
+              
+              <h4 className="text-3xl font-bold text-white mb-8 flex items-center gap-3 font-display">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
                   <CalendarIcon className="w-6 h-6 text-white" />
                 </div>
                 Key Milestones
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {[{
-                year: '2004',
-                event: 'GEFMI Officially Registered (SEC)'
-              }, {
-                year: '2005',
-                event: 'First Annual Assembly & Mass Baptism (52 souls)'
-              }, {
-                year: '2005',
-                event: 'Pas. Velasco, Tubal & Andrada Ordained'
-              }, {
-                year: '2006',
-                event: 'New Outreaches: Capiniaan & Manicla'
-              }, {
-                year: '2007',
-                event: 'Villa Flores Outreached Atbu'
-              }, {
-                year: '2008',
-                event: 'CPTC Fourth Batch (24 enrollees)'
-              }, {
-                year: '2013',
-                event: 'Rev. Silan Became Executive Director'
-              }, {
-                year: 'Present',
-                event: 'Continuing International Ministry'
-              }].map((milestone, index) => <motion.div key={index} initial={{
-                opacity: 0,
-                x: -20
-              }} animate={{
-                opacity: 1,
-                x: 0
-              }} transition={{
-                delay: 1.1 + index * 0.1
-              }} className="flex items-center gap-4 bg-white rounded-xl p-5 shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-lg">
+                {[
+                {
+                  year: '2004',
+                  event: 'GEFMI Officially Registered (SEC)'
+                },
+                {
+                  year: '2005',
+                  event: 'First Annual Assembly & Mass Baptism (52 souls)'
+                },
+                {
+                  year: '2005',
+                  event: 'Pas. Velasco, Tubal & Andrada Ordained'
+                },
+                {
+                  year: '2006',
+                  event: 'New Outreaches: Capiniaan & Manicla'
+                },
+                {
+                  year: '2007',
+                  event: 'Villa Flores Outreached Atbu'
+                },
+                {
+                  year: '2008',
+                  event: 'CPTC Fourth Batch (24 enrollees)'
+                },
+                {
+                  year: '2013',
+                  event: 'Rev. Silan Became Executive Director'
+                },
+                {
+                  year: 'Present',
+                  event: 'Continuing International Ministry'
+                }].
+                map((milestone, index) =>
+                <motion.div
+                  key={index}
+                  initial={{
+                    opacity: 0,
+                    x: -20
+                  }}
+                  animate={{
+                    opacity: 1,
+                    x: 0
+                  }}
+                  transition={{
+                    delay: 1.1 + index * 0.1
+                  }}
+                  className="flex items-center gap-4 bg-white/5 backdrop-blur-md rounded-2xl p-5 shadow-2xl border border-white/10 hover:border-blue-500/30 transition-all duration-300">
+                  
+                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/20">
                       <span className="text-white font-bold text-sm">
                         {milestone.year}
                       </span>
                     </div>
-                    <span className="text-gray-800 font-semibold text-lg">
+                    <span className="text-slate-200 font-semibold text-lg font-display">
                       {milestone.event}
                     </span>
-                  </motion.div>)}
+                  </motion.div>
+                )}
               </div>
             </motion.div>
 
             {/* Call to Action */}
-            <motion.div initial={{
-            opacity: 0,
-            y: 30
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            duration: 0.8,
-            delay: 1.5
-          }} className="mt-16 text-center">
-              <div className="bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl p-12 shadow-2xl">
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 30
+              }}
+              animate={{
+                opacity: 1,
+                y: 0
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 1.5
+              }}
+              className="mt-16 text-center">
+              
+              <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-12 border border-white/10 shadow-2xl relative group overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                 <div className="flex items-center justify-center gap-3 mb-6">
-                  <HeartIcon className="w-8 h-8 text-white" />
-                  <h3 className="text-3xl md:text-4xl font-bold text-white">
+                  <HeartIcon className="w-8 h-8 text-blue-400" />
+                  <h3 className="text-3xl md:text-4xl font-bold text-white font-display">
                     Join Our Story
                   </h3>
                 </div>
-                <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed">
                   Want to be part of our journey? Explore our churches, meet our
                   pastors, and discover how you can get involved.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link to="/churches" className="inline-flex items-center gap-3 bg-white hover:bg-gray-100 text-blue-900 font-bold py-4 px-8 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg">
-                    <ChurchIcon className="w-5 h-5" />
+                <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
+                  <Link
+                    to="/churches"
+                    data-cursor-text="CHURCHES"
+                    className="inline-flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-blue-950 font-bold py-4 px-8 rounded-xl transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg font-display">
+                    
+                    <ChurchIcon className="w-5 h-5 text-blue-600" />
                     <span>Explore Our Churches</span>
                   </Link>
-                  <Link to="/pastors" className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 border border-white/20 hover:border-white/40">
-                    <SparklesIcon className="w-5 h-5" />
+                  <Link
+                    to="/pastors"
+                    data-cursor-text="MEET"
+                    className="inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 border border-white/25 hover:border-white/40 shadow-lg font-display">
+                    
+                    <SparklesIcon className="w-5 h-5 text-purple-400" />
                     <span>Meet Our Pastors</span>
                   </Link>
                 </div>
@@ -234,5 +310,6 @@ export function GefmiStoryPage() {
       </section>
 
       <Footer />
-    </div>;
+    </div>);
+
 }

@@ -21,6 +21,18 @@ import { OurPastorsPage } from './pages/OurPastorsPage';
 import { OurChurchesPage } from './pages/OurChurchesPage';
 import { GefmiStoryPage } from './pages/GefmiStoryPage';
 import { ScrollToTop } from './components/ScrollToTop';
+// Affiliate Pages
+import { LhgcfFellowship } from './pages/affiliate/LhgcfFellowship';
+import { PutlanChurch } from './pages/affiliate/PutlanChurch';
+import { IkapitoChurch } from './pages/affiliate/IkapitoChurch';
+import { ManiclaChurch } from './pages/affiliate/ManiclaChurch';
+import { BambangLhgcfChurch } from './pages/affiliate/BambangLhgcfChurch';
+import { Psalms23Church } from './pages/affiliate/Psalms23Church';
+import { CtlFellowship } from './pages/affiliate/CtlFellowship';
+import { CalaocanChurch } from './pages/affiliate/CalaocanChurch';
+import { ToytoyanChurch } from './pages/affiliate/ToytoyanChurch';
+import { BorlonganChurch } from './pages/affiliate/BorlonganChurch';
+import { BalerChurch } from './pages/affiliate/BalerChurch';
 const pageVariants = {
   initial: {
     opacity: 0,
@@ -41,83 +53,496 @@ const pageTransition = {
 };
 function AnimatedRoutes() {
   const location = useLocation();
-  return <AnimatePresence mode="wait">
+  return (
+    <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+        <Route
+          path="/"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <App />
-            </motion.div>} />
-        <Route path="/churches/bantinan" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/bantinan"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <BantinanChurch />
-            </motion.div>} />
-        <Route path="/churches/dalton" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/dalton"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <DaltonChurch />
-            </motion.div>} />
-        <Route path="/churches/atbu" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/atbu"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <AtbuChurch />
-            </motion.div>} />
-        <Route path="/churches/santa-fe" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/santa-fe"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <SantaFeChurch />
-            </motion.div>} />
-        <Route path="/churches/timmuri" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/timmuri"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <TimmuriChurch />
-            </motion.div>} />
-        <Route path="/churches/beti" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/beti"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <BetiChurch />
-            </motion.div>} />
-        <Route path="/churches/aasin" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/aasin"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <AasinChurch />
-            </motion.div>} />
-        <Route path="/churches/lower-kiskis" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/lower-kiskis"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <LowerKiskisChurch />
-            </motion.div>} />
-        <Route path="/churches/upper-kiskis" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/upper-kiskis"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <UpperKiskisChurch />
-            </motion.div>} />
-        <Route path="/churches/orchids" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/orchids"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <OrchidsChurch />
-            </motion.div>} />
-        <Route path="/churches/villaflores" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/villaflores"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <VillafloresChurch />
-            </motion.div>} />
-        <Route path="/ministry" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/ministry"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <MinistryPage />
-            </motion.div>} />
-        <Route path="/about" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/about"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <AboutPage />
-            </motion.div>} />
-        <Route path="/about/churches" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/about/churches"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <AboutPage />
-            </motion.div>} />
-        <Route path="/about/pastors" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/about/pastors"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <AboutPage />
-            </motion.div>} />
-        <Route path="/about/youth-leaders" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/about/youth-leaders"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <AboutPage />
-            </motion.div>} />
-        <Route path="/about/history" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/about/history"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <AboutPage />
-            </motion.div>} />
-        <Route path="/pastors" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/pastors"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <OurPastorsPage />
-            </motion.div>} />
-        <Route path="/churches" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <OurChurchesPage />
-            </motion.div>} />
-        <Route path="/sponsorship" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/sponsorship"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <SponsorshipPage />
-            </motion.div>} />
-        <Route path="/contact" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/contact"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <ContactPage />
-            </motion.div>} />
-        <Route path="/gefmi-story" element={<motion.div initial="initial" animate="animate" exit="exit" variants={pageVariants} transition={pageTransition}>
+            </motion.div>
+          } />
+        
+        <Route
+          path="/gefmi-story"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
               <GefmiStoryPage />
-            </motion.div>} />
+            </motion.div>
+          } />
+        
+
+        {/* Affiliate Church Routes */}
+        <Route
+          path="/churches/affiliate/lhgcf"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
+              <LhgcfFellowship />
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/affiliate/lhgcf/putlan"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
+              <PutlanChurch />
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/affiliate/lhgcf/ikapito"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
+              <IkapitoChurch />
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/affiliate/lhgcf/manicla"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
+              <ManiclaChurch />
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/affiliate/lhgcf/bambang"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
+              <BambangLhgcfChurch />
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/affiliate/psalms23"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
+              <Psalms23Church />
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/affiliate/ctl"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
+              <CtlFellowship />
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/affiliate/ctl/calaocan"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
+              <CalaocanChurch />
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/affiliate/ctl/toytoyan"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
+              <ToytoyanChurch />
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/affiliate/ctl/borlongan"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
+              <BorlonganChurch />
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/affiliate/ctl/baler"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
+              <BalerChurch />
+            </motion.div>
+          } />
+        
       </Routes>
-    </AnimatePresence>;
+    </AnimatePresence>);
+
 }
 export function AppRouter() {
-  return <BrowserRouter>
+  return (
+    <BrowserRouter>
       <ScrollToTop />
       <AnimatedRoutes />
-    </BrowserRouter>;
+    </BrowserRouter>);
+
 }

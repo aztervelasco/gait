@@ -3,6 +3,7 @@ import { Navbar } from '../components/Navbar';
 import { HeroCarousel } from '../components/HeroCarousel';
 import { ServicesSection } from '../components/ServicesSection';
 import { AboutSection } from '../components/AboutSection';
+import { ScrollytellingSection } from '../components/ScrollytellingSection';
 import { SponsorshipSection } from '../components/SponsorshipSection';
 import { Footer } from '../components/Footer';
 import { useSmoothScroll } from '../hooks/useSmoothScroll';
@@ -16,7 +17,8 @@ export const Home = () => {
     touchMultiplier: 1.5,
     damping: 0.88 // Slightly lower for faster deceleration
   });
-  return <div className="w-full">
+  return (
+    <div className="w-full">
       <Navbar />
       <div id="hero">
         <HeroCarousel />
@@ -27,9 +29,11 @@ export const Home = () => {
       <div id="about">
         <AboutSection />
       </div>
+      <ScrollytellingSection />
       <div id="sponsorship">
         <SponsorshipSection />
       </div>
       <Footer />
-    </div>;
+    </div>);
+
 };

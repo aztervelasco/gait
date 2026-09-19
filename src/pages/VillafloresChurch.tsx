@@ -1,232 +1,993 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  MapPinIcon,
+  ClockIcon,
+  HeartIcon,
+  SparklesIcon,
+  ImageIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  CalendarIcon } from
+'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { BackButton } from '../components/BackButton';
-import { useSmoothScroll } from '../hooks/useSmoothScroll';
-import { ChurchIcon, MapPinIcon, CalendarIcon, HeartIcon, UsersIcon } from 'lucide-react';
 const churchData = {
-  name: 'Villaflores Church',
-  location: 'Villaflores, Nueva Vizcaya',
-  established: '2021',
-  description: 'Villaflores Church is a community of believers passionate about sharing the Gospel. We strive to be a light in our neighborhood, offering hope, support, and spiritual guidance to all.',
-  pastor: 'Pastor [Name]',
-  services: [{
+  name: 'Villaflores Christian Fellowship Center',
+  abbreviation: 'VCFC',
+  location: 'Villaflores, Santa Fe, Nueva Vizcaya',
+  established: '2020',
+  tagline: 'Empowering Lives Through Faith and Fellowship',
+  description:
+  'Villaflores Christian Fellowship Center is a vibrant community of believers passionate about sharing the Gospel and transforming lives. VCFC is dedicated to empowering families, nurturing spiritual growth, and being a light in the Villaflores community through dynamic worship and compassionate service.',
+  heroImage: "/509690083_10229295030221092_2313788764351527266_n.webp",
+
+  services: [
+  {
     day: 'Sunday',
     time: '9:00 AM',
-    type: 'Worship Service'
-  }, {
+    type: 'Worship Service',
+    icon: ClockIcon
+  },
+  {
     day: 'Wednesday',
     time: '7:00 PM',
-    type: 'Bible Study'
+    type: 'Bible Study',
+    icon: BookOpenIcon
   }],
-  gallery: ['https://images.unsplash.com/photo-1543249960-d8b275288b71?w=800&h=600&fit=crop', 'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=800&h=600&fit=crop', 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&h=600&fit=crop', 'https://images.unsplash.com/photo-1529070538774-1843cb3265df?w=800&h=600&fit=crop', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop', 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=600&fit=crop']
+
+  gallery: [
+  {
+    url: "/508570671_10229211210685656_224273478076672264_n.webp",
+    caption: 'Worship Service'
+  },
+  {
+    url: "/486119856_1951458895662295_93632808113974675_n.webp",
+    caption: 'Church Leaders'
+  },
+  {
+    url: "/39261704_10212282068067671_73800822479126528_n.webp",
+    caption: 'Church Building Project'
+  }],
+
+  mission:
+  'To be a Christ-centered community that empowers believers to live out their faith, serve their neighbors, and share the transforming love of Jesus with the Villaflores community and beyond.',
+  vision:
+  "To see every person in Villaflores and surrounding areas experience the love of Christ, grow in faith, and become active participants in building God's Kingdom through fellowship, worship, and service."
 };
+// Helper icon for Bible Study
+function BookOpenIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round">
+      
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+    </svg>);
+
+}
 export function VillafloresChurch() {
-  useSmoothScroll({
-    lerp: 0.15,
-    smoothWheel: true,
-    smoothTouch: false,
-    wheelMultiplier: 1.3,
-    damping: 0.88
-  });
-  return <div className="w-full min-h-screen bg-white">
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [isPaused, setIsPaused] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const nextSlide = useCallback(() => {
+    setDirection(1);
+    setCurrentSlide((prev) => (prev + 1) % churchData.gallery.length);
+  }, []);
+  const prevSlide = useCallback(() => {
+    setDirection(-1);
+    setCurrentSlide(
+      (prev) =>
+      (prev - 1 + churchData.gallery.length) % churchData.gallery.length
+    );
+  }, []);
+  // Auto-advance carousel
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(nextSlide, 5000);
+    return () => clearInterval(timer);
+  }, [isPaused, nextSlide]);
+  const goToSlide = (index: number) => {
+    setDirection(index > currentSlide ? 1 : -1);
+    setCurrentSlide(index);
+  };
+  // Touch handlers for mobile swipe
+  const minSwipeDistance = 50;
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    if (isLeftSwipe) nextSlide();
+    if (isRightSwipe) prevSlide();
+  };
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? '100%' : '-100%',
+      opacity: 0,
+      scale: 0.95
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+      scale: 1
+    },
+    exit: (direction: number) => ({
+      zIndex: 0,
+      x: direction < 0 ? '100%' : '-100%',
+      opacity: 0,
+      scale: 0.95
+    })
+  };
+  return (
+    <div className="w-full min-h-screen bg-dark-premium overflow-x-hidden">
       <Navbar />
       <BackButton to="/churches" label="Back to Churches" />
 
-      {/* Hero Section */}
-      <section className="relative w-full h-[80vh] overflow-hidden">
+      {/* Enhanced Hero Section */}
+      <section className="relative w-full h-[100svh] overflow-hidden">
+        {/* Background Image with Ken Burns Effect */}
         <div className="absolute inset-0">
-          <img src={churchData.gallery[0]} alt={churchData.name} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30"></div>
+          <motion.img
+            initial={{
+              scale: 1.2
+            }}
+            animate={{
+              scale: 1
+            }}
+            transition={{
+              duration: 20,
+              ease: 'linear'
+            }}
+            src={churchData.heroImage}
+            alt={churchData.name}
+            className="w-full h-full object-cover" />
+          
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-violet-900/30 via-transparent to-purple-900/20"></div>
         </div>
 
-        <div className="absolute inset-0 flex items-center justify-center">
-          <motion.div initial={{
-          opacity: 0,
-          y: 30
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 1
-        }} className="text-center text-white px-6 relative z-10">
-            <motion.div initial={{
-            opacity: 0,
-            scale: 0.9
-          }} animate={{
-            opacity: 1,
-            scale: 1
-          }} transition={{
-            duration: 0.8,
-            delay: 0.2
-          }} className="inline-block mb-6">
-              <span className="text-teal-300 text-sm font-bold tracking-widest uppercase bg-white/10 backdrop-blur-sm px-6 py-2 rounded-full border border-white/20">
-                GEFMI Church
+        {/* Animated Particles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(8)].map((_, i) =>
+          <motion.div
+            key={i}
+            initial={{
+              opacity: 0,
+              y: 100
+            }}
+            animate={{
+              opacity: [0, 0.4, 0],
+              y: [-20, -250],
+              x: [0, Math.random() * 80 - 40]
+            }}
+            transition={{
+              duration: 10 + Math.random() * 5,
+              repeat: Infinity,
+              delay: i * 1.2,
+              ease: 'easeOut'
+            }}
+            className="absolute w-1.5 h-1.5 md:w-2 md:h-2 bg-violet-300 rounded-full blur-[1px]"
+            style={{
+              left: `${10 + i * 12}%`,
+              bottom: '5%'
+            }} />
+
+          )}
+        </div>
+
+        {/* Decorative Glow */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            animate={{
+              opacity: [0.08, 0.2, 0.08],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: 'easeInOut'
+            }}
+            className="absolute -top-32 -right-32 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-violet-500 rounded-full blur-[120px]" />
+          
+          <motion.div
+            animate={{
+              opacity: [0.05, 0.15, 0.05],
+              scale: [1, 1.15, 1]
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              delay: 2
+            }}
+            className="absolute -bottom-32 -left-32 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-purple-500 rounded-full blur-[100px]" />
+          
+        </div>
+
+        {/* Hero Content */}
+        <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-6">
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 40
+            }}
+            animate={{
+              opacity: 1,
+              y: 0
+            }}
+            transition={{
+              duration: 1,
+              delay: 0.3
+            }}
+            className="text-center text-white relative z-10 max-w-5xl w-full">
+            
+            {/* Heritage Badge */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: 0.8,
+                y: 20
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                y: 0
+              }}
+              transition={{
+                duration: 0.6,
+                delay: 0.5
+              }}
+              className="inline-block mb-6 md:mb-8">
+              
+              <span className="inline-flex items-center gap-2 text-violet-300 text-xs sm:text-sm font-bold tracking-[0.15em] sm:tracking-[0.2em] uppercase bg-white/10 backdrop-blur-md px-4 sm:px-8 py-2 sm:py-3 rounded-full border border-violet-400/30 shadow-lg shadow-violet-500/10">
+                <SparklesIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+                {churchData.abbreviation} • Est. {churchData.established}
+                <SparklesIcon className="w-3 h-3 sm:w-4 sm:h-4" />
               </span>
             </motion.div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6">
-              {churchData.name}
-            </h1>
-            <div className="w-32 h-1 bg-gradient-to-r from-teal-400 to-cyan-400 mx-auto mb-6"></div>
-            <div className="flex items-center justify-center gap-2 text-xl md:text-2xl text-gray-200 mb-4">
-              <MapPinIcon className="w-6 h-6" />
-              <p>{churchData.location}</p>
+
+            {/* Main Title */}
+            <div className="overflow-hidden mb-4 md:mb-6">
+              <motion.h1
+                initial={{
+                  opacity: 0,
+                  y: 60
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0
+                }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.7
+                }}
+                className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1]">
+                
+                <motion.span
+                  className="block text-transparent bg-clip-text bg-gradient-to-r from-violet-200 via-purple-100 to-violet-200 bg-[length:200%_auto]"
+                  animate={{
+                    backgroundPosition: ['0% center', '200% center']
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: 'linear'
+                  }}>
+                  
+                  {churchData.name}
+                </motion.span>
+              </motion.h1>
             </div>
-            <div className="flex items-center justify-center gap-2 text-lg text-teal-300">
-              <CalendarIcon className="w-5 h-5" />
-              <p>Established {churchData.established}</p>
-            </div>
+
+            {/* Tagline */}
+            <motion.p
+              initial={{
+                opacity: 0
+              }}
+              animate={{
+                opacity: 1
+              }}
+              transition={{
+                duration: 0.6,
+                delay: 0.9
+              }}
+              className="text-lg sm:text-xl md:text-2xl text-violet-100/90 mb-6 md:mb-8 font-light">
+              
+              {churchData.tagline}
+            </motion.p>
+
+            {/* Animated Decorative Line */}
+            <motion.div
+              initial={{
+                scaleX: 0,
+                opacity: 0
+              }}
+              animate={{
+                scaleX: 1,
+                opacity: 1
+              }}
+              transition={{
+                duration: 1,
+                delay: 1
+              }}
+              className="relative w-32 sm:w-48 h-1 mx-auto mb-6 md:mb-8">
+              
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-400 via-purple-300 to-violet-400 rounded-full" />
+              <motion.div
+                animate={{
+                  x: ['-100%', '200%']
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: 'easeInOut'
+                }}
+                className="absolute inset-0 w-1/3 bg-white/70 rounded-full blur-sm" />
+              
+            </motion.div>
+
+            {/* Location */}
+            <motion.div
+              initial={{
+                opacity: 0
+              }}
+              animate={{
+                opacity: 1
+              }}
+              transition={{
+                duration: 0.6,
+                delay: 1.2
+              }}
+              className="flex items-center justify-center gap-2 sm:gap-3 mb-8 md:mb-10">
+              
+              <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg md:text-xl text-gray-200 bg-white/5 backdrop-blur-sm px-4 sm:px-6 py-2 sm:py-3 rounded-full border border-white/10">
+                <MapPinIcon className="w-4 h-4 sm:w-5 sm:h-5 text-violet-300 flex-shrink-0" />
+                <p className="text-sm sm:text-base">{churchData.location}</p>
+              </div>
+            </motion.div>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 20
+              }}
+              animate={{
+                opacity: 1,
+                y: 0
+              }}
+              transition={{
+                duration: 0.6,
+                delay: 1.4
+              }}
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              
+              <a
+                href="#gallery"
+                className="group inline-flex items-center justify-center gap-2 sm:gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-full transition-all duration-300 border border-white/30 text-sm sm:text-base">
+                
+                <ImageIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span>View Gallery</span>
+              </a>
+            </motion.div>
           </motion.div>
         </div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          initial={{
+            opacity: 0
+          }}
+          animate={{
+            opacity: 1
+          }}
+          transition={{
+            duration: 1,
+            delay: 2
+          }}
+          className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 hidden sm:block">
+          
+          <motion.div
+            animate={{
+              y: [0, 10, 0]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: 'easeInOut'
+            }}
+            className="flex flex-col items-center gap-2 text-white/60">
+            
+            <span className="text-xs sm:text-sm tracking-widest uppercase">
+              Scroll
+            </span>
+            <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
+              <motion.div
+                animate={{
+                  y: [0, 10, 0]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'easeInOut'
+                }}
+                className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-violet-400 rounded-full" />
+              
+            </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* About Section */}
-      <section className="py-20 px-6 md:px-12 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <motion.div initial={{
-          opacity: 0,
-          y: 30
-        }} whileInView={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.8
-        }} viewport={{
-          once: true
-        }} className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              About{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-cyan-600">
-                Our Church
-              </span>
-            </h2>
-            <p className="text-xl text-gray-700 leading-relaxed">
-              {churchData.description}
-            </p>
-          </motion.div>
+      <section
+        id="about"
+        className="py-16 sm:py-24 px-4 sm:px-6 md:px-12 bg-gradient-to-br from-white via-violet-50/30 to-white relative overflow-hidden">
+        
+        {/* Subtle Background Pattern */}
+        <div className="absolute inset-0 opacity-[0.03]">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)`,
+              backgroundSize: '40px 40px'
+            }} />
+          
+        </div>
 
-          {/* Services Schedule */}
-          <motion.div initial={{
-          opacity: 0,
-          y: 30
-        }} whileInView={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.8,
-          delay: 0.2
-        }} viewport={{
-          once: true
-        }} className="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-3xl p-8 md:p-12 shadow-lg">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
-                <CalendarIcon className="w-6 h-6 text-white" />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 30
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0
+            }}
+            transition={{
+              duration: 0.8
+            }}
+            viewport={{
+              once: true
+            }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            
+            <div>
+              <motion.div
+                initial={{
+                  scale: 0
+                }}
+                whileInView={{
+                  scale: 1
+                }}
+                transition={{
+                  duration: 0.5,
+                  type: 'spring'
+                }}
+                viewport={{
+                  once: true
+                }}
+                className="inline-flex items-center gap-2 text-violet-700 text-xs sm:text-sm font-bold tracking-widest uppercase mb-4 bg-violet-100 px-4 py-2 rounded-full">
+                
+                <HeartIcon className="w-4 h-4" />
+                Our Story
+              </motion.div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                A Community of{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-purple-600">
+                  Faith & Love
+                </span>
+              </h2>
+              <p className="text-base sm:text-lg text-gray-700 leading-relaxed mb-6">
+                {churchData.description}
+              </p>
+              <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
+                Since 2020, VCFC has been a place where people can find
+                belonging, purpose, and spiritual growth. We are committed to
+                walking together in faith and serving our community with joy.
+              </p>
+            </div>
+
+            {/* Service Times Card */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: 30
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2
+              }}
+              viewport={{
+                once: true
+              }}
+              className="relative">
+              
+              {/* Glow Effect */}
+              <motion.div
+                animate={{
+                  opacity: [0.3, 0.6, 0.3]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: 'easeInOut'
+                }}
+                className="absolute -inset-2 bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-violet-500/20 rounded-3xl blur-xl" />
+              
+
+              <div className="relative bg-gradient-to-br from-violet-600 via-purple-600 to-violet-700 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl shadow-violet-500/20">
+                <div className="flex items-center gap-3 mb-6 sm:mb-8">
+                  <motion.div
+                    whileHover={{
+                      rotate: 360
+                    }}
+                    transition={{
+                      duration: 0.6
+                    }}
+                    className="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-sm rounded-xl sm:rounded-2xl flex items-center justify-center">
+                    
+                    <CalendarIcon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                  </motion.div>
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white">
+                      Service Times
+                    </h3>
+                    <p className="text-violet-100 text-sm sm:text-base">
+                      Join us for worship
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  {churchData.services.map((service, index) =>
+                  <motion.div
+                    key={index}
+                    initial={{
+                      opacity: 0,
+                      x: -20
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      x: 0
+                    }}
+                    transition={{
+                      duration: 0.5,
+                      delay: 0.3 + index * 0.1
+                    }}
+                    viewport={{
+                      once: true
+                    }}
+                    className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-white/10">
+                    
+                      <div className="flex items-start gap-3 sm:gap-4">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                          <service.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-violet-200 font-semibold text-sm sm:text-base">
+                            {service.day}
+                          </p>
+                          <p className="text-xl sm:text-2xl font-bold text-white">
+                            {service.time}
+                          </p>
+                          <p className="text-violet-100 text-sm sm:text-base">
+                            {service.type}
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+
+                {/* Location */}
+                <div className="mt-6 pt-6 border-t border-white/20">
+                  <div className="flex items-start gap-3">
+                    <MapPinIcon className="w-5 h-5 text-violet-200 flex-shrink-0 mt-0.5" />
+                    <p className="text-violet-100 text-sm sm:text-base">
+                      {churchData.location}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-3xl font-bold text-gray-900">
-                Service Times
-              </h3>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {churchData.services.map((service, index) => <div key={index} className="bg-white rounded-2xl p-6 shadow-md border border-teal-100">
-                  <p className="text-teal-600 font-bold text-lg mb-2">
-                    {service.day}
-                  </p>
-                  <p className="text-3xl font-bold text-gray-900 mb-2">
-                    {service.time}
-                  </p>
-                  <p className="text-gray-600">{service.type}</p>
-                </div>)}
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section className="py-20 px-6 md:px-12 bg-gradient-to-br from-gray-50 to-white">
-        <div className="max-w-7xl mx-auto">
-          <motion.div initial={{
-          opacity: 0,
-          y: 30
-        }} whileInView={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.8
-        }} viewport={{
-          once: true
-        }} className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Church{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-cyan-600">
-                Gallery
+      {/* Mission & Vision */}
+      <section className="py-16 sm:py-24 px-4 sm:px-6 md:px-12 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-0 w-64 sm:w-96 h-64 sm:h-96 bg-violet-500/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="max-w-6xl mx-auto relative z-10">
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 30
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0
+            }}
+            transition={{
+              duration: 0.8
+            }}
+            viewport={{
+              once: true
+            }}
+            className="text-center mb-12">
+            
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+              Our{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-400">
+                Purpose
               </span>
             </h2>
-            <p className="text-xl text-gray-600">
-              Moments from our worship, fellowship, and community events
-            </p>
           </motion.div>
 
-          {/* Gallery Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {churchData.gallery.map((image, index) => <motion.div key={index} initial={{
-            opacity: 0,
-            scale: 0.9
-          }} whileInView={{
-            opacity: 1,
-            scale: 1
-          }} transition={{
-            duration: 0.5,
-            delay: index * 0.1
-          }} viewport={{
-            once: true
-          }} className="group relative aspect-square rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
-                <img src={image} alt={`${churchData.name} - Image ${index + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              </motion.div>)}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: -30
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.1
+              }}
+              viewport={{
+                once: true
+              }}
+              className="group relative">
+              
+              <div className="absolute -inset-1 bg-gradient-to-r from-violet-500/20 to-purple-500/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative bg-white/5 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-white/10 h-full">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-violet-500 to-purple-500 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 shadow-lg shadow-violet-500/20">
+                  <HeartIcon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-bold text-violet-400 mb-4">
+                  Our Mission
+                </h3>
+                <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
+                  {churchData.mission}
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: 30
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0
+              }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2
+              }}
+              viewport={{
+                once: true
+              }}
+              className="group relative">
+              
+              <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/20 to-violet-500/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative bg-white/5 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-white/10 h-full">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-purple-500 to-violet-500 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 shadow-lg shadow-purple-500/20">
+                  <SparklesIcon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-bold text-purple-400 mb-4">
+                  Our Vision
+                </h3>
+                <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
+                  {churchData.vision}
+                </p>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Contact CTA */}
-      <section className="py-20 px-6 md:px-12 bg-gradient-to-br from-teal-900 via-cyan-900 to-blue-900 relative overflow-hidden">
+      {/* Gallery Carousel Section */}
+      <section
+        id="gallery"
+        className="py-16 sm:py-24 px-4 sm:px-6 md:px-12 bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 relative overflow-hidden">
+        
+        {/* Background Effects */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-0 w-64 sm:w-96 h-64 sm:h-96 bg-violet-500/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="max-w-5xl mx-auto relative z-10">
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 30
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0
+            }}
+            transition={{
+              duration: 0.8
+            }}
+            viewport={{
+              once: true
+            }}
+            className="text-center mb-8 sm:mb-12">
+            
+            <motion.div
+              initial={{
+                scale: 0
+              }}
+              whileInView={{
+                scale: 1
+              }}
+              transition={{
+                duration: 0.5,
+                type: 'spring'
+              }}
+              viewport={{
+                once: true
+              }}
+              className="inline-flex items-center gap-2 text-violet-400 text-xs sm:text-sm font-bold tracking-widest uppercase mb-4 bg-violet-500/10 px-4 py-2 rounded-full">
+              
+              <ImageIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+              Gallery
+            </motion.div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+              Church{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-400">
+                Moments
+              </span>
+            </h2>
+            <p className="text-base sm:text-xl text-gray-400 px-4">
+              Capturing moments of faith, fellowship, and community
+            </p>
+          </motion.div>
+
+          {/* Carousel */}
+          <div
+            className="relative"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}>
+            
+            {/* Main Carousel Container */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: 0.95
+              }}
+              whileInView={{
+                opacity: 1,
+                scale: 1
+              }}
+              transition={{
+                duration: 0.8
+              }}
+              viewport={{
+                once: true
+              }}
+              className="relative aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl bg-gray-800"
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}>
+              
+              {/* Decorative Frame */}
+              <div className="absolute inset-0 border-2 border-violet-500/20 rounded-2xl sm:rounded-3xl pointer-events-none z-20" />
+
+              <AnimatePresence initial={false} custom={direction} mode="wait">
+                <motion.div
+                  key={currentSlide}
+                  custom={direction}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{
+                    x: {
+                      type: 'spring',
+                      stiffness: 300,
+                      damping: 30
+                    },
+                    opacity: {
+                      duration: 0.4
+                    },
+                    scale: {
+                      duration: 0.4
+                    }
+                  }}
+                  className="absolute inset-0">
+                  
+                  <img
+                    src={churchData.gallery[currentSlide].url}
+                    alt={churchData.gallery[currentSlide].caption}
+                    className="w-full h-full object-cover"
+                    draggable={false} />
+                  
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none"></div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Caption */}
+              <motion.div
+                key={`caption-${currentSlide}`}
+                initial={{
+                  opacity: 0,
+                  y: 20
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0
+                }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.2
+                }}
+                className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 z-10">
+                
+                <p className="text-white text-lg sm:text-2xl font-bold">
+                  {churchData.gallery[currentSlide].caption}
+                </p>
+              </motion.div>
+
+              {/* Navigation Arrows */}
+              <button
+                onClick={prevSlide}
+                className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-white/20 hover:bg-violet-500/40 backdrop-blur-sm rounded-full items-center justify-center text-white transition-all duration-300 hover:scale-110 z-10"
+                aria-label="Previous image">
+                
+                <ChevronLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+              </button>
+              <button
+                onClick={nextSlide}
+                className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-white/20 hover:bg-violet-500/40 backdrop-blur-sm rounded-full items-center justify-center text-white transition-all duration-300 hover:scale-110 z-10"
+                aria-label="Next image">
+                
+                <ChevronRightIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+              </button>
+
+              {/* Slide Counter */}
+              <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium z-10">
+                {currentSlide + 1} / {churchData.gallery.length}
+              </div>
+
+              {/* Swipe Hint for Mobile */}
+              <div className="sm:hidden absolute bottom-20 left-1/2 -translate-x-1/2 text-white/60 text-xs flex items-center gap-2 z-10">
+                <ChevronLeftIcon className="w-4 h-4" />
+                <span>Swipe to navigate</span>
+                <ChevronRightIcon className="w-4 h-4" />
+              </div>
+            </motion.div>
+
+            {/* Dot Indicators */}
+            <div className="flex justify-center gap-2 mt-6">
+              {churchData.gallery.map((_, index) =>
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`transition-all duration-300 rounded-full ${index === currentSlide ? 'w-8 sm:w-10 h-2.5 sm:h-3 bg-gradient-to-r from-violet-400 to-purple-400' : 'w-2.5 sm:w-3 h-2.5 sm:h-3 bg-gray-600 hover:bg-gray-500'}`}
+                aria-label={`Go to image ${index + 1}`} />
+
+              )}
+            </div>
+
+            {/* Progress Bar */}
+            <div className="mt-4 h-1 bg-gray-700 rounded-full overflow-hidden">
+              <motion.div
+                key={currentSlide}
+                initial={{
+                  width: '0%'
+                }}
+                animate={{
+                  width: isPaused ?
+                  `${(currentSlide + 1) / churchData.gallery.length * 100}%` :
+                  '100%'
+                }}
+                transition={{
+                  duration: isPaused ? 0 : 5,
+                  ease: 'linear'
+                }}
+                className="h-full bg-gradient-to-r from-violet-500 to-purple-500" />
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-16 sm:py-24 px-4 sm:px-6 md:px-12 bg-gradient-to-br from-violet-900 via-purple-900 to-violet-900 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-teal-500 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-500 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 left-10 w-64 sm:w-96 h-64 sm:h-96 bg-violet-500 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-64 sm:w-96 h-64 sm:h-96 bg-purple-500 rounded-full blur-3xl"></div>
         </div>
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <motion.div initial={{
-          opacity: 0,
-          y: 30
-        }} whileInView={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.8
-        }} viewport={{
-          once: true
-        }}>
-            <HeartIcon className="w-16 h-16 text-teal-300 mx-auto mb-6" />
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 30
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0
+            }}
+            transition={{
+              duration: 0.8
+            }}
+            viewport={{
+              once: true
+            }}>
+            
+            <motion.div
+              animate={{
+                scale: [1, 1.1, 1]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: 'easeInOut'
+              }}>
+              
+              <HeartIcon className="w-12 h-12 sm:w-16 sm:h-16 text-violet-300 mx-auto mb-4 sm:mb-6" />
+            </motion.div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
               Visit Us This Sunday
             </h2>
-            <p className="text-xl text-gray-200 mb-8 leading-relaxed">
-              Experience authentic worship, biblical teaching, and warm
-              fellowship. Everyone is welcome!
+            <p className="text-base sm:text-xl text-violet-100 mb-8 sm:mb-10 leading-relaxed max-w-2xl mx-auto px-4">
+              Experience authentic worship, powerful teaching, and genuine
+              community. Everyone is welcome at VCFC!
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/contact" className="inline-block bg-white hover:bg-gray-100 text-teal-900 font-bold py-4 px-8 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg">
-                Get Directions
-              </a>
-              <a href="/churches" className="inline-block bg-transparent border-2 border-white hover:bg-white/10 text-white font-bold py-4 px-8 rounded-full transition-all duration-300">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <Link
+                to="/churches"
+                className="inline-block bg-white hover:bg-gray-100 text-violet-900 font-bold py-3 sm:py-4 px-8 sm:px-10 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl text-sm sm:text-base">
+                
                 View All Churches
-              </a>
+              </Link>
             </div>
           </motion.div>
         </div>
       </section>
 
       <Footer />
-    </div>;
+    </div>);
+
 }
