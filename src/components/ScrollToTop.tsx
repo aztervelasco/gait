@@ -1,20 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+
 export const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [pathname, search]);
+
   useEffect(() => {
-    // Instant scroll to top on route change to prevent jumps
-    // This ensures pages always load at the first section/top
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'instant' as ScrollBehavior
-    });
-    // Small delay to ensure DOM is ready, then force scroll to top again
-    const timeoutId = setTimeout(() => {
+    const handleScroll = () => {
       window.scrollTo(0, 0);
-    }, 0);
-    return () => clearTimeout(timeoutId);
-  }, [pathname]);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+    handleScroll();
+    const t1 = setTimeout(handleScroll, 20);
+    const t2 = setTimeout(handleScroll, 100);
+    const t3 = setTimeout(handleScroll, 300);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
+  }, [pathname, search]);
+
   return null;
 };

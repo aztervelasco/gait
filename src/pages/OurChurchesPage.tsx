@@ -1,6 +1,6 @@
-import React, { useState, Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { BackButton } from '../components/BackButton';
@@ -251,9 +251,20 @@ const affiliateChurches = [
 ];
 
 export function OurChurchesPage() {
-  const [activeTab, setActiveTab] = useState<'associate' | 'affiliate'>(
-    'associate'
-  );
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState<'associate' | 'affiliate'>(() => {
+    if (typeof window !== 'undefined' && window.location.search.includes('tab=affiliate')) {
+      return 'affiliate';
+    }
+    return 'associate';
+  });
+
+  useEffect(() => {
+    if (location.search.includes('tab=affiliate')) {
+      setActiveTab('affiliate');
+    }
+  }, [location.search]);
+
   useSmoothScroll({
     lerp: 0.15,
     smoothWheel: true,
@@ -757,27 +768,77 @@ export function OurChurchesPage() {
                   }}>
                   
                       <Link
-                    to={church.link}
-                    data-cursor-text="VISIT"
-                    className="group block grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                        to={church.link}
+                        onClick={() => {
+                          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                          document.documentElement.scrollTop = 0;
+                          document.body.scrollTop = 0;
+                        }}
+                        data-cursor-text="VISIT"
+                        className="group block grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center"
+                      >
                     
                         <div
                       className={`lg:col-span-6 relative ${index % 2 === 1 ? 'lg:order-2' : 'lg:order-1'}`}>
                       
-                          <div className="relative overflow-hidden rounded-3xl shadow-2xl border border-white/5">
-                            <img
-                          src={church.image}
-                          alt={church.name}
-                          className="w-full h-[280px] sm:h-[380px] md:h-[450px] object-cover group-hover:scale-105 transition-transform duration-700" />
-                        
-                            <div
-                          className={`absolute inset-0 bg-gradient-to-t ${church.color} opacity-20 group-hover:opacity-30 transition-opacity duration-500`}
-                          style={{
-                            marginTop: '1px',
-                            marginBottom: '1px'
-                          }} />
-                        
-                          </div>
+                          {church.name === 'LHGCF Putlan Church' ? (
+                            <div className="relative overflow-hidden rounded-3xl shadow-2xl border border-white/5">
+                              <img
+                                src={church.image}
+                                alt={church.name}
+                                className="w-full h-[280px] sm:h-[380px] md:h-[450px] object-cover group-hover:scale-105 transition-transform duration-700"
+                              />
+                              <div
+                                className={`absolute inset-0 bg-gradient-to-t ${church.color} opacity-20 group-hover:opacity-30 transition-opacity duration-500`}
+                                style={{
+                                  marginTop: '1px',
+                                  marginBottom: '1px'
+                                }}
+                              />
+                            </div>
+                          ) : (
+                            <div className="relative overflow-hidden rounded-3xl shadow-2xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 w-full h-[280px] sm:h-[380px] md:h-[450px] flex flex-col items-center justify-center p-6 text-center group-hover:border-emerald-500/30 transition-colors duration-500">
+                              {/* Ambient Glow */}
+                              <div
+                                className={`absolute inset-0 bg-gradient-to-br ${church.color} opacity-15 group-hover:opacity-25 blur-2xl transition-opacity duration-700`}
+                              />
+                              {/* Grid lines */}
+                              <div
+                                className="absolute inset-0 opacity-[0.04]"
+                                style={{
+                                  backgroundImage:
+                                    'radial-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px)',
+                                  backgroundSize: '24px 24px'
+                                }}
+                              />
+                              <div className="relative z-10 flex flex-col items-center space-y-4">
+                                {/* Animated Icon Circle */}
+                                <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center">
+                                  <div
+                                    className="absolute inset-0 rounded-full border border-dashed border-white/20 animate-spin"
+                                    style={{ animationDuration: '20s' }}
+                                  />
+                                  <div
+                                    className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br ${church.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500`}
+                                  >
+                                    <ChurchIcon className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+                                  </div>
+                                </div>
+                                <div className="space-y-1.5">
+                                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-amber-300 text-xs font-bold tracking-wider uppercase">
+                                    <SparklesIcon
+                                      className="w-3 h-3 animate-spin"
+                                      style={{ animationDuration: '6s' }}
+                                    />
+                                    Photo Coming Soon
+                                  </div>
+                                  <div className="text-xs text-slate-400 font-medium">
+                                    Digital Media In Production
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
                           <div
                         className={`absolute -top-4 ${index % 2 === 1 ? '-left-2 sm:-left-8' : '-right-2 sm:-right-8'} sm:-top-8`}>
                         
