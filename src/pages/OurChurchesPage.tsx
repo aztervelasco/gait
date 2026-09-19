@@ -25,130 +25,126 @@ const motherChurch = {
   location: 'Bantinan, Santa Fe, Nueva Vizcaya',
   established: '2015',
   description:
-  'Our spiritual home and the foundation of GEFMI. Where it all began with a vision to transform communities through faith. Bantinan Church serves as the mother church, nurturing new congregations and training leaders for ministry across the region.',
-  image: "/old_bantinan.webp",
-
+    'Our spiritual home and the foundation of GEFMI. Where it all began with a vision to transform communities through faith. Bantinan Church serves as the mother church, nurturing new congregations and training leaders for ministry across the region.',
+  image: '/old_bantinan.webp',
   link: '/churches/bantinan',
   color: 'from-amber-600 to-orange-700'
 };
-// Associate Churches
+
+// 10 GEFMI Churches (1 Mother + 9 Branches)
 const churches = [
-{
-  name: 'Beti Church',
-  location: 'Beti, Nueva Vizcaya',
-  established: '2016',
-  description:
-  'A vibrant community bringing the Gospel to life through worship, fellowship, and dedicated service to the Beti community.',
-  image: "/66728098_10214429552993452_5769225433216188416_n.webp",
-
-  link: '/churches/beti',
-  color: 'from-blue-600 to-cyan-600'
-},
-{
-  name: 'Aasin Church',
-  location: 'Aasin, Nueva Vizcaya',
-  established: '2017',
-  description:
-  'Growing in faith and community, reaching families with the transforming message of hope and love.',
-  image: "/aasin.webp",
-
-  link: '/churches/aasin',
-  color: 'from-emerald-600 to-teal-600'
-},
-{
-  name: 'Lower Kiskis Church',
-  location: 'Lower Kiskis, Nueva Vizcaya',
-  established: '2018',
-  description:
-  'A welcoming congregation dedicated to building strong families and nurturing spiritual growth in the Lower Kiskis area.',
-  image: "/526716262_10230208541658307_7509032496096349413_n.webp",
-
-  link: '/churches/lower-kiskis',
-  color: 'from-purple-600 to-pink-600'
-},
-{
-  name: 'Upper Kiskis Church',
-  location: 'Upper Kiskis, Nueva Vizcaya',
-  established: '2018',
-  description:
-  'Serving the Upper Kiskis community with passionate worship, biblical teaching, and compassionate outreach.',
-  image: "/kiskis.webp",
-
-  link: '/churches/upper-kiskis',
-  color: 'from-indigo-600 to-blue-600'
-},
-{
-  name: 'Tactac Orchids Evangelical Church',
-  location: "Tactac Orchid's, Nueva Vizcaya",
-  established: '2019',
-  description:
-  "A flourishing congregation bringing light and hope to the community through faithful ministry, children's programs, and dedicated service.",
-  image: "/Tactac.webp",
-
-  link: '/churches/orchids',
-  color: 'from-rose-600 to-red-600'
-},
-{
-  name: 'Villaflores Christian Fellowship Center',
-  location: 'Villaflores, Santa Fe, Nueva Vizcaya',
-  established: '2020',
-  description:
-  'A vibrant community of believers empowering lives through dynamic worship, faithful ministry, and compassionate service to the Villaflores community.',
-  image: "/508570671_10229211210685656_224273478076672264_n.webp",
-
-  link: '/churches/villaflores',
-  color: 'from-violet-600 to-purple-600'
-},
-{
-  name: 'Timmuri Church',
-  location: 'Ocao Capiniaan, Aritao, Nueva Vizcaya',
-  established: '2021',
-  description:
-  'A growing congregation dedicated to serving the Timmuri community with faith, hope, and love.',
-  image: "/506020317_10229095814600826_8093534636738664874_n.webp",
-
-  link: '/churches/timmuri',
-  color: 'from-teal-600 to-cyan-600'
-}];
-
-// Individual Affiliate Churches (exact structure as associate churches)
-const affiliateChurches = [
   {
-    name: 'LHGCF Putlan Church',
-    fellowship: 'Living Hope and Grace in Christ Fellowship',
-    abbreviation: 'LHGCF',
-    location: 'Putlan, Carranglan, Nueva Ecija',
-    pastor: 'Ptr. Nora Silan',
-    established: 'Affiliate',
+    name: 'Beti Church',
+    location: 'Beti, Santa Fe, Nueva Vizcaya',
+    established: '2016',
     description:
-      'A vibrant community of believers dedicated to sharing the living hope and grace found in Jesus Christ, reaching families and nurturing spiritual growth across Carranglan.',
+      'A vibrant community bringing the Gospel to life through worship, fellowship, and dedicated service to the Beti community.',
+    image: '/66728098_10214429552993452_5769225433216188416_n.webp',
+    link: '/churches/beti',
+    color: 'from-blue-600 to-cyan-600'
+  },
+  {
+    name: 'Santa Fe Church',
+    location: 'Santa Fe, Nueva Vizcaya',
+    established: '2016',
+    description:
+      'Proclaiming Christ across Santa Fe through active discipleship, community outreach, and faithful worship services.',
+    image:
+      'https://images.unsplash.com/photo-1528605105345-5344ea20e269?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80',
+    link: '/churches/santa-fe',
+    color: 'from-emerald-600 to-teal-600'
+  },
+  {
+    name: 'Dalton Church',
+    location: 'Dalton, Nueva Vizcaya',
+    established: '2017',
+    description:
+      'A shining lighthouse of faith at Dalton Pass, ministering to families and travelers with spiritual hope and Christ-like love.',
+    image:
+      'https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80',
+    link: '/churches/dalton',
+    color: 'from-indigo-600 to-blue-600'
+  },
+  {
+    name: 'Timmuri Church',
+    location: 'Ocao Capiniaan, Aritao, Nueva Vizcaya',
+    established: '2021',
+    description:
+      'A growing congregation dedicated to serving the Timmuri community with vibrant faith, passionate prayer, and lasting hope.',
+    image: '/506020317_10229095814600826_8093534636738664874_n.webp',
+    link: '/churches/timmuri',
+    color: 'from-teal-600 to-cyan-600'
+  },
+  {
+    name: 'Aasin Church',
+    location: 'Aasin, Nueva Vizcaya',
+    established: '2017',
+    description:
+      'Growing in faith and community, reaching families with the transforming message of hope, biblical truth, and selfless service.',
+    image: '/aasin.webp',
+    link: '/churches/aasin',
+    color: 'from-emerald-600 to-teal-600'
+  },
+  {
+    name: 'Lower Kiskis Church',
+    location: 'Lower Kiskis, Nueva Vizcaya',
+    established: '2018',
+    description:
+      'A welcoming congregation dedicated to building strong godly families and nurturing spiritual growth in the Lower Kiskis area.',
+    image: '/526716262_10230208541658307_7509032496096349413_n.webp',
+    link: '/churches/lower-kiskis',
+    color: 'from-purple-600 to-pink-600'
+  },
+  {
+    name: 'Upper Kiskis Church',
+    location: 'Upper Kiskis, Nueva Vizcaya',
+    established: '2018',
+    description:
+      'Serving the Upper Kiskis community with passionate worship, foundational biblical teaching, and active evangelistic outreach.',
+    image: '/kiskis.webp',
+    link: '/churches/upper-kiskis',
+    color: 'from-indigo-600 to-blue-600'
+  },
+  {
+    name: 'Tactac Orchids Evangelical Church',
+    location: "Tactac Orchid's, Nueva Vizcaya",
+    established: '2019',
+    description:
+      "A flourishing congregation bringing light and hope to the community through faithful ministry, children's programs, and dedicated worship.",
+    image: '/Tactac.webp',
+    link: '/churches/orchids',
+    color: 'from-rose-600 to-red-600'
+  },
+  {
+    name: 'Villaflores Christian Fellowship Center',
+    location: 'Villaflores, Santa Fe, Nueva Vizcaya',
+    established: '2020',
+    description:
+      'A vibrant community of believers empowering lives through dynamic worship, faithful ministry, and compassionate service to Villaflores.',
+    image: '/508570671_10229211210685656_224273478076672264_n.webp',
+    link: '/churches/villaflores',
+    color: 'from-violet-600 to-purple-600'
+  },
+  {
+    name: 'Masagana Church',
+    location: 'Masagana, Putlan, Carranglan, Nueva Ecija',
+    established: '2022',
+    description:
+      'Proclaiming the abundance of God’s grace and love to the families and community of Masagana, Putlan, Carranglan.',
     image: '/d31d0fba-04a5-4c4b-9ab3-e4b5139eba09.webp',
-    link: '/churches/affiliate/lhgcf/putlan',
-    color: 'from-emerald-600 to-teal-600',
-    accentGradient: 'from-emerald-400 via-teal-300 to-cyan-400',
-    badgeColor: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300',
-  },
-  {
-    name: 'LHGCF Ikapito Church',
-    fellowship: 'Living Hope and Grace in Christ Fellowship',
-    abbreviation: 'LHGCF',
-    location: 'Ikapito, Carranglan, Nueva Ecija',
-    pastor: 'Ptr. Roselyn Basilio / Ptr. Carlito Sanchez',
-    established: 'Affiliate',
-    description:
-      'Bringing transformation, faithful prayer, and worship to the Ikapito community with deep commitment to spreading the Gospel and raising devoted leaders.',
-    image: '/480975052_950039643993852_6543480930474798010_n.webp',
-    link: '/churches/affiliate/lhgcf/ikapito',
-    color: 'from-teal-600 to-cyan-600',
-    accentGradient: 'from-teal-400 via-cyan-300 to-blue-400',
-    badgeColor: 'bg-teal-500/10 border-teal-500/20 text-teal-300',
-  },
+    link: '/churches/masagana',
+    color: 'from-emerald-600 to-teal-600'
+  }
+];
+
+// Individual Affiliate Churches
+const affiliateChurches = [
   {
     name: 'LHGCF Manicla Church',
     fellowship: 'Living Hope and Grace in Christ Fellowship',
     abbreviation: 'LHGCF',
-    location: 'Manicla, Carranglan, Nueva Ecija',
-    pastor: 'Ptr. Louie Silan',
+    location: 'Manicla, San Jose City, Nueva Ecija',
+    pastor: 'Rev. Luisito S. Silan',
     established: 'Affiliate',
     description:
       'A faithful congregation committed to discipleship, building strong godly families, vibrant youth fellowship, and compassionate community service in Manicla.',
@@ -156,14 +152,44 @@ const affiliateChurches = [
     link: '/churches/affiliate/lhgcf/manicla',
     color: 'from-emerald-600 to-green-600',
     accentGradient: 'from-emerald-400 via-green-300 to-teal-400',
-    badgeColor: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300',
+    badgeColor: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300'
+  },
+  {
+    name: 'LHGCF Putlan Church',
+    fellowship: 'Living Hope and Grace in Christ Fellowship',
+    abbreviation: 'LHGCF',
+    location: 'Putlan, Carranglan, Nueva Ecija',
+    pastor: 'Ptr. Nora D. Silan',
+    established: 'Affiliate',
+    description:
+      'A vibrant community of believers dedicated to sharing the living hope and grace found in Jesus Christ, reaching families and nurturing spiritual growth across Carranglan.',
+    image: '/d31d0fba-04a5-4c4b-9ab3-e4b5139eba09.webp',
+    link: '/churches/affiliate/lhgcf/putlan',
+    color: 'from-emerald-600 to-teal-600',
+    accentGradient: 'from-emerald-400 via-teal-300 to-cyan-400',
+    badgeColor: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300'
+  },
+  {
+    name: 'LHGCF Ika-pito Church',
+    fellowship: 'Living Hope and Grace in Christ Fellowship',
+    abbreviation: 'LHGCF',
+    location: 'Ika-pito, Putlan, Carranglan, Nueva Ecija',
+    pastor: 'Madam Roselyn Basilio',
+    established: 'Affiliate',
+    description:
+      'Bringing transformation, faithful prayer, and worship to the Ikapito community with deep commitment to spreading the Gospel and raising devoted leaders.',
+    image: '/480975052_950039643993852_6543480930474798010_n.webp',
+    link: '/churches/affiliate/lhgcf/ikapito',
+    color: 'from-teal-600 to-cyan-600',
+    accentGradient: 'from-teal-400 via-cyan-300 to-blue-400',
+    badgeColor: 'bg-teal-500/10 border-teal-500/20 text-teal-300'
   },
   {
     name: 'LHGCF Bambang Church',
     fellowship: 'Living Hope and Grace in Christ Fellowship',
     abbreviation: 'LHGCF',
     location: 'Bambang, Nueva Vizcaya',
-    pastor: 'Ptr. Clem',
+    pastor: 'Rev. Leonard Clemens L. Cadoy',
     established: 'Affiliate',
     description:
       "Proclaiming God's grace and love throughout Bambang, providing spiritual nourishment, dynamic worship, and intentional community discipleship.",
@@ -171,14 +197,44 @@ const affiliateChurches = [
     link: '/churches/affiliate/lhgcf/bambang',
     color: 'from-cyan-600 to-blue-600',
     accentGradient: 'from-cyan-400 via-sky-300 to-blue-400',
-    badgeColor: 'bg-cyan-500/10 border-cyan-500/20 text-cyan-300',
+    badgeColor: 'bg-cyan-500/10 border-cyan-500/20 text-cyan-300'
+  },
+  {
+    name: 'Ammoweg Eternal Life Fellowship Church',
+    fellowship: 'Eternal Life Fellowship Church',
+    abbreviation: 'ELFC',
+    location: 'Ammoweg, Ambaguio, Nueva Vizcaya',
+    pastor: 'Rev. Junie M. Balwang & Pastor Solomon W. Balwang',
+    established: 'Affiliate',
+    description:
+      'Rooted in the message of eternal life in Christ, equipping disciples and reaching upland communities with faith, love, and unwavering dedication.',
+    image: '',
+    link: '/churches/affiliate/ammoweg',
+    color: 'from-blue-600 to-teal-600',
+    accentGradient: 'from-blue-400 via-teal-300 to-emerald-400',
+    badgeColor: 'bg-blue-500/10 border-blue-500/20 text-blue-300'
+  },
+  {
+    name: 'Taaw Eternal Life Fellowship Church',
+    fellowship: 'Eternal Life Fellowship Church',
+    abbreviation: 'ELFC',
+    location: 'Taaw, Ambaguio, Nueva Vizcaya',
+    pastor: 'Pastor Lito Baguiwan',
+    established: 'Affiliate',
+    description:
+      'A steadfast fellowship bringing the light of the Gospel to the families of Taaw, fostering prayer, communal unity, and spiritual renewal.',
+    image: '',
+    link: '/churches/affiliate/taaw',
+    color: 'from-sky-600 to-indigo-600',
+    accentGradient: 'from-sky-400 via-indigo-300 to-blue-400',
+    badgeColor: 'bg-sky-500/10 border-sky-500/20 text-sky-300'
   },
   {
     name: 'Psalms 23 Fellowship Church',
     fellowship: 'Psalms 23 Fellowship',
     abbreviation: 'P23',
     location: 'San Antonio, Bambang, Nueva Vizcaya',
-    pastor: 'Church Pastor',
+    pastor: 'Pastor Jerry Litawen & Pastor Zeny B. Litawen (Assoc. Ptr. Gina S. Espiritu)',
     established: 'Affiliate',
     description:
       '"The Lord is my shepherd; I shall not want." — A fellowship rooted in the promise of God\'s faithful provision, shepherd care, and guidance.',
@@ -186,29 +242,29 @@ const affiliateChurches = [
     link: '/churches/affiliate/psalms23',
     color: 'from-amber-600 to-orange-600',
     accentGradient: 'from-amber-400 via-orange-300 to-yellow-400',
-    badgeColor: 'bg-amber-500/10 border-amber-500/20 text-amber-300',
+    badgeColor: 'bg-amber-500/10 border-amber-500/20 text-amber-300'
   },
   {
-    name: 'CTL Calaocan Church',
-    fellowship: 'Christ The Lord Fellowship',
-    abbreviation: 'CTL',
-    location: 'Calaocan, Aurora',
-    pastor: 'Ptr. Sonny Boy',
+    name: 'The Living Hope Fellowship Salazar',
+    fellowship: 'The Living Hope Fellowship',
+    abbreviation: 'LHF',
+    location: 'Salazar, Carranglan, Nueva Ecija',
+    pastor: 'Pastor Maxima G. Anton & Sis. Mylene J. Padone',
     established: 'Affiliate',
     description:
-      'Proclaiming the Lordship of Christ across Aurora, establishing a community of faith, passionate worship, and lifelong transformation.',
-    image: '/600226379_122193353540449557_1592564097436516824_n.webp',
-    link: '/churches/affiliate/ctl/calaocan',
-    color: 'from-blue-600 to-indigo-600',
-    accentGradient: 'from-blue-400 via-indigo-300 to-purple-400',
-    badgeColor: 'bg-blue-500/10 border-blue-500/20 text-blue-300',
+      'Reaching Salazar and adjacent mountain communities with living hope, caring leadership, and biblical foundations for families.',
+    image: '',
+    link: '/churches/affiliate/salazar',
+    color: 'from-rose-600 to-pink-600',
+    accentGradient: 'from-rose-400 via-pink-300 to-amber-400',
+    badgeColor: 'bg-rose-500/10 border-rose-500/20 text-rose-300'
   },
   {
-    name: 'CTL Toytoyan Church',
-    fellowship: 'Christ The Lord Fellowship',
-    abbreviation: 'CTL',
-    location: 'Toytoyan, Aurora',
-    pastor: 'Ptra. Merly',
+    name: 'Toytoyan The Church of the Living Christ',
+    fellowship: 'The Church of the Living Christ',
+    abbreviation: 'CLC',
+    location: 'Toytoyan, Dipaculao, Aurora',
+    pastor: 'Rev. Sonny Boy B. Jacob & Assoc. Ptr. Merly S. Jacob',
     established: 'Affiliate',
     description:
       'Empowering believers and families in Toytoyan through biblical teaching, prayer ministry, and compassionate service to the local community.',
@@ -216,14 +272,29 @@ const affiliateChurches = [
     link: '/churches/affiliate/ctl/toytoyan',
     color: 'from-indigo-600 to-purple-600',
     accentGradient: 'from-indigo-400 via-purple-300 to-pink-400',
-    badgeColor: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-300',
+    badgeColor: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-300'
   },
   {
-    name: 'CTL Borlongan Church',
-    fellowship: 'Christ The Lord Fellowship',
-    abbreviation: 'CTL',
+    name: 'Calaocan Church of the Living Christ',
+    fellowship: 'The Church of the Living Christ',
+    abbreviation: 'CLC',
+    location: 'Calaocan, Dipaculao, Aurora',
+    pastor: 'Church Leadership',
+    established: 'Affiliate',
+    description:
+      'Proclaiming the Lordship of Christ across Aurora, establishing a community of faith, passionate worship, and lifelong transformation.',
+    image: '/600226379_122193353540449557_1592564097436516824_n.webp',
+    link: '/churches/affiliate/ctl/calaocan',
+    color: 'from-blue-600 to-indigo-600',
+    accentGradient: 'from-blue-400 via-indigo-300 to-purple-400',
+    badgeColor: 'bg-blue-500/10 border-blue-500/20 text-blue-300'
+  },
+  {
+    name: 'The United Christian Mission Church',
+    fellowship: 'The United Christian Mission Church',
+    abbreviation: 'UCMC',
     location: 'Borlongan, Dipaculao, Aurora',
-    pastor: 'Ptr. Teodoro',
+    pastor: 'Rev. Teodoro Garlit Sr.',
     established: 'Affiliate',
     description:
       'Steadfast in sharing the transforming Gospel of Jesus Christ to Dipaculao and establishing lasting spiritual foundations.',
@@ -231,14 +302,14 @@ const affiliateChurches = [
     link: '/churches/affiliate/ctl/borlongan',
     color: 'from-sky-600 to-blue-600',
     accentGradient: 'from-sky-400 via-blue-300 to-indigo-400',
-    badgeColor: 'bg-sky-500/10 border-sky-500/20 text-sky-300',
+    badgeColor: 'bg-sky-500/10 border-sky-500/20 text-sky-300'
   },
   {
-    name: 'CTL Baler Church',
+    name: 'Christ the Lord Fellowship',
     fellowship: 'Christ The Lord Fellowship',
     abbreviation: 'CTL',
-    location: 'Baler, Aurora',
-    pastor: 'Ptr. Joseph',
+    location: 'Dikaluyungan, Baler, Aurora',
+    pastor: 'Rev. Joseph Soridor',
     established: 'Affiliate',
     description:
       'Bringing the light of Christ to Baler with vibrant youth ministry, faithful pastoral leadership, and dynamic evangelistic outreach.',
@@ -246,8 +317,23 @@ const affiliateChurches = [
     link: '/churches/affiliate/ctl/baler',
     color: 'from-violet-600 to-purple-600',
     accentGradient: 'from-violet-400 via-purple-300 to-pink-400',
-    badgeColor: 'bg-violet-500/10 border-violet-500/20 text-violet-300',
+    badgeColor: 'bg-violet-500/10 border-violet-500/20 text-violet-300'
   },
+  {
+    name: 'Challenge Ministries Churches',
+    fellowship: 'Challenge Ministries International (CMI)',
+    abbreviation: 'CMI',
+    location: 'Inter-Provincial Network',
+    pastor: 'Partner Churches & Leadership',
+    established: 'Affiliate',
+    description:
+      'A collaborative alliance of mission-minded churches working in unity with GEFMI for evangelism, church planting, and leadership empowerment.',
+    image: '',
+    link: '/churches/affiliate/cmi',
+    color: 'from-orange-600 to-amber-600',
+    accentGradient: 'from-orange-400 via-amber-300 to-yellow-400',
+    badgeColor: 'bg-orange-500/10 border-orange-500/20 text-orange-300'
+  }
 ];
 
 export function OurChurchesPage() {
@@ -411,7 +497,7 @@ export function OurChurchesPage() {
                 className={`flex items-center gap-1.5 sm:gap-2.5 ${activeTab === 'associate' ? 'text-blue-400' : 'text-slate-400 hover:text-slate-200'}`}>
                 
                 <ChurchIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="font-display">Associate Churches</span>
+                <span className="font-display">GEFMI Churches</span>
               </div>
               {activeTab === 'associate' &&
               <motion.div
@@ -473,7 +559,7 @@ export function OurChurchesPage() {
           transition={{
             duration: 0.4
           }}>
-                   {/* Associate Churches Section */}
+                   {/* GEFMI Churches Section */}
             <section className="py-32 px-6 md:px-12 lg:px-16 bg-slate-900/40 relative overflow-hidden">
               {/* Ambient glow blobs */}
               <div className="absolute top-20 left-10 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none animate-glow-slow" />
@@ -500,7 +586,7 @@ export function OurChurchesPage() {
                   <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-6 py-3 rounded-full mb-6 text-blue-400">
                     <ChurchIcon className="w-5 h-5" />
                     <span className="font-semibold text-xs tracking-widest uppercase font-display">
-                      Associate Churches
+                      GEFMI Churches
                     </span>
                   </div>
                   <h2 className="text-5xl md:text-6xl font-bold text-white mb-6 font-display">
@@ -926,13 +1012,13 @@ export function OurChurchesPage() {
                   gradient: 'from-emerald-400 to-teal-400'
                 },
                 {
-                  label: 'Fellowships',
-                  value: 3,
+                  label: 'Fellowship Networks',
+                  value: '8+',
                   gradient: 'from-blue-400 to-indigo-400'
                 },
                 {
                   label: 'Provinces Reached',
-                  value: 3,
+                  value: '5+',
                   gradient: 'from-amber-400 to-orange-400'
                 }].
                 map((stat, i) =>

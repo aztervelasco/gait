@@ -1,347 +1,484 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { BackButton } from '../components/BackButton';
+import { LeadershipAccordion, LeaderItem } from '../components/LeadershipAccordion';
 import { useSmoothScroll } from '../hooks/useSmoothScroll';
 import {
   SparklesIcon,
   HeartIcon,
   BookOpenIcon,
   XIcon,
-  ArrowRightIcon,
-  ArrowLeftIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon } from
-'lucide-react';
+  UserIcon,
+  MapPinIcon,
+  LayersIcon,
+  CompassIcon,
+  UsersIcon,
+  FlameIcon
+} from 'lucide-react';
+
 const headPastor = {
   name: 'Rev. Movel B. Velasco',
-  title: 'Head Pastor & Founder',
-  image: "/517112793_10229821241296040_7747544348507949052_n.webp",
-
-  bio: "Pioneer and founder of GEFMI, Rev. Movel B. Velasco has dedicated his life to spreading the Gospel and establishing vibrant faith communities. With unwavering vision and a heart for God's people, he leads our ministry with wisdom, compassion, and an infectious passion for Christ. Under his leadership, GEFMI has grown from a small gathering to a thriving network of churches touching lives across communities and nations.",
+  title: 'Head Pastor & General Overseer',
+  roleCategory: 'Founder & Head Pastor',
+  image: '/517112793_10229821241296040_7747544348507949052_n.webp',
+  church: 'GEFMI Mother Church',
+  location: 'Bantinan, Santa Fe, Nueva Vizcaya',
+  bio: "Pioneer and founder of GEFMI, Rev. Movel B. Velasco has dedicated his life to spreading the Gospel and establishing vibrant faith communities across Nueva Vizcaya, Nueva Ecija, Aurora, and beyond. With visionary leadership and a heart for God's people, he guides our fellowship with wisdom, pastoral excellence, and apostolic dedication.",
   message:
-  '"My calling is simple: to see every person encounter the transforming love of Jesus Christ. Through faith, service, and unwavering commitment to God\'s Word, we are building a movement that will impact generations to come."',
+    '"My calling is simple: to see every person encounter the transforming love of Jesus Christ. Through faith, discipleship, and unwavering commitment to God\'s Word, we are building a movement that impacts generations to come."',
   fullBio:
-  "Pioneer and founder of GEFMI, Rev. Movel B. Velasco has dedicated his life to spreading the Gospel and establishing vibrant faith communities. With unwavering vision and a heart for God's people, he leads our ministry with wisdom, compassion, and an infectious passion for Christ. Under his leadership, GEFMI has grown from a small gathering to a thriving network of churches touching lives across communities and nations.",
+    "Pioneer and founder of GEFMI, Rev. Movel B. Velasco has dedicated his life to spreading the Gospel and establishing vibrant faith communities. With unwavering vision and a heart for God's people, he leads our ministry with wisdom, compassion, and an infectious passion for Christ. Under his leadership, GEFMI has grown to an extensive network of 10 GEFMI churches and multiple affiliate fellowships across the nation.",
   story:
-  "[Placeholder] Rev. Movel B. Velasco's journey began with a divine calling to serve God's people. From humble beginnings, he has built a thriving ministry that spans multiple churches and touches countless lives. His visionary leadership and unwavering faith have been instrumental in establishing GEFMI as a beacon of hope and transformation. Through years of dedicated service, he has mentored numerous pastors, planted churches, and created a lasting legacy of faith that continues to impact communities across the region. His commitment to excellence in ministry and his passion for seeing lives transformed by the Gospel have made him a respected leader in the evangelical community.",
-  specialization: 'Visionary Leadership'
+    "Rev. Movel B. Velasco's journey began with a divine calling to serve God's people. From humble beginnings in Bantinan, he has built a thriving ministry that touches countless lives. Through years of dedicated service, he has mentored numerous pastors, planted churches, and created an enduring legacy of faith that continues to impact communities across the Philippines.",
+  specialization: 'Visionary & Apostolic Leadership'
 };
-const pastors = [
-{
-  name: 'Ptr. Lando Abalos',
-  title: 'Pastor of Kasibu Church',
-  church: 'Kasibu Church',
-  image: "/d91ddbe4-386e-4fe9-8532-0eda1500ba62-removebg-preview.webp",
 
-  shortBio:
-  'A devoted servant of God with a heart for community outreach and discipleship.',
-  fullBio:
-  'A devoted servant of God with a heart for community outreach and discipleship. Pastor Lando brings warmth, wisdom, and practical teaching that helps believers grow in their faith journey. His dedication to serving the community has made a lasting impact on countless lives.',
-  specialization: 'Community Outreach',
-  story:
-  "[Placeholder] Pastor Lando's journey began in humble circumstances, where he discovered his calling to serve God's people. His dedication to community outreach has transformed countless lives, bringing hope and practical support to those in need. Through his ministry, he has established numerous outreach programs that continue to impact communities today. His compassionate approach and servant leadership have made him a beloved figure in the community, always ready to lend a helping hand and share the love of Christ."
-},
-{
-  name: 'Ptr. Jerry Nobres',
-  title: 'Pastor of Beti Church',
-  church: 'Beti Church',
-  image: "/038c6588-1445-473e-9640-378b702bbc97.webp",
+// Ordained Ministers
+const ordainedMinisters: LeaderItem[] = [
+  {
+    name: 'Rev. Vergelio Lamsis',
+    title: 'Ordained Minister',
+    roleCategory: 'Ordained Minister',
+    church: 'Bantinan Church',
+    location: 'Bantinan, Santa Fe, Nueva Vizcaya',
+    image: '/561149741_122184417068449557_3419564386070091008_n.webp',
+    shortBio: 'A dynamic ordained minister with a fervent passion for worship, prayer, and congregational spiritual revival.',
+    fullBio: 'A dynamic leader with a passion for worship and prayer, Rev. Vergelio Lamsis leads the congregation into powerful encounters with God. His ministry ignites revival and spiritual growth throughout our churches.',
+    specialization: 'Worship, Prayer & Pastoral Ministry'
+  },
+  {
+    name: 'Rev. Rudy C. Tindaan',
+    title: 'Ordained Minister',
+    roleCategory: 'Ordained Minister',
+    church: 'GEFMI Ministry',
+    location: 'Santa Fe, Nueva Vizcaya',
+    image: '/Ptr_Rudy-removebg-preview.webp',
+    shortBio: 'Serving with a dedicated gift for pastoral care, counseling, and strengthening family spiritual foundations.',
+    fullBio: "With a gift for pastoral care and counseling, Rev. Rudy C. Tindaan walks alongside believers in their spiritual journey. His compassionate heart and wise counsel have brought healing and guidance to many families facing life's challenges.",
+    specialization: 'Pastoral Care & Counseling'
+  },
+  {
+    name: 'Rev. Jun P. Matedio',
+    title: 'Ordained Minister',
+    roleCategory: 'Ordained Minister',
+    church: 'Lower Kiskis Church',
+    location: 'Lower Kiskis, Santa Fe, Nueva Vizcaya',
+    image: '/june_matedio-removebg-preview.webp',
+    shortBio: 'A passionate communicator and mentor committed to biblical discipleship, youth empowerment, and outreach.',
+    fullBio: 'A gifted communicator and ordained minister, Rev. Jun P. Matedio connects with families and the next generation through relevant biblical teaching and authentic pastoral care, raising devoted disciples of Jesus Christ.',
+    specialization: 'Discipleship & Community Leadership'
+  }
+];
 
-  shortBio: 'Known for his passionate preaching and deep love for Scripture.',
-  fullBio:
-  'Known for his passionate preaching and deep love for Scripture, Pastor Jerry inspires believers to live boldly for Christ. His teaching ministry has transformed countless lives through powerful biblical exposition and practical application.',
-  specialization: 'Teaching Ministry',
-  story:
-  "[Placeholder] With a profound love for God's Word, Pastor Jerry has dedicated his life to teaching and preaching the Gospel. His dynamic teaching style and deep biblical insights have inspired generations of believers to pursue a deeper relationship with Christ. His ministry continues to equip and empower the church for effective service. Through his expository preaching and commitment to sound doctrine, he has helped countless believers develop a solid foundation in their faith."
-},
-{
-  name: 'Ptr. Rudy Tindaan',
-  title: 'Pastor of Atbu Church',
-  church: 'Atbu Church',
-  image: "/Ptr_Rudy-removebg-preview.webp",
+// GEFMI Pastors
+const gefmiPastors: LeaderItem[] = [
+  {
+    name: 'Pastor Jerry Nobres',
+    title: 'GEFMI Pastor',
+    roleCategory: 'GEFMI Pastor',
+    church: 'Beti Church',
+    location: 'Beti, Santa Fe, Nueva Vizcaya',
+    image: '/038c6588-1445-473e-9640-378b702bbc97.webp',
+    shortBio: 'Known for passionate preaching, deep love for Scripture, and faithful pastoral shepherd care.',
+    fullBio: 'Known for his passionate preaching and deep love for Scripture, Pastor Jerry Nobres inspires believers to live boldly for Christ. His teaching ministry has transformed countless lives through powerful biblical exposition.',
+    specialization: 'Biblical Exposition & Pastoral Care'
+  },
+  {
+    name: 'Pastor Carlos Basilio',
+    title: 'GEFMI Pastor',
+    roleCategory: 'GEFMI Pastor',
+    church: 'GEFMI Ministry',
+    location: 'Santa Fe / Nueva Vizcaya',
+    image: '/carlito.webp',
+    shortBio: 'A faithful shepherd dedicated to evangelistic outreach, discipleship training, and church strengthening.',
+    fullBio: 'Pastor Carlos Basilio brings steady pastoral leadership and warm fellowship, focusing on discipling believers and serving the broader mission of GEFMI.',
+    specialization: 'Pastoral Ministry & Evangelism'
+  },
+  {
+    name: 'Pastor Moris B. Velasco',
+    title: 'GEFMI Pastor',
+    roleCategory: 'GEFMI Pastor',
+    church: 'Villaflores Church',
+    location: 'Villaflores, Santa Fe, Nueva Vizcaya',
+    image: '/514414300_10229639822320679_5865684077610383712_n.webp',
+    shortBio: 'Carrying an evangelistic and church planting zeal, expanding God’s kingdom into new communities.',
+    fullBio: "With a heart for evangelism and church planting, Pastor Moris B. Velasco is passionate about reaching the lost and nurturing new believers into mature followers of Christ.",
+    specialization: 'Church Planting & Evangelism'
+  }
+];
 
-  shortBio: 'With a gift for pastoral care and counseling.',
-  fullBio:
-  "With a gift for pastoral care and counseling, Pastor Rudy walks alongside believers in their spiritual journey. His compassionate heart and wise counsel have brought healing and hope to many families and individuals facing life's challenges.",
-  specialization: 'Pastoral Care',
-  story:
-  "[Placeholder] Pastor Rudy's compassionate heart and gift for pastoral care have made him a trusted counselor and spiritual guide. His ministry of healing and restoration has brought hope to countless individuals and families facing life's challenges. Through his gentle wisdom and unwavering support, many have found renewed strength and purpose in their faith journey. His ability to listen with empathy and provide biblical guidance has helped numerous believers navigate difficult seasons with grace and hope."
-},
-{
-  name: 'Ptr. Moris Velasco',
-  title: 'Pastor of Villaflores Church',
-  church: 'Villaflores Church',
-  image: "/514414300_10229639822320679_5865684077610383712_n.webp",
+// Preachers
+const preachers: LeaderItem[] = [
+  {
+    name: 'Jezreel Matedio',
+    title: 'Preacher',
+    roleCategory: 'Preacher',
+    church: 'GEFMI Preaching Ministry',
+    location: 'Santa Fe, Nueva Vizcaya',
+    image: '/jezreel-removebg-preview.webp',
+    shortBio: 'With a strong devotion to biblical teaching, discipleship, and inspiring believers to walk in truth.',
+    fullBio: "With a passion for biblical teaching and discipleship, Preacher Jezreel Matedio equips believers to grow in their theological foundation and apply God's Word in everyday life.",
+    specialization: 'Biblical Teaching & Preaching'
+  },
+  {
+    name: 'Ireneo Bugtong',
+    title: 'Preacher',
+    roleCategory: 'Preacher',
+    church: 'GEFMI Preaching Ministry',
+    location: 'Santa Fe, Nueva Vizcaya',
+    image: '',
+    shortBio: 'Proclaiming the Gospel with conviction and ministering to local congregations with humility.',
+    fullBio: 'Preacher Ireneo Bugtong faithfully proclaims the message of salvation, encouraging believers and supporting local church services through impactful preaching.',
+    specialization: 'Pulpit Ministry & Discipleship'
+  },
+  {
+    name: 'Sammy Paay',
+    title: 'Preacher',
+    roleCategory: 'Preacher',
+    church: 'GEFMI Preaching Ministry',
+    location: 'Santa Fe, Nueva Vizcaya',
+    image: '',
+    shortBio: 'Sharing the Good News with passion, ministering in community bible studies and Sunday worship.',
+    fullBio: 'Preacher Sammy Paay is a dedicated servant of God who brings uplifting biblical messages and fervent prayer to believers across our network.',
+    specialization: 'Evangelism & Pastoral Preaching'
+  },
+  {
+    name: 'Mateo Quiñones',
+    title: 'Preacher',
+    roleCategory: 'Preacher',
+    church: 'Bantinan Church',
+    location: 'Bantinan, Santa Fe, Nueva Vizcaya',
+    image: '',
+    shortBio: 'A devoted preacher at Bantinan Church serving the congregation with compassion and spiritual insight.',
+    fullBio: 'Preacher Mateo Quiñones serves at the mother church in Bantinan, nurturing spiritual growth and delivering uplifting biblical teachings to families and youth.',
+    specialization: 'Pastoral Ministry & Preaching'
+  }
+];
 
-  shortBio: 'With a heart for evangelism and church planting.',
-  fullBio:
-  "With a heart for evangelism and church planting, Pastor Moris is passionate about reaching the lost and establishing new congregations. His pioneering spirit continues to expand God's Kingdom into new territories and unreached communities.",
-  specialization: 'Church Planting',
-  story:
-  '[Placeholder] Pastor Moris carries a pioneering spirit that has led to the establishment of multiple thriving congregations. His evangelistic zeal and strategic vision for church planting have expanded the reach of the Gospel to unreached communities. Through his leadership, new churches continue to be planted, bringing transformation to entire regions. His ability to cast vision and mobilize teams has resulted in a multiplication movement that continues to grow and impact lives.'
-},
-{
-  name: 'Ptr. Vergilio Lamsis',
-  title: 'Pastor of Bantinan Church',
-  church: 'Bantinan Church',
-  image: "/561149741_122184417068449557_3419564386070091008_n.webp",
+// Reconnaissance Worker (Floating)
+const reconnaissanceWorkers: LeaderItem[] = [
+  {
+    name: 'Ptr. Orlando "Lando" Abalos',
+    title: 'Reconnaissance Worker (Floating)',
+    roleCategory: 'Reconnaissance Worker',
+    church: 'GEFMI Field Reconnaissance',
+    location: 'Regional Mission Fields',
+    image: '/d91ddbe4-386e-4fe9-8532-0eda1500ba62-removebg-preview.webp',
+    shortBio: 'Pioneering reconnaissance field worker surveying new mission opportunities and planting seeds of the Gospel.',
+    fullBio: 'Pastor Orlando "Lando" Abalos serves as GEFMI’s Reconnaissance Worker (Floating), scouting new territories, connecting with outlying communities, and facilitating church planting breakthroughs.',
+    specialization: 'Field Reconnaissance & Pioneer Missions'
+  }
+];
 
-  shortBio: 'A dynamic leader with a passion for worship and prayer.',
-  fullBio:
-  'A dynamic leader with a passion for worship and prayer, Pastor Vergilio leads our congregation into powerful encounters with God. His ministry has ignited revival and spiritual awakening throughout our churches and beyond.',
-  specialization: 'Worship & Prayer',
-  story:
-  "[Placeholder] Pastor Vergilio's passion for worship and prayer has transformed the spiritual atmosphere of our church. His leadership in worship has led countless believers into deeper encounters with God's presence. Through his ministry, revival fires have been ignited, and many have experienced powerful spiritual breakthroughs and renewed devotion to Christ. His commitment to creating an atmosphere of authentic worship has helped believers experience the manifest presence of God in transformative ways."
-},
-{
-  name: 'Ptr. Mateo Quinones',
-  title: 'Pastor of Bantinan Church',
-  church: 'Bantinan Church',
-  image: '',
-  shortBio: 'A dedicated servant with a heart for pastoral ministry.',
-  fullBio:
-  'A dedicated servant with a heart for pastoral ministry, Pastor Mateo serves the Bantinan community with compassion and wisdom. His ministry focuses on building strong relationships and nurturing spiritual growth among believers.',
-  specialization: 'Pastoral Ministry',
-  story:
-  "[Placeholder] Pastor Mateo's journey in ministry has been marked by his dedication to serving God's people with compassion and wisdom. His heart for pastoral care and community building has helped many believers grow in their faith and discover their purpose in Christ."
-},
-{
-  name: 'Ptr. Roves Abalos',
-  title: "Pastor of Orchid's Church",
-  church: "Orchid's Church",
-  image: "/521953240_122169464594567446_7082549070398521511_n.webp",
+// Lady Missionary Workers
+const ladyMissionaries: LeaderItem[] = [
+  {
+    name: 'Violeta "Violy" Hungduan',
+    title: 'Lady Missionary Worker',
+    roleCategory: 'Lady Missionary Worker',
+    church: 'GEFMI Missionary Outreach',
+    location: 'Santa Fe / Nueva Vizcaya',
+    image: '/993a5d67-5ca6-450a-b02b-f06f17f064d0-removebg-preview.webp',
+    shortBio: 'A compassionate missionary empowering women and families through prayer, counseling, and home ministry.',
+    fullBio: "A compassionate missionary leader with a deep heart for family discipleship and women's fellowship, Sister Violy empowers women to embrace their divine calling in Christ.",
+    specialization: "Women's & Family Missions"
+  },
+  {
+    name: 'Mia M. Tindaan',
+    title: 'Lady Missionary Worker',
+    roleCategory: 'Lady Missionary Worker',
+    church: 'GEFMI Missionary Outreach',
+    location: 'Santa Fe / Nueva Vizcaya',
+    image: '/mia.webp',
+    shortBio: 'Dedicated missionary servant nurturing children, youth, and women in spiritual maturity and prayer.',
+    fullBio: 'Sister Mia M. Tindaan brings wisdom and gentleness to missionary work, conducting community bible studies, Sunday school leadership, and compassionate home visits.',
+    specialization: 'Community Outreach & Mentorship'
+  },
+  {
+    name: 'Maxima Anton',
+    title: 'Lady Missionary Worker',
+    roleCategory: 'Lady Missionary Worker',
+    church: 'GEFMI Missionary Outreach',
+    location: 'Carranglan / Nueva Ecija',
+    image: '',
+    shortBio: 'Faithful missionary sharing God’s love in provincial mission fields through compassionate service.',
+    fullBio: 'Sister Maxima Anton is an active missionary worker supporting provincial fellowships, discipling women, and ministering to families in remote barangays.',
+    specialization: 'Provincial Mission Ministry'
+  }
+];
 
-  shortBio: 'Dedicated to equipping the next generation.',
-  fullBio:
-  'Dedicated to equipping the next generation, Pastor Roves combines biblical truth with practical application. His ministry empowers believers to discover and fulfill their God-given purpose through intentional discipleship and leadership development.',
-  specialization: 'Leadership Development',
-  story:
-  '[Placeholder] Pastor Roves has a unique gift for identifying and developing emerging leaders. His mentorship has shaped numerous young ministers who are now serving effectively in various capacities. Through his practical teaching and hands-on training, he has equipped believers to step into their God-given calling with confidence and competence. His investment in the next generation continues to bear fruit as his disciples multiply and impact communities around the world.'
-},
-{
-  name: 'Ptr. June Matedio',
-  title: 'Pastor of Lower Kiskis Church',
-  church: 'Lower Kiskis Church',
-  image: "/june_matedio-removebg-preview.webp",
+// GEFMI Youth Leaders
+const youthLeaders: LeaderItem[] = [
+  {
+    name: 'Nathan Velasco',
+    title: 'GEFMI Youth Leader',
+    roleCategory: 'GEFMI Youth Leader',
+    church: 'GEFMI Youth Movement',
+    location: 'Santa Fe / Central',
+    image: '',
+    shortBio: 'Inspiring young people to passionately pursue Christ and discover their kingdom purpose.',
+    fullBio: 'Nathan Velasco leads youth initiatives with visionary enthusiasm, organizing youth fellowships, praise events, and campus discipleship.',
+    specialization: 'Youth Leadership & Music Ministry'
+  },
+  {
+    name: 'Roves Abalos',
+    title: 'GEFMI Youth Leader',
+    roleCategory: 'GEFMI Youth Leader',
+    church: "Orchid's Church / Youth Fellowship",
+    location: 'Orchids, Santa Fe, Nueva Vizcaya',
+    image: '/521953240_122169464594567446_7082549070398521511_n.webp',
+    shortBio: 'Dedicated to equipping the next generation with practical biblical principles and leadership skills.',
+    fullBio: 'Roves Abalos combines biblical truth with practical mentorship, helping youth discover their God-given gifts through intentional discipleship.',
+    specialization: 'Next-Gen Mentorship'
+  },
+  {
+    name: 'Arcela Tindaan',
+    title: 'GEFMI Youth Leader',
+    roleCategory: 'GEFMI Youth Leader',
+    church: 'GEFMI Youth Movement',
+    location: 'Santa Fe, Nueva Vizcaya',
+    image: '',
+    shortBio: 'Fostering vibrant youth fellowship, creative worship, and young ladies’ discipleship.',
+    fullBio: 'Arcela Tindaan serves faithfully in youth ministry, guiding young women in godliness, prayer, and church involvement.',
+    specialization: 'Youth Fellowship & Discipleship'
+  },
+  {
+    name: 'Zizzaly',
+    title: 'GEFMI Youth Leader',
+    roleCategory: 'GEFMI Youth Leader',
+    church: 'GEFMI Youth Movement',
+    location: 'Santa Fe, Nueva Vizcaya',
+    image: '',
+    shortBio: 'Passionate about worship, youth engagement, and active community outreach.',
+    fullBio: 'Zizzaly is an energetic youth leader who inspires peers to live consecrated lives and serve in their local churches.',
+    specialization: 'Youth Engagement'
+  },
+  {
+    name: 'Mirocel Paay',
+    title: 'GEFMI Youth Leader',
+    roleCategory: 'GEFMI Youth Leader',
+    church: 'GEFMI Youth Movement',
+    location: 'Santa Fe, Nueva Vizcaya',
+    image: '',
+    shortBio: 'Leading youth worship and mentoring teenagers to walk steadfastly in faith.',
+    fullBio: 'Mirocel Paay coordinates youth activities, encouraging teens to build strong relationships grounded in the love of Jesus.',
+    specialization: 'Youth Discipleship'
+  },
+  {
+    name: 'Maja Lea',
+    title: 'GEFMI Youth Leader',
+    roleCategory: 'GEFMI Youth Leader',
+    church: 'GEFMI Youth Movement',
+    location: 'Santa Fe, Nueva Vizcaya',
+    image: '',
+    shortBio: 'Active in creative ministry, youth bible study, and fellowship coordination.',
+    fullBio: 'Maja Lea brings passion and creativity to GEFMI Youth, helping cultivate welcoming environments for youth to encounter God.',
+    specialization: 'Creative Ministries'
+  },
+  {
+    name: 'Beverly Lamsis',
+    title: 'GEFMI Youth Leader',
+    roleCategory: 'GEFMI Youth Leader',
+    church: 'Bantinan Youth Fellowship',
+    location: 'Bantinan, Santa Fe, Nueva Vizcaya',
+    image: '',
+    shortBio: 'Devoted to youth worship, prayer meetings, and uplifting fellowship in Bantinan.',
+    fullBio: 'Beverly Lamsis serves at Bantinan Church, inspiring young believers to worship passionately and step boldly into their callings.',
+    specialization: 'Youth Worship & Outreach'
+  }
+];
 
-  shortBio: 'A gifted communicator with a heart for youth ministry.',
-  fullBio:
-  'A gifted communicator with a heart for youth ministry, Pastor June connects with the next generation through relevant teaching and authentic relationships. His ministry inspires young people to pursue Christ passionately and live out their faith with boldness and conviction.',
-  specialization: 'Youth Ministry',
-  story:
-  "[Placeholder] Pastor June's dynamic approach to youth ministry has revolutionized how young people engage with their faith. His ability to communicate biblical truth in relevant, compelling ways has drawn countless youth into a vibrant relationship with Christ. Through his ministry, a new generation of passionate believers is rising up to impact their world for the Kingdom. His authentic leadership and genuine care for young people have created a thriving youth community where teenagers encounter God and discover their purpose."
-},
-{
-  name: 'Ptr. Tanacio Tindaan',
-  title: 'Pastor of Upper Kiskis Church',
-  church: 'Upper Kiskis Church',
-  image: "/tanacio1.webp",
+// Affiliate Pastors & Ministers
+const affiliatePastors: LeaderItem[] = [
+  {
+    name: 'Rev. Luisito S. Silan',
+    title: 'Affiliate Pastor',
+    roleCategory: 'Affiliate Pastor',
+    church: 'LHGCF Manicla Church',
+    location: 'Manicla, San Jose City, Nueva Ecija',
+    image: '/496941650_9986446918087623_5321505900457071114_n.webp',
+    shortBio: 'Faithful shepherd leading LHGCF Manicla Church in discipleship, evangelism, and community transformation.',
+    fullBio: 'Rev. Luisito S. Silan leads LHGCF Manicla Church in San Jose City, Nueva Ecija, building strong Christian families and mentoring faithful believers.',
+    specialization: 'Affiliate Pastoral Leadership'
+  },
+  {
+    name: 'Ptr. Nora D. Silan',
+    title: 'Affiliate Pastor',
+    roleCategory: 'Affiliate Pastor',
+    church: 'LHGCF Putlan Church',
+    location: 'Putlan, Carranglan, Nueva Ecija',
+    image: '',
+    shortBio: 'Serving with dedication and grace at Putlan Church in Carranglan, Nueva Ecija.',
+    fullBio: 'Pastor Nora D. Silan ministers to the flock in Putlan, Carranglan, creating a loving spiritual home and raising up godly disciples.',
+    specialization: 'Pastoral Care & Discipleship'
+  },
+  {
+    name: 'Madam Roselyn Basilio',
+    title: 'Affiliate Pastor',
+    roleCategory: 'Affiliate Pastor',
+    church: 'LHGCF Ika-pito Church',
+    location: 'Ika-pito, Putlan, Carranglan, Nueva Ecija',
+    image: '/272048676_481309780287901_5755746467562633499_n-Picsart-AiImageEnhancer.webp',
+    shortBio: 'Leading with spiritual fervor and prayer in Ika-pito, Carranglan, Nueva Ecija.',
+    fullBio: 'Madam Roselyn Basilio serves faithfully in Ika-pito, Putlan, Carranglan, ministering through prayer, discipleship, and community engagement.',
+    specialization: 'Community Discipleship'
+  },
+  {
+    name: 'Rev. Leonard Clemens L. Cadoy',
+    title: 'Affiliate Pastor',
+    roleCategory: 'Affiliate Pastor',
+    church: 'LHGCF Bambang Church',
+    location: 'Bambang, Nueva Vizcaya',
+    image: '/497733291_9986444718087843_9208305502871839500_n.webp',
+    shortBio: 'Leading LHGCF Bambang Church with a focus on preaching grace and building authentic Christian community.',
+    fullBio: 'Rev. Leonard Clemens L. Cadoy ministers in Bambang, Nueva Vizcaya, bringing the transforming message of God’s grace to families and youth.',
+    specialization: 'Preaching & Pastoral Ministry'
+  },
+  {
+    name: 'Rev. Junie M. Balwang',
+    title: 'Senior Pastor',
+    roleCategory: 'Affiliate Pastor',
+    church: 'Ammoweg Eternal Life Fellowship Church',
+    location: 'Ammoweg, Ambaguio, Nueva Vizcaya',
+    image: '/480975052_950039643993852_6543480930474798010_n.webp',
+    shortBio: 'Senior Pastor of Eternal Life Fellowship in Ammoweg, Ambaguio, proclaiming the Gospel of life.',
+    fullBio: 'Rev. Junie M. Balwang leads the Eternal Life Fellowship congregation in Ammoweg, Ambaguio, establishing strong spiritual roots and vibrant worship.',
+    specialization: 'Pastoral Leadership'
+  },
+  {
+    name: 'Pastor Solomon W. Balwang',
+    title: 'Associate Pastor',
+    roleCategory: 'Affiliate Pastor',
+    church: 'Ammoweg Eternal Life Fellowship Church',
+    location: 'Ammoweg, Ambaguio, Nueva Vizcaya',
+    image: '/480033865_950497310608841_5157391532199260184_n.webp',
+    shortBio: 'Associate Pastor assisting in pastoral leadership and discipleship at Ammoweg Eternal Life Fellowship.',
+    fullBio: 'Pastor Solomon W. Balwang faithfully serves alongside senior leadership in Ammoweg, discipling youth and strengthening family ministries.',
+    specialization: 'Associate Pastoral Ministry'
+  },
+  {
+    name: 'Pastor Lito Baguiwan',
+    title: 'Pastor',
+    roleCategory: 'Affiliate Pastor',
+    church: 'Taaw Eternal Life Fellowship Church',
+    location: 'Taaw, Ambaguio, Nueva Vizcaya',
+    image: '',
+    shortBio: 'Pastor of Taaw Eternal Life Fellowship, bringing the light of Christ to the mountain community of Taaw.',
+    fullBio: 'Pastor Lito Baguiwan shepherds the Taaw Eternal Life Fellowship in Ambaguio, dedicated to village outreach, prayer, and pastoral care.',
+    specialization: 'Rural & Village Missions'
+  },
+  {
+    name: 'Pastor Jerry Litawen',
+    title: 'Pastor',
+    roleCategory: 'Affiliate Pastor',
+    church: 'Psalms 23 Fellowship Church',
+    location: 'San Antonio, Bambang, Nueva Vizcaya',
+    image: '/516406366_10229806109237748_6995946554747989513_n.webp',
+    shortBio: 'Pastor of Psalms 23 Fellowship in San Antonio, Bambang, shepherding believers with the love of Christ.',
+    fullBio: 'Pastor Jerry Litawen leads Psalms 23 Fellowship Church in San Antonio, Bambang, fostering deep spiritual growth and community care.',
+    specialization: 'Shepherd Pastoral Ministry'
+  },
+  {
+    name: 'Pastor Zeny B. Litawen',
+    title: 'Pastor',
+    roleCategory: 'Affiliate Pastor',
+    church: 'Psalms 23 Fellowship Church',
+    location: 'San Antonio, Bambang, Nueva Vizcaya',
+    image: '/513878149_10017784441610134_1432304304820809657_n.webp',
+    shortBio: 'Co-pastor at Psalms 23 Fellowship Church, ministering with warmth and passionate prayer.',
+    fullBio: 'Pastor Zeny B. Litawen ministers in San Antonio, Bambang, building up families and leading women’s and prayer ministries with dedication.',
+    specialization: 'Pastoral Care & Prayer'
+  },
+  {
+    name: 'Associate Pastor Gina S. Espiritu',
+    title: 'Associate Pastor',
+    roleCategory: 'Affiliate Pastor',
+    church: 'Psalms 23 Fellowship Church',
+    location: 'San Antonio, Bambang, Nueva Vizcaya',
+    image: '/534256705_122121319898931963_7528005705236173993_n.webp',
+    shortBio: 'Associate Pastor at Psalms 23 Fellowship, serving in community connections and spiritual mentoring.',
+    fullBio: 'Associate Pastor Gina S. Espiritu creates welcoming spaces for believers to connect authentically and grow together in faith at Psalms 23 Fellowship.',
+    specialization: 'Associate Pastoral Care'
+  },
+  {
+    name: 'Pastor Maxima G. Anton',
+    title: 'Pastor',
+    roleCategory: 'Affiliate Pastor',
+    church: 'The Living Hope Fellowship Salazar',
+    location: 'Salazar, Carranglan, Nueva Ecija',
+    image: '',
+    shortBio: 'Pastor of The Living Hope Fellowship in Salazar, Carranglan, leading community evangelism.',
+    fullBio: 'Pastor Maxima G. Anton ministers in Salazar, Carranglan, bringing hope and godly leadership to the local fellowship.',
+    specialization: 'Pastoral Leadership'
+  },
+  {
+    name: 'Sis. Mylene J. Padone',
+    title: 'Associate Worker',
+    roleCategory: 'Affiliate Pastor',
+    church: 'The Living Hope Fellowship Salazar',
+    location: 'Salazar, Carranglan, Nueva Ecija',
+    image: '',
+    shortBio: 'Associate worker assisting in children, youth, and family ministry in Salazar, Carranglan.',
+    fullBio: 'Sister Mylene J. Padone faithfully serves at The Living Hope Fellowship in Salazar, assisting pastoral work and teaching Sunday school.',
+    specialization: 'Associate Ministry Work'
+  },
+  {
+    name: 'Rev. Sonny Boy B. Jacob',
+    title: 'Senior Pastor',
+    roleCategory: 'Affiliate Pastor',
+    church: 'Toytoyan The Church of the Living Christ',
+    location: 'Toytoyan, Dipaculao, Aurora',
+    image: '/516853943_10229874176339383_741894806820482945_n-removebg-preview.webp',
+    shortBio: 'Senior Pastor of Toytoyan The Church of the Living Christ in Aurora province.',
+    fullBio: 'Rev. Sonny Boy B. Jacob leads The Church of the Living Christ in Toytoyan and Calaocan, Dipaculao, Aurora with dynamic evangelism and biblical preaching.',
+    specialization: 'Church Leadership & Evangelism'
+  },
+  {
+    name: 'Associate Pastor Merly S. Jacob',
+    title: 'Associate Pastor',
+    roleCategory: 'Affiliate Pastor',
+    church: 'Toytoyan The Church of the Living Christ',
+    location: 'Toytoyan, Dipaculao, Aurora',
+    image: '',
+    shortBio: 'Associate Pastor at Toytoyan The Church of the Living Christ, ministering to families and women.',
+    fullBio: 'Associate Pastor Merly S. Jacob serves in Dipaculao, Aurora, discipling women and nurturing spiritual growth across the church family.',
+    specialization: 'Associate Pastoral Ministry'
+  },
+  {
+    name: 'Rev. Teodoro Garlit Sr.',
+    title: 'Pastor',
+    roleCategory: 'Affiliate Pastor',
+    church: 'The United Christian Mission Church',
+    location: 'Borlongan, Dipaculao, Aurora',
+    image: '/teodoro1.webp',
+    shortBio: 'Pastor of The United Christian Mission Church in Borlongan, Dipaculao, Aurora.',
+    fullBio: 'Rev. Teodoro Garlit Sr. is a veteran minister preaching the Gospel of salvation in Borlongan, Dipaculao, Aurora, and transforming local communities.',
+    specialization: 'Missions & Pastoral Care'
+  },
+  {
+    name: 'Rev. Joseph Soridor',
+    title: 'Pastor',
+    roleCategory: 'Affiliate Pastor',
+    church: 'Christ The Lord Fellowship',
+    location: 'Dikaluyungan, Baler, Aurora',
+    image: '/577605319_122218167392101611_366158039041198078_n.webp',
+    shortBio: 'Pastor of Christ The Lord Fellowship in Dikaluyungan, Baler, Aurora.',
+    fullBio: 'Rev. Joseph Soridor leads Christ The Lord Fellowship in Dikaluyungan, Baler, Aurora, dedicated to reaching youth and establishing godly foundations.',
+    specialization: 'Pastoral Leadership & Outreach'
+  }
+];
 
-  shortBio:
-  'A faithful servant with a heart for ministry and spiritual growth.',
-  fullBio:
-  'A faithful servant with a heart for ministry and spiritual growth, Pastor Tanacio serves the Upper Kiskis community with dedication and compassion. His ministry focuses on nurturing believers and helping them discover their purpose in Christ.',
-  specialization: 'Pastoral Ministry',
-  story:
-  "[Placeholder] Pastor Tanacio's journey in ministry has been marked by his dedication to serving God's people with faithfulness and compassion. His heart for spiritual growth and community building has helped many believers deepen their relationship with Christ."
-},
-{
-  name: 'Ptra. Violeta Hungduan',
-  title: 'Associate Pastor',
-  image: "/993a5d67-5ca6-450a-b02b-f06f17f064d0-removebg-preview.webp",
+const allGefmiLeaders: LeaderItem[] = [
+  ...ordainedMinisters,
+  ...gefmiPastors,
+  ...preachers,
+  ...reconnaissanceWorkers,
+  ...ladyMissionaries,
+  ...youthLeaders
+];
 
-  shortBio: "A compassionate leader with a heart for women's ministry.",
-  fullBio:
-  "A compassionate leader with a heart for women's ministry and family discipleship, Pastor Violeta empowers women to embrace their calling in Christ. Her ministry brings healing, restoration, and spiritual growth to families through biblical teaching and mentorship.",
-  specialization: "Women's Ministry",
-  story:
-  "[Placeholder] Pastor Violeta has dedicated her ministry to empowering women and strengthening families through biblical discipleship. Her compassionate approach and practical wisdom have helped countless women discover their identity in Christ and embrace their God-given purpose. Through her leadership, women's ministry has flourished, creating a supportive community where women grow in faith, develop their gifts, and impact their families and communities for Christ. Her mentorship has raised up a generation of godly women leaders."
-},
-{
-  name: 'Ptr. Jezreel Matedio',
-  title: 'Pastor of Atbu Church',
-  church: 'Atbu Church',
-  image: "/jezreel-removebg-preview.webp",
-
-  shortBio: 'With a passion for biblical teaching and discipleship.',
-  fullBio:
-  "With a passion for biblical teaching and discipleship, Pastor Jezreel equips believers to grow in their understanding of Scripture. His systematic approach to teaching helps believers develop a solid theological foundation and apply God's Word to daily life.",
-  specialization: 'Biblical Teaching',
-  story:
-  "[Placeholder] Pastor Jezreel's commitment to sound biblical teaching has strengthened the theological foundation of our church. His systematic approach to Scripture and emphasis on discipleship have equipped believers to understand and apply God's Word effectively. Through his teaching ministry, many have developed a deeper love for Scripture and a more mature faith. His dedication to raising up biblically literate believers has created a culture of continuous learning and spiritual growth."
-},
-{
-  name: 'Ptra. Mia Tindaan',
-  title: 'Pastor of Atbu Church',
-  church: 'Atbu Church',
-  image: "/mia.webp",
-
-  shortBio:
-  'A dedicated servant with a heart for ministry and spiritual growth.',
-  fullBio:
-  'A dedicated servant with a heart for ministry and spiritual growth, Pastor Mia brings compassion and wisdom to her calling. Her ministry focuses on nurturing believers and helping them discover their purpose in Christ.',
-  specialization: 'Spiritual Growth',
-  story:
-  "[Placeholder] Pastor Mia's journey in ministry has been marked by her dedication to serving God's people with compassion and wisdom. Her heart for spiritual growth and discipleship has helped many believers deepen their relationship with Christ and discover their calling."
-}];
-
-const fellowshipPastors = [
-{
-  name: 'Ptr. Leonard Clemens Cadoy',
-  title: 'Affiliates Pastor',
-  image: "/497733291_9986444718087843_9208305502871839500_n.webp",
-
-  specialization: 'Affiliates Ministry',
-  shortBio: 'A dedicated servant with a heart for building community.',
-  fullBio:
-  'A dedicated servant with a heart for building community and fostering meaningful relationships within the church family. His ministry focuses on creating welcoming environments where believers can connect and grow together.',
-  story:
-  "[Placeholder] Pastor Leonard's journey in fellowship ministry has been marked by his genuine care for people and his ability to bring diverse groups together. His dedication to building authentic Christian community has created lasting bonds among believers and strengthened the church family."
-},
-{
-  name: 'Ptr. Louie Silan',
-  title: 'Affiliates Pastor',
-  image: "/496941650_9986446918087623_5321505900457071114_n.webp",
-
-  specialization: 'Affiliates Ministry',
-  shortBio: 'Passionate about creating welcoming environments.',
-  fullBio:
-  'Passionate about creating welcoming environments where believers can connect, grow, and support one another in faith. His approach to ministry emphasizes the importance of genuine relationships and mutual encouragement.',
-  story:
-  "[Placeholder] Pastor Louie's ministry has been characterized by his warm hospitality and his gift for making everyone feel valued and included."
-},
-{
-  name: 'Ptr. Sonny Jacob',
-  title: 'Affiliates Pastor',
-  image: "/516853943_10229874176339383_741894806820482945_n-removebg-preview.webp",
-
-  specialization: 'Affiliates Ministry',
-  shortBio: 'With expertise in missions and cross-cultural ministry.',
-  fullBio:
-  'With expertise in missions and cross-cultural ministry, bringing a global vision for spreading the Gospel through fellowship. His unique perspective enriches the church community and broadens our understanding of Christian unity.',
-  story:
-  "[Placeholder] Pastor Sonny's experience in cross-cultural ministry has brought a rich, global perspective to our fellowship."
-},
-{
-  name: 'Ptr. Junie M. Balwang',
-  title: 'Affiliates Pastor',
-  image: "/480975052_950039643993852_6543480930474798010_n.webp",
-
-  specialization: 'Affiliates Ministry',
-  shortBio: 'Committed to strengthening the bonds of fellowship.',
-  fullBio:
-  'Committed to strengthening the bonds of fellowship and creating spaces where believers experience genuine Christian community.',
-  story:
-  "[Placeholder] Pastor Junie's dedication to building strong fellowship has resulted in a vibrant, connected church community."
-},
-{
-  name: 'Ptra. Gina Espiritu',
-  title: 'Affiliates Pastor',
-  image: "/534256705_122121319898931963_7528005705236173993_n.webp",
-
-  specialization: 'Affiliates Ministry',
-  shortBio: 'A compassionate leader dedicated to building strong fellowship.',
-  fullBio:
-  'A compassionate leader dedicated to building strong fellowship and community connections. Her ministry creates welcoming spaces where believers can grow together in faith and mutual support.',
-  story:
-  "[Placeholder] Pastor Gina's heart for fellowship ministry has created a warm and welcoming environment where believers connect authentically."
-},
-{
-  name: 'Ptra. Zeny Litawen',
-  title: 'Affiliates Pastor',
-  image: "/513878149_10017784441610134_1432304304820809657_n.webp",
-
-  specialization: 'Affiliates Ministry',
-  shortBio: 'Passionate about fostering authentic relationships.',
-  fullBio:
-  'Passionate about fostering authentic relationships and creating meaningful fellowship experiences.',
-  story:
-  "[Placeholder] Pastor Zeny's approach to fellowship ministry has brought people together in authentic, life-giving relationships."
-},
-{
-  name: 'Ptr. Jerry Litawen',
-  title: 'Affiliates Pastor',
-  image: "/516406366_10229806109237748_6995946554747989513_n.webp",
-
-  specialization: 'Affiliates Ministry',
-  shortBio: 'Dedicated to building strong community bonds.',
-  fullBio:
-  'Dedicated to building strong community bonds and fostering spiritual growth through fellowship.',
-  story:
-  "[Placeholder] Pastor Jerry's leadership in fellowship ministry has strengthened community bonds and created lasting relationships among believers."
-},
-{
-  name: 'Ptr. Teodoro Garlit Sr.',
-  title: 'Affiliates Pastor',
-  church: 'United Christian Fellowship',
-  image: "/teodoro1.webp",
-
-  specialization: 'Affiliates Ministry',
-  shortBio:
-  'Leading United Christian Fellowship in Borlongan, Dipaculao, Aurora.',
-  fullBio:
-  'Leading United Christian Fellowship in Borlongan, Dipaculao, Aurora with a heart for evangelism and community transformation.',
-  story:
-  "[Placeholder] Pastor Teodoro's faithful ministry at United Christian Fellowship has been a beacon of hope in the community."
-},
-{
-  name: 'Ptr. Joseph Soridor',
-  title: 'Affiliates Pastor',
-  church: 'Christ The Lord Fellowship',
-  image: "/577605319_122218167392101611_366158039041198078_n.webp",
-
-  specialization: 'Affiliates Ministry',
-  shortBio: 'Serving at Christ The Lord Fellowship in Baler, Aurora.',
-  fullBio:
-  'Serving at Christ The Lord Fellowship in Baler, Aurora, bringing the message of hope and salvation to the community.',
-  story:
-  "[Placeholder] Pastor Joseph's ministry at Christ The Lord Fellowship in Baler, Aurora has been marked by his passionate commitment to sharing the Gospel."
-},
-{
-  name: 'Ptr. Carlito Sanchez',
-  title: 'Affiliates Pastor',
-  church: 'Hope & Grace Fellowship',
-  image: "/carlito.webp",
-
-  specialization: 'Affiliates Ministry',
-  shortBio: 'Leading Hope & Grace Fellowship.',
-  fullBio:
-  'Leading Hope & Grace Fellowship with a focus on bringing hope and the grace of God to every person he encounters.',
-  story:
-  "[Placeholder] Pastor Carlito's leadership at Hope & Grace Fellowship has been a testament to the power of God's grace."
-},
-{
-  name: 'Ptra. Rocelyn Basilio',
-  title: 'Affiliates Pastor',
-  church: 'Putlan Church, Carranglan, Nueva Ecija',
-  image: "/272048676_481309780287901_5755746467562633499_n-Picsart-AiImageEnhancer.webp",
-
-  specialization: 'Affiliates Ministry',
-  shortBio: 'Serving faithfully in Putlan, Carranglan, Nueva Ecija.',
-  fullBio:
-  'Serving faithfully in Putlan, Carranglan, Nueva Ecija, with a heart for discipleship and community outreach.',
-  story:
-  "[Placeholder] Pastor Roselyn's dedicated ministry in Putlan, Carranglan, Nueva Ecija has been a source of spiritual growth and encouragement for the community."
-},
-{
-  name: 'Ptr. Solomon Balwang',
-  title: 'Affiliates Pastor',
-  church: 'Eternal Life Fellowship, Ammoweg, Ambaguio',
-  image: "/480033865_950497310608841_5157391532199260184_n.webp",
-
-  specialization: 'Affiliates Ministry',
-  shortBio: 'Leading Eternal Life Fellowship in Ammoweg, Ambaguio.',
-  fullBio:
-  'Leading Eternal Life Fellowship in Ammoweg, Ambaguio with a passion for sharing the message of eternal life through Christ.',
-  story:
-  "[Placeholder] Pastor Solomon's faithful service at Eternal Life Fellowship has established a thriving congregation committed to the Gospel."
-}];
-
-const getShortDescription = (text: string) => {
-  const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
-  return sentences.slice(0, 2).join(' ').trim();
-};
 export function OurPastorsPage() {
   useSmoothScroll({
     lerp: 0.15,
@@ -350,985 +487,320 @@ export function OurPastorsPage() {
     wheelMultiplier: 1.3,
     damping: 0.88
   });
-  const [selectedPastor, setSelectedPastor] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState<'story' | 'gallery'>('story');
-  const [activePastorTab, setActivePastorTab] = useState<
-    'associate' | 'fellowship'>(
-    'associate');
-  const [expandedImage, setExpandedImage] = useState<{
-    url: string;
-    name: string;
-  } | null>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const placeholderGallery = [
-  'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=800&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1529070538774-1843cb3265df?w=800&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&h=600&fit=crop'];
 
-  const handlePastorSelect = (pastor: any) => {
-    setSelectedPastor(pastor);
-    setActiveTab('story');
-  };
-  const handleImageExpand = (imageUrl: string, name: string) => {
-    setExpandedImage({
-      url: imageUrl,
-      name
-    });
-  };
-  const currentPastors =
-  activePastorTab === 'associate' ? pastors : fellowshipPastors;
-  // Carousel scroll helpers
-  const scrollCarousel = useCallback((direction: 'left' | 'right') => {
-    if (!carouselRef.current) return;
-    const cardWidth = 320;
-    const scrollAmount = cardWidth * 3;
-    carouselRef.current.scrollBy({
-      left: direction === 'right' ? scrollAmount : -scrollAmount,
-      behavior: 'smooth'
-    });
-  }, []);
-  // Reset carousel scroll when tab changes
-  useEffect(() => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollLeft = 0;
+  const [selectedLeader, setSelectedLeader] = useState<LeaderItem | null>(null);
+  const [activeCategory, setActiveCategory] = useState<
+    'all' | 'ordained' | 'pastors' | 'preachers' | 'recon' | 'missionaries' | 'youth' | 'affiliate'
+  >('all');
+
+  const categories = [
+    { id: 'all', label: 'All GEFMI Leaders', count: allGefmiLeaders.length },
+    { id: 'ordained', label: 'Ordained Ministers', count: ordainedMinisters.length },
+    { id: 'pastors', label: 'GEFMI Pastors', count: gefmiPastors.length },
+    { id: 'preachers', label: 'Preachers', count: preachers.length },
+    { id: 'recon', label: 'Reconnaissance Worker', count: reconnaissanceWorkers.length },
+    { id: 'missionaries', label: 'Lady Missionaries', count: ladyMissionaries.length },
+    { id: 'youth', label: 'Youth Leaders', count: youthLeaders.length },
+    { id: 'affiliate', label: 'Affiliate Ministers', count: affiliatePastors.length }
+  ];
+
+  const getFilteredItems = (): LeaderItem[] => {
+    switch (activeCategory) {
+      case 'ordained':
+        return ordainedMinisters;
+      case 'pastors':
+        return gefmiPastors;
+      case 'preachers':
+        return preachers;
+      case 'recon':
+        return reconnaissanceWorkers;
+      case 'missionaries':
+        return ladyMissionaries;
+      case 'youth':
+        return youthLeaders;
+      case 'affiliate':
+        return affiliatePastors;
+      case 'all':
+      default:
+        return allGefmiLeaders;
     }
-  }, [activePastorTab]);
-  const renderPastorCard = (
-  pastor: (typeof currentPastors)[0],
-  isMobile = false) =>
-  {
-    const isAssociate = activePastorTab === 'associate';
-    const isFellowship = activePastorTab === 'fellowship';
-    return (
-      <div
-        className={`bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden shadow-2xl ${!isMobile ? 'hover:shadow-purple-500/20 hover:scale-[1.02]' : ''} transition-all duration-500 h-full flex flex-col border border-white/10 ${!isMobile ? 'hover:border-purple-500/50' : ''}`}>
-        
-        <div
-          className={`relative ${isMobile ? 'h-80' : 'h-64'} overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800`}>
-          
-          <div
-            className={`absolute inset-0 ${isAssociate ? 'bg-gradient-to-br from-purple-600/30 to-blue-600/30' : 'bg-gradient-to-br from-sky-400/30 to-blue-400/30'} z-10`} />
-          
-          {pastor.image ?
-          <img
-            src={pastor.image}
-            alt={pastor.name}
-            className="w-full h-full object-cover object-center" /> :
-
-
-          <div className="w-full h-full flex items-center justify-center relative z-20">
-              <div className="text-gray-400 text-6xl font-bold">
-                {pastor.name.
-              split(' ').
-              map((n) => n[0]).
-              join('')}
-              </div>
-            </div>
-          }
-        </div>
-        <div className={`${isMobile ? 'p-6' : 'p-5'} flex-1 flex flex-col`}>
-          <div className="flex-1">
-            <h3
-              className={`${isMobile ? 'text-xl' : 'text-lg'} font-bold text-white mb-1`}>
-              
-              {pastor.name}
-            </h3>
-            <p
-              className={`text-xs font-semibold uppercase tracking-wide ${isAssociate ? 'text-purple-300' : 'text-sky-300'}`}>
-              
-              {pastor.title}
-            </p>
-            {'church' in pastor && pastor.church &&
-            <p className="text-xs text-gray-400 mt-1">{pastor.church}</p>
-            }
-          </div>
-          {isFellowship ?
-          <button
-            onClick={() => handleImageExpand(pastor.image, pastor.name)}
-            className={`w-full ${isMobile ? 'mt-4 py-3' : 'mt-3 py-2.5'} bg-gradient-to-r from-sky-500 to-blue-500 hover:from-sky-400 hover:to-blue-400 text-white font-semibold px-4 rounded-lg transition-all duration-300 active:scale-95 shadow-lg flex items-center justify-center gap-2 group/btn text-sm`}>
-            
-              <span>View Image</span>
-              <svg
-              className="w-4 h-4 group-hover/btn:scale-110 transition-transform duration-300"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24">
-              
-                <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-              
-              </svg>
-            </button> :
-
-          <button
-            onClick={() => handlePastorSelect(pastor)}
-            className={`w-full ${isMobile ? 'mt-4 py-3' : 'mt-3 py-2.5'} bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold px-4 rounded-lg transition-all duration-300 active:scale-95 shadow-lg flex items-center justify-center gap-2 group/btn text-sm`}>
-            
-              <span>View Story</span>
-              <ArrowRightIcon className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
-            </button>
-          }
-        </div>
-      </div>);
-
   };
+
+  const filteredLeaders = getFilteredItems();
+
+  // Split into chunks of 4 or 5 for optimal accordion rendering
+  const chunkArray = (arr: LeaderItem[], size: number) => {
+    const results: LeaderItem[][] = [];
+    for (let i = 0; i < arr.length; i += size) {
+      results.push(arr.slice(i, i + size));
+    }
+    return results;
+  };
+
+  const leaderChunks = chunkArray(filteredLeaders, 4);
+
   return (
-    <div className="w-full min-h-screen bg-dark-premium text-slate-100">
+    <div className="w-full min-h-screen bg-dark-premium text-slate-100 overflow-x-hidden selection:bg-emerald-500/30">
       <Navbar />
+      <BackButton to="/about" label="Back to About" />
 
       {/* Hero Section */}
-      <section className="relative w-full h-[70vh] overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
+      <section className="relative min-h-[60vh] flex items-center justify-center pt-28 pb-16 px-4 sm:px-6 md:px-12 overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
         <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full blur-[100px] animate-pulse" />
-          <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500 rounded-full blur-[100px] animate-pulse"
-            style={{
-              animationDelay: '1s'
-            }} />
-          
+          <div className="absolute top-10 left-10 w-[450px] h-[450px] bg-purple-600 rounded-full blur-[140px] animate-pulse" />
+          <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-blue-600 rounded-full blur-[160px] animate-pulse" />
         </div>
-        <div className="absolute inset-0 flex items-center justify-center">
+
+        <div className="relative z-10 max-w-5xl mx-auto text-center space-y-6">
           <motion.div
-            initial={{
-              opacity: 0,
-              y: 30
-            }}
-            animate={{
-              opacity: 1,
-              y: 0
-            }}
-            transition={{
-              duration: 1
-            }}
-            className="text-center text-white px-6 relative z-10">
-            
-            <motion.div
-              initial={{
-                opacity: 0,
-                scale: 0.9
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1
-              }}
-              transition={{
-                duration: 0.8,
-                delay: 0.2
-              }}
-              className="inline-block mb-6">
-              
-              <span className="text-blue-300 text-xs font-bold tracking-widest uppercase bg-blue-500/10 border border-blue-500/20 px-6 py-2.5 rounded-full">
-                Spiritual Leadership
-              </span>
-            </motion.div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 font-display">
-              Our{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300">
-                Pastors
-              </span>
-            </h1>
-            <div className="w-32 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mx-auto mb-6 rounded-full" />
-            <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light">
-              Shepherds called by God to lead, inspire, and nurture our faith
-              community with wisdom, compassion, and unwavering dedication
-            </p>
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"
+          >
+            <SparklesIcon className="w-4 h-4 text-amber-300" />
+            <span className="text-xs sm:text-sm font-semibold tracking-widest uppercase text-slate-300">
+              GEFMI Pastoral & Ministry Leadership
+            </span>
           </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.15 }}
+            className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-tight font-display"
+          >
+            Our Shepherds &{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-300 to-pink-400">
+              Servants of God
+            </span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-base sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light"
+          >
+            Meet the ordained ministers, pastors, preachers, missionaries, and youth leaders dedicated to proclaiming the Gospel and shepherding God's flock with passion and integrity.
+          </motion.p>
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* Founding Leader Section — normal flow         */}
-      {/* ============================================ */}
-      <section className="py-16 md:py-24 px-6 md:px-12 bg-slate-900/40 relative overflow-hidden">
-        <div className="absolute top-10 right-10 w-[400px] h-[400px] bg-purple-600/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 30
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            transition={{
-              duration: 0.8
-            }}
-            viewport={{
-              once: true
-            }}
-            className="text-center mb-10 md:mb-14">
-            
-            <span className="text-blue-400 text-xs font-bold tracking-widest uppercase font-display">
-              Founding Leader
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mt-4 mb-4 font-display">
-              Our{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-                Visionary
-              </span>
-            </h2>
-          </motion.div>
-
-          {/* Desktop: side-by-side card */}
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 40
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.1
-            }}
-            viewport={{
-              once: true
-            }}
-            className="hidden lg:block">
-            
-            <div className="bg-white/5 backdrop-blur-md rounded-3xl overflow-hidden shadow-2xl border border-white/10">
-              <div className="grid grid-cols-2 gap-0">
-                <div className="relative h-[480px] lg:h-[520px] bg-slate-950/40">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 z-10 pointer-events-none" />
+      {/* Founder & Head Pastor Spotlight */}
+      <section className="py-16 px-4 sm:px-6 md:px-12 bg-slate-900/40 relative">
+        <div className="max-w-6xl mx-auto">
+          <div className="relative p-6 sm:p-10 md:p-12 rounded-3xl bg-gradient-to-br from-white/[0.07] to-white/[0.02] border border-white/15 backdrop-blur-xl shadow-2xl overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              {/* Photo */}
+              <div className="lg:col-span-5 relative group">
+                <div className="absolute -inset-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-[30px] blur-xl opacity-40 group-hover:opacity-60 transition duration-700" />
+                <div className="relative rounded-[26px] overflow-hidden aspect-[3/4] bg-slate-900 border border-white/20 shadow-2xl">
                   <img
                     src={headPastor.image}
                     alt={headPastor.name}
-                    className="w-full h-full object-cover object-[center_12%]" />
-                </div>
-                <div className="p-10 xl:p-14 flex flex-col justify-center">
-                  <div className="inline-block mb-4">
-                    <span className="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs font-bold px-4 py-2 rounded-full font-display uppercase tracking-widest">
-                      {headPastor.title}
+                    className="w-full h-full object-cover object-[center_12%] group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/80 text-slate-950 shadow">
+                      <SparklesIcon className="w-3.5 h-3.5" />
+                      Founder & General Overseer
                     </span>
                   </div>
-                  <h3 className="text-3xl xl:text-4xl font-bold text-white mb-4 font-display">
-                    {headPastor.name}
-                  </h3>
-                  <p className="text-base text-slate-300 leading-relaxed mb-4">
-                    {getShortDescription(headPastor.bio)}...
-                  </p>
-                  <div className="bg-white/5 rounded-2xl p-5 border-l-4 border-blue-500 mb-5">
-                    <div className="flex items-start gap-3">
-                      <SparklesIcon className="w-5 h-5 text-blue-400 flex-shrink-0 mt-1" />
-                      <p className="text-slate-200 italic leading-relaxed text-sm">
-                        {headPastor.message}
-                      </p>
-                    </div>
-                  </div>
+                </div>
+              </div>
+
+              {/* Bio & Details */}
+              <div className="lg:col-span-7 space-y-6 text-left">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs sm:text-sm font-semibold">
+                  <UserIcon className="w-4 h-4" />
+                  <span>General Overseer of GEFMI</span>
+                </div>
+
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white font-display">
+                  {headPastor.name}
+                </h2>
+
+                <p className="text-sm sm:text-base text-emerald-400 font-semibold tracking-wide">
+                  {headPastor.title} • {headPastor.church}
+                </p>
+
+                <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-light">
+                  {headPastor.bio}
+                </p>
+
+                <blockquote className="p-4 rounded-2xl bg-white/[0.04] border-l-4 border-amber-400 text-slate-200 text-sm sm:text-base italic">
+                  {headPastor.message}
+                </blockquote>
+
+                <div className="pt-2">
                   <button
-                    onClick={() => handlePastorSelect(headPastor)}
-                    data-cursor-text="VISIONARY"
-                    className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 hover:scale-[1.02] active:scale-95 shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn font-display">
-                    
-                    <span>View Full Story</span>
-                    <ArrowRightIcon className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
+                    onClick={() => setSelectedLeader(headPastor as LeaderItem)}
+                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-bold text-sm sm:text-base shadow-lg hover:scale-105 active:scale-95 transition-all duration-300"
+                  >
+                    <BookOpenIcon className="w-4 h-4" />
+                    <span>Read Full Ministry Story</span>
                   </button>
                 </div>
               </div>
             </div>
-          </motion.div>
-
-          {/* Tablet & Mobile: card layout (image on top, content below) */}
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 40
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.1
-            }}
-            viewport={{
-              once: true
-            }}
-            className="lg:hidden max-w-md mx-auto">
-            
-            <div className="bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl border border-white/10">
-              <div className="relative h-[320px] sm:h-[360px] bg-slate-950/40">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 z-10 pointer-events-none" />
-                <img
-                  src={headPastor.image}
-                  alt={headPastor.name}
-                  className="w-full h-full object-cover object-[center_12%]" />
-              </div>
-              <div className="p-6">
-                <span className="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs font-bold px-3 py-1.5 rounded-full font-display uppercase tracking-widest">
-                  {headPastor.title}
-                </span>
-                <h3 className="text-2xl font-bold text-white mt-3 mb-3 font-display">
-                  {headPastor.name}
-                </h3>
-                <p className="text-sm text-slate-300 leading-relaxed mb-4">
-                  {getShortDescription(headPastor.bio)}...
-                </p>
-                <button
-                  onClick={() => handlePastorSelect(headPastor)}
-                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-2 font-display">
-                  
-                  <span>View Full Story</span>
-                  <ArrowRightIcon className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* ============================================ */}
-      {/* Ministry Team Section — normal flow           */}
-      {/* ============================================ */}
-      <section className="py-20 md:py-28 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-purple-500 rounded-full blur-3xl animate-pulse" />
-          <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl animate-pulse"
-            style={{
-              animationDelay: '1s'
-            }} />
-          
-        </div>
-
-        <div className="relative z-10">
-          {/* Header */}
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 30
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            transition={{
-              duration: 0.8
-            }}
-            viewport={{
-              once: true
-            }}
-            className="text-center mb-8 px-6">
-            
-            <span className="text-purple-300 text-sm font-bold tracking-widest uppercase">
-              Ministry Team
+      {/* Leadership Directory Section with Image Accordion */}
+      <section className="py-20 px-4 sm:px-6 md:px-12 relative">
+        <div className="max-w-7xl mx-auto space-y-12">
+          {/* Section Header */}
+          <div className="text-center space-y-4 max-w-3xl mx-auto">
+            <span className="text-xs sm:text-sm font-bold tracking-[0.2em] text-emerald-400 uppercase bg-emerald-500/10 border border-emerald-500/20 px-4 py-1.5 rounded-full inline-block">
+              GEFMI Ministry Directory
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-3">
-              Our{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                Pastoral Team
-              </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white font-display">
+              Leadership & Ministry Workers
             </h2>
-            <p className="text-base text-gray-400 max-w-xl mx-auto">
-              Dedicated servants leading our faith communities
-            </p>
-          </motion.div>
-
-          {/* Tab Navigation */}
-          <div className="relative mb-10">
-            <div className="flex items-center justify-center gap-2 px-8">
-              <button
-                onClick={() => setActivePastorTab('associate')}
-                className={`relative px-6 py-3 text-base font-semibold transition-colors duration-300 ${activePastorTab === 'associate' ? 'text-white' : 'text-gray-400 hover:text-gray-300'}`}>
-                
-                <div className="flex items-center gap-2">
-                  <SparklesIcon className="w-4 h-4" />
-                  <span>Associate Pastors</span>
-                </div>
-              </button>
-              <button
-                onClick={() => setActivePastorTab('fellowship')}
-                className={`relative px-6 py-3 text-base font-semibold transition-colors duration-300 ${activePastorTab === 'fellowship' ? 'text-white' : 'text-gray-400 hover:text-gray-300'}`}>
-                
-                <div className="flex items-center gap-2">
-                  <HeartIcon className="w-4 h-4" />
-                  <span>Affiliates Pastors</span>
-                </div>
-              </button>
-            </div>
-            <motion.div
-              className={`absolute bottom-0 left-1/2 h-0.5 ${activePastorTab === 'associate' ? 'bg-gradient-to-r from-purple-500 to-blue-500' : 'bg-gradient-to-r from-emerald-500 to-teal-500'} rounded-full`}
-              initial={false}
-              animate={{
-                x: activePastorTab === 'associate' ? '-100%' : '0%',
-                width: '200px'
-              }}
-              transition={{
-                type: 'spring',
-                stiffness: 300,
-                damping: 30
-              }} />
-            
-          </div>
-
-          {/* Desktop: Horizontal carousel with nav arrows */}
-          <div className="hidden md:block relative">
-            {/* Left arrow */}
-            <button
-              onClick={() => scrollCarousel('left')}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 border border-white/20">
-              
-              <ChevronLeftIcon className="w-6 h-6" />
-            </button>
-            {/* Right arrow */}
-            <button
-              onClick={() => scrollCarousel('right')}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 hover:scale-110 border border-white/20">
-              
-              <ChevronRightIcon className="w-6 h-6" />
-            </button>
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activePastorTab}
-                initial={{
-                  opacity: 0,
-                  y: 20
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0
-                }}
-                exit={{
-                  opacity: 0,
-                  y: -20
-                }}
-                transition={{
-                  duration: 0.35
-                }}>
-                
-                <div
-                  ref={carouselRef}
-                  className="flex gap-6 overflow-x-auto scrollbar-hide px-16 pb-6 snap-x snap-mandatory"
-                  style={{
-                    scrollBehavior: 'auto'
-                  }}>
-                  
-                  {currentPastors.map((pastor, index) =>
-                  <motion.div
-                    key={pastor.name}
-                    initial={{
-                      opacity: 0,
-                      y: 20
-                    }}
-                    animate={{
-                      opacity: 1,
-                      y: 0
-                    }}
-                    transition={{
-                      duration: 0.4,
-                      delay: index * 0.05
-                    }}
-                    className="w-[300px] flex-shrink-0 snap-start">
-                    
-                      {renderPastorCard(pastor)}
-                    </motion.div>
-                  )}
-                </div>
-              </motion.div>
-            </AnimatePresence>
-
-            <p className="text-center text-gray-500 text-sm mt-4">
-              ← Scroll or use arrows to see more →
+            <p className="text-slate-400 text-sm sm:text-base">
+              Hover over any leader to expand their profile card and explore their pastoral background.
             </p>
           </div>
 
-          {/* Mobile: Horizontal scroll */}
-          <div className="md:hidden">
-            <div
-              className="overflow-x-auto scrollbar-hide px-6 pb-4"
-              style={{
-                scrollSnapType: 'x mandatory'
-              }}>
-              
-              <div className="flex gap-4">
-                {currentPastors.map((pastor) =>
-                <div
-                  key={pastor.name}
-                  className="flex-shrink-0 w-[280px]"
-                  style={{
-                    scrollSnapAlign: 'start'
-                  }}>
-                  
-                    {renderPastorCard(pastor, true)}
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="text-center mt-4">
-              <p className="text-gray-400 text-sm">← Swipe to see more →</p>
-            </div>
+          {/* Category Switcher Tabs */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            {categories.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveCategory(tab.id as any)}
+                className={`px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-2 border ${
+                  activeCategory === tab.id
+                    ? 'bg-emerald-500 text-slate-950 font-bold border-emerald-400 shadow-lg shadow-emerald-500/20 scale-105'
+                    : 'bg-white/5 hover:bg-white/10 text-slate-300 border-white/10'
+                }`}
+              >
+                <span>{tab.label}</span>
+                <span
+                  className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                    activeCategory === tab.id ? 'bg-slate-950 text-emerald-300' : 'bg-white/10 text-slate-400'
+                  }`}
+                >
+                  {tab.count}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Leadership Accordion Groups */}
+          <div className="space-y-8 pt-4">
+            {leaderChunks.map((chunk, idx) => (
+              <LeadershipAccordion
+                key={`chunk-${idx}-${activeCategory}`}
+                items={chunk}
+                onSelectLeader={(leader) => setSelectedLeader(leader)}
+              />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Image Expansion Modal */}
+      {/* Leader Bio Modal */}
       <AnimatePresence>
-        {expandedImage && (
-        <motion.div
-          initial={{
-            opacity: 0
-          }}
-          animate={{
-            opacity: 1
-          }}
-          exit={{
-            opacity: 0
-          }}
-          className="fixed inset-0 bg-black/95 backdrop-blur-lg z-50 flex items-center justify-center p-4"
-          onClick={() => setExpandedImage(null)}>
-          
-            <motion.div
-            initial={{
-              scale: 0.8,
-              opacity: 0
-            }}
-            animate={{
-              scale: 1,
-              opacity: 1
-            }}
-            exit={{
-              scale: 0.8,
-              opacity: 0
-            }}
-            transition={{
-              type: 'spring',
-              duration: 0.5
-            }}
-            className="relative max-w-5xl w-full"
-            onClick={(e) => e.stopPropagation()}>
-            
-              <button
-                onClick={() => setExpandedImage(null)}
-                className="absolute top-4 right-4 sm:-top-12 sm:right-0 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-2.5 sm:p-3 rounded-full transition-all duration-300 hover:scale-110 border border-white/20 z-20">
-                <XIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-              </button>
-              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/10">
-                <img
-                  src={expandedImage.url}
-                  alt={expandedImage.name}
-                  className="w-full h-auto max-h-[80vh] sm:max-h-[85vh] object-contain"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-4 sm:p-8">
-                  <h3 className="text-xl sm:text-3xl font-bold text-white mb-1">
-                    {expandedImage.name}
-                  </h3>
-                  <p className="text-sky-300 text-sm sm:text-lg font-semibold">
-                    Affiliates Pastor
-                  </p>
-                </div>
-              </div>
-              <p className="text-center text-white/60 text-xs sm:text-sm mt-3 sm:mt-4">
-                Click anywhere outside the image to close
-              </p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Pastor Story Modal */}
-      <AnimatePresence>
-        {selectedPastor && (
+        {selectedLeader && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4"
-            onClick={() => setSelectedPastor(null)}>
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md"
+            onClick={() => setSelectedLeader(null)}
+          >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ type: 'spring', duration: 0.5 }}
-              className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl sm:rounded-3xl max-w-5xl w-full max-h-[94vh] sm:max-h-[90vh] overflow-hidden shadow-2xl border border-white/10 flex flex-col"
-              onClick={(e) => e.stopPropagation()}>
+              initial={{ scale: 0.9, y: 30 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 30 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-slate-900 border border-white/20 p-6 sm:p-8 shadow-2xl text-left space-y-6"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedLeader(null)}
+                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-slate-300 hover:text-white transition-colors"
+                aria-label="Close"
+              >
+                <XIcon className="w-5 h-5" />
+              </button>
 
               {/* Modal Header */}
-              <div className="relative min-h-[7.5rem] sm:min-h-[10rem] md:h-48 bg-gradient-to-br from-slate-800 to-slate-900 flex-shrink-0">
-                <div
-                  className={`absolute inset-0 ${
-                    'specialization' in selectedPastor &&
-                    selectedPastor.specialization === 'Affiliates Ministry'
-                      ? 'bg-gradient-to-r from-sky-500/30 via-blue-500/20 to-sky-500/30'
-                      : 'bg-gradient-to-r from-blue-600/30 via-purple-600/20 to-blue-600/30'
-                  }`}
-                />
-                <div className="absolute inset-0 opacity-10">
-                  <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl" />
-                  <div className="absolute bottom-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl" />
+              <div className="flex items-start gap-4 sm:gap-6">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-slate-800 flex-shrink-0 border border-white/15">
+                  {selectedLeader.image ? (
+                    <img
+                      src={selectedLeader.image}
+                      alt={selectedLeader.name}
+                      className="w-full h-full object-cover object-center"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-white/5 text-slate-400 font-bold text-2xl">
+                      {selectedLeader.name.slice(0, 2)}
+                    </div>
+                  )}
                 </div>
 
-                <button
-                  onClick={() => setSelectedPastor(null)}
-                  className="absolute top-3 right-3 sm:top-6 sm:right-6 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full transition-all duration-300 hover:scale-110 z-10 border border-white/20"
-                  aria-label="Close modal">
-                  <XIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-                </button>
+                <div className="space-y-1">
+                  <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    {selectedLeader.roleCategory}
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-display">
+                    {selectedLeader.name}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-emerald-400 font-medium">
+                    {selectedLeader.title}
+                  </p>
+                  {selectedLeader.church && (
+                    <p className="text-xs text-slate-400 flex items-center gap-1">
+                      <MapPinIcon className="w-3.5 h-3.5 text-teal-400" />
+                      <span>{selectedLeader.church}</span>
+                    </p>
+                  )}
+                </div>
+              </div>
 
-                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent">
-                  <div className="flex items-end gap-3 sm:gap-6">
-                    <div className="relative flex-shrink-0">
-                      <div
-                        className={`absolute inset-0 rounded-full blur-xl ${
-                          'specialization' in selectedPastor &&
-                          selectedPastor.specialization === 'Affiliates Ministry'
-                            ? 'bg-gradient-to-br from-sky-400 to-blue-400'
-                            : 'bg-gradient-to-br from-blue-400 to-purple-400'
-                        } opacity-60`}
-                      />
-                      <div className="relative w-16 h-16 sm:w-28 sm:h-28 rounded-full overflow-hidden ring-4 ring-white/20 bg-slate-800">
-                        {selectedPastor.image ? (
-                          <img
-                            src={selectedPastor.image}
-                            alt={selectedPastor.name}
-                            className="w-full h-full object-cover object-center"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <div className="text-white text-xl sm:text-3xl font-bold opacity-50">
-                              {selectedPastor.name
-                                .split(' ')
-                                .map((n: string) => n[0])
-                                .join('')}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex-1 pb-1 sm:pb-2 min-w-0">
-                      <h3 className="text-lg sm:text-2xl md:text-4xl font-bold text-white mb-0.5 sm:mb-1 truncate">
-                        {selectedPastor.name}
-                      </h3>
-                      <p
-                        className={`text-xs sm:text-base font-semibold truncate ${
-                          'specialization' in selectedPastor &&
-                          selectedPastor.specialization === 'Affiliates Ministry'
-                            ? 'text-sky-300'
-                            : 'text-blue-300'
-                        }`}>
-                        {selectedPastor.title}
-                      </p>
-                    </div>
+              {/* Bio Content */}
+              <div className="space-y-4 pt-2 border-t border-white/10">
+                <div>
+                  <h4 className="text-sm font-bold uppercase text-slate-400 tracking-wider mb-1">
+                    Ministry Profile
+                  </h4>
+                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    {selectedLeader.fullBio || selectedLeader.shortBio || selectedLeader.bio}
+                  </p>
+                </div>
+
+                {selectedLeader.story && (
+                  <div>
+                    <h4 className="text-sm font-bold uppercase text-slate-400 tracking-wider mb-1">
+                      Journey of Faith
+                    </h4>
+                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                      {selectedLeader.story}
+                    </p>
                   </div>
-                </div>
-              </div>
+                )}
 
-              {/* Tab Navigation */}
-              <div className="relative border-b border-white/10 bg-slate-900/50 backdrop-blur-sm flex-shrink-0">
-                <div className="flex items-center justify-center gap-2 px-4 sm:px-8 pt-3 sm:pt-6 pb-0">
-                  <button
-                    onClick={() => setActiveTab('story')}
-                    className={`relative px-4 sm:px-8 py-2.5 sm:py-4 text-sm sm:text-lg font-semibold transition-colors duration-300 ${
-                      activeTab === 'story'
-                        ? 'text-white'
-                        : 'text-gray-400 hover:text-gray-300'
-                    }`}>
-                    <div className="flex items-center gap-2">
-                      <BookOpenIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                      <span>Story</span>
-                    </div>
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('gallery')}
-                    className={`relative px-4 sm:px-8 py-2.5 sm:py-4 text-sm sm:text-lg font-semibold transition-colors duration-300 ${
-                      activeTab === 'gallery'
-                        ? 'text-white'
-                        : 'text-gray-400 hover:text-gray-300'
-                    }`}>
-                    <div className="flex items-center gap-2">
-                      <svg
-                        className="w-4 h-4 sm:w-5 sm:h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        />
-                      </svg>
-                      <span>Gallery</span>
-                    </div>
-                  </button>
-                </div>
-              </div>
-              {/* Tab Content */}
-              <div className="flex-1 overflow-hidden">
-                <AnimatePresence mode="wait">
-                  {activeTab === 'story' &&
-                <motion.div
-                  key="story"
-                  initial={{
-                    opacity: 0,
-                    y: 20
-                  }}
-                  animate={{
-                    opacity: 1,
-                    y: 0
-                  }}
-                  exit={{
-                    opacity: 0,
-                    y: -20
-                  }}
-                  transition={{
-                    duration: 0.3
-                  }}
-                  className="h-full overflow-y-auto p-8 lg:p-12">
-                  
-                      <div className="max-w-5xl mx-auto">
-                        <div className="mb-10">
-                          <div className="flex items-center gap-3 mb-6">
-                            <div
-                          className={`w-12 h-12 rounded-xl flex items-center justify-center ${'specialization' in selectedPastor && selectedPastor.specialization === 'Affiliates Ministry' ? 'bg-gradient-to-br from-sky-500 to-blue-500' : 'bg-gradient-to-br from-blue-600 to-purple-600'} shadow-lg`}>
-                          
-                              <BookOpenIcon className="w-6 h-6 text-white" />
-                            </div>
-                            <h4 className="text-3xl font-bold text-white">
-                              {selectedPastor.name === headPastor.name ?
-                          "Founder's Story" :
-                          "Pastor's Story"}
-                            </h4>
-                          </div>
-                          <div className="bg-amber-900/20 border-l-4 border-amber-500 p-4 mb-6 rounded-r-lg backdrop-blur-sm">
-                            <p className="text-sm text-amber-200 font-semibold">
-                              📝 Note: This is temporary placeholder text. The
-                              full story will be added soon.
-                            </p>
-                          </div>
-                          <p className="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
-                            {selectedPastor.story}
-                          </p>
-                        </div>
-                        <div
-                      className={`rounded-2xl p-8 border-l-4 mb-10 ${'specialization' in selectedPastor && selectedPastor.specialization === 'Affiliates Ministry' ? 'bg-gradient-to-br from-sky-900/30 to-blue-900/30 border-sky-500' : 'bg-gradient-to-br from-blue-900/30 to-purple-900/30 border-purple-500'} backdrop-blur-sm`}>
-                      
-                          <div className="flex items-start gap-4">
-                            <HeartIcon
-                          className={`w-7 h-7 flex-shrink-0 mt-1 ${'specialization' in selectedPastor && selectedPastor.specialization === 'Affiliates Ministry' ? 'text-sky-400' : 'text-purple-400'}`} />
-                        
-                            <div>
-                              <p className="text-white font-bold text-xl mb-3">
-                                Ministry Focus
-                              </p>
-                              <p className="text-gray-300 leading-relaxed text-lg">
-                                {selectedPastor.fullBio}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-3 mb-6">
-                            <div
-                          className={`w-12 h-12 rounded-xl flex items-center justify-center ${'specialization' in selectedPastor && selectedPastor.specialization === 'Affiliates Ministry' ? 'bg-gradient-to-br from-sky-500 to-blue-500' : 'bg-gradient-to-br from-blue-600 to-purple-600'} shadow-lg`}>
-                          
-                              <SparklesIcon className="w-6 h-6 text-white" />
-                            </div>
-                            <h4 className="text-3xl font-bold text-white">
-                              Testimonials
-                            </h4>
-                          </div>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-                              <p className="text-gray-300 italic mb-4 text-lg leading-relaxed">
-                                "Pastor{' '}
-                                {
-                            selectedPastor.name.split(' ')[
-                            selectedPastor.name.split(' ').length - 1]
-
-                            }
-                                's ministry has transformed our community. Their
-                                dedication and wisdom inspire us daily."
-                              </p>
-                              <p className="text-sm text-gray-400 font-semibold">
-                                — Church Member
-                              </p>
-                            </div>
-                            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-                              <p className="text-gray-300 italic mb-4 text-lg leading-relaxed">
-                                "A true servant leader who leads by example and
-                                brings people closer to God through authentic
-                                faith."
-                              </p>
-                              <p className="text-sm text-gray-400 font-semibold">
-                                — Ministry Partner
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                }
-                  {activeTab === 'gallery' &&
-                <motion.div
-                  key="gallery"
-                  initial={{
-                    opacity: 0,
-                    y: 20
-                  }}
-                  animate={{
-                    opacity: 1,
-                    y: 0
-                  }}
-                  exit={{
-                    opacity: 0,
-                    y: -20
-                  }}
-                  transition={{
-                    duration: 0.3
-                  }}
-                  className="h-full overflow-y-auto p-8 lg:p-12">
-                  
-                      <div className="max-w-6xl mx-auto">
-                        <div className="flex items-center gap-3 mb-8">
-                          <div
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center ${'specialization' in selectedPastor && selectedPastor.specialization === 'Affiliates Ministry' ? 'bg-gradient-to-br from-sky-500 to-blue-500' : 'bg-gradient-to-br from-blue-600 to-purple-600'} shadow-lg`}>
-                        
-                            <svg
-                          className="w-6 h-6 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24">
-                          
-                              <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          
-                            </svg>
-                          </div>
-                          <h4 className="text-3xl font-bold text-white">
-                            Ministry Gallery
-                          </h4>
-                        </div>
-                        <div className="bg-blue-900/20 border-l-4 border-blue-500 p-4 mb-8 rounded-r-lg backdrop-blur-sm">
-                          <p className="text-sm text-blue-200 font-semibold">
-                            🖼️ Gallery images will be added soon
-                          </p>
-                        </div>
-                        <div className="grid grid-cols-3 gap-6 mb-10">
-                          {placeholderGallery.map((img, index) =>
-                      <motion.div
-                        key={index}
-                        initial={{
-                          opacity: 0,
-                          scale: 0.9
-                        }}
-                        animate={{
-                          opacity: 1,
-                          scale: 1
-                        }}
-                        transition={{
-                          delay: index * 0.1
-                        }}
-                        className="group relative aspect-square rounded-xl overflow-hidden bg-slate-700 border border-white/10">
-                        
-                              <img
-                          src={img}
-                          alt={`Ministry moment ${index + 1}`}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                        
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                            </motion.div>
-                      )}
-                        </div>
-                        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-                          <h5 className="text-white font-bold text-2xl mb-6">
-                            Ministry Highlights
-                          </h5>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {[
-                        'Leading weekly worship services',
-                        'Mentoring emerging leaders',
-                        'Community outreach programs',
-                        'Biblical teaching and discipleship',
-                        'Prayer and spiritual guidance',
-                        'Youth and family ministry'].
-                        map((h, i) =>
-                        <div key={i} className="flex items-start gap-3">
-                                <span className="mt-1 text-blue-400">•</span>
-                                <span className="text-gray-300 text-lg">
-                                  {h}
-                                </span>
-                              </div>
-                        )}
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                }
-                </AnimatePresence>
+                {selectedLeader.specialization && (
+                  <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2">
+                    <SparklesIcon className="w-4 h-4 text-amber-300 flex-shrink-0" />
+                    <span className="text-xs sm:text-sm text-slate-300">
+                      <strong>Focus Area:</strong> {selectedLeader.specialization}
+                    </span>
+                  </div>
+                )}
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Call to Action */}
-      <section className="py-20 px-6 md:px-12 bg-gradient-to-br from-blue-900 via-purple-900 to-slate-900 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500 rounded-full blur-3xl" />
-        </div>
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 30
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0
-            }}
-            transition={{
-              duration: 0.8
-            }}
-            viewport={{
-              once: true
-            }}>
-            
-            <BookOpenIcon className="w-16 h-16 text-blue-300 mx-auto mb-6" />
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Connect With Our Pastoral Team
-            </h2>
-            <p className="text-xl text-gray-200 mb-8 leading-relaxed">
-              Whether you need prayer, guidance, or simply want to learn more
-              about our ministry, our pastors are here to serve you with open
-              hearts and listening ears.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/contact"
-                className="inline-block bg-white hover:bg-gray-100 text-blue-900 font-bold py-4 px-8 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg">
-                
-                Get in Touch
-              </a>
-              <a
-                href="/"
-                className="inline-block bg-transparent border-2 border-white hover:bg-white/10 text-white font-bold py-4 px-8 rounded-full transition-all duration-300">
-                
-                Back to Home
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       <Footer />
-    </div>);
-
+    </div>
+  );
 }

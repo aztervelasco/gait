@@ -13,6 +13,7 @@ import { LowerKiskisChurch } from './pages/LowerKiskisChurch';
 import { UpperKiskisChurch } from './pages/UpperKiskisChurch';
 import { OrchidsChurch } from './pages/OrchidsChurch';
 import { VillafloresChurch } from './pages/VillafloresChurch';
+import { MasaganaChurch } from './pages/MasaganaChurch';
 import { MinistryPage } from './pages/MinistryPage';
 import { AboutPage } from './pages/AboutPage';
 import { SponsorshipPage } from './pages/SponsorshipPage';
@@ -229,6 +230,20 @@ function AnimatedRoutes() {
             transition={pageTransition}>
             
               <VillafloresChurch />
+            </motion.div>
+          } />
+        
+        <Route
+          path="/churches/masagana"
+          element={
+          <motion.div
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={pageVariants}
+            transition={pageTransition}>
+            
+              <MasaganaChurch />
             </motion.div>
           } />
         

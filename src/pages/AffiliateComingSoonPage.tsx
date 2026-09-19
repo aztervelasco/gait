@@ -23,11 +23,29 @@ const affiliateChurchesData: Record<
     glowColor: string;
   }
 > = {
+  '/churches/affiliate/lhgcf/manicla': {
+    name: 'LHGCF Manicla Church',
+    location: 'Manicla, San Jose City, Nueva Ecija',
+    pastor: 'Rev. Luisito S. Silan',
+    fellowship: 'Living Hope and Grace in Christ Fellowship',
+    abbreviation: 'LHGCF',
+    gradient: 'from-emerald-400 via-green-300 to-teal-400',
+    glowColor: '#10b981'
+  },
+  '/churches/affiliate/manicla': {
+    name: 'LHGCF Manicla Church',
+    location: 'Manicla, San Jose City, Nueva Ecija',
+    pastor: 'Rev. Luisito S. Silan',
+    fellowship: 'Living Hope and Grace in Christ Fellowship',
+    abbreviation: 'LHGCF',
+    gradient: 'from-emerald-400 via-green-300 to-teal-400',
+    glowColor: '#10b981'
+  },
   '/churches/affiliate/lhgcf/putlan': {
     name: 'LHGCF Putlan Church',
     location: 'Putlan, Carranglan, Nueva Ecija',
-    pastor: 'Ptr. Nora Silan',
-    fellowship: 'Living Hope & Grace in Christ Fellowship',
+    pastor: 'Ptr. Nora D. Silan',
+    fellowship: 'Living Hope and Grace in Christ Fellowship',
     abbreviation: 'LHGCF',
     gradient: 'from-emerald-400 via-teal-300 to-cyan-400',
     glowColor: '#10b981'
@@ -35,92 +53,164 @@ const affiliateChurchesData: Record<
   '/churches/affiliate/putlan': {
     name: 'LHGCF Putlan Church',
     location: 'Putlan, Carranglan, Nueva Ecija',
-    pastor: 'Ptr. Nora Silan',
-    fellowship: 'Living Hope & Grace in Christ Fellowship',
+    pastor: 'Ptr. Nora D. Silan',
+    fellowship: 'Living Hope and Grace in Christ Fellowship',
     abbreviation: 'LHGCF',
     gradient: 'from-emerald-400 via-teal-300 to-cyan-400',
     glowColor: '#10b981'
   },
   '/churches/affiliate/lhgcf/ikapito': {
-    name: 'LHGCF Ikapito Church',
-    location: 'Ikapito, Carranglan, Nueva Ecija',
-    pastor: 'Ptr. Roselyn Basilio / Ptr. Carlito Sanchez',
-    fellowship: 'Living Hope & Grace in Christ Fellowship',
+    name: 'LHGCF Ika-pito Church',
+    location: 'Ika-pito, Putlan, Carranglan, Nueva Ecija',
+    pastor: 'Madam Roselyn Basilio',
+    fellowship: 'Living Hope and Grace in Christ Fellowship',
     abbreviation: 'LHGCF',
     gradient: 'from-teal-400 via-cyan-300 to-blue-400',
     glowColor: '#14b8a6'
   },
   '/churches/affiliate/ikapito': {
-    name: 'LHGCF Ikapito Church',
-    location: 'Ikapito, Carranglan, Nueva Ecija',
-    pastor: 'Ptr. Roselyn Basilio / Ptr. Carlito Sanchez',
-    fellowship: 'Living Hope & Grace in Christ Fellowship',
+    name: 'LHGCF Ika-pito Church',
+    location: 'Ika-pito, Putlan, Carranglan, Nueva Ecija',
+    pastor: 'Madam Roselyn Basilio',
+    fellowship: 'Living Hope and Grace in Christ Fellowship',
     abbreviation: 'LHGCF',
     gradient: 'from-teal-400 via-cyan-300 to-blue-400',
     glowColor: '#14b8a6'
   },
-  '/churches/affiliate/lhgcf/manicla': {
-    name: 'LHGCF Manicla Church',
-    location: 'Manicla, Carranglan, Nueva Ecija',
-    pastor: 'Ptr. Louie Silan',
-    fellowship: 'Living Hope & Grace in Christ Fellowship',
-    abbreviation: 'LHGCF',
-    gradient: 'from-emerald-400 via-green-300 to-teal-400',
-    glowColor: '#10b981'
-  },
   '/churches/affiliate/lhgcf/bambang': {
     name: 'LHGCF Bambang Church',
     location: 'Bambang, Nueva Vizcaya',
-    pastor: 'Ptr. Clem',
-    fellowship: 'Living Hope & Grace in Christ Fellowship',
+    pastor: 'Rev. Leonard Clemens L. Cadoy',
+    fellowship: 'Living Hope and Grace in Christ Fellowship',
     abbreviation: 'LHGCF',
     gradient: 'from-cyan-400 via-sky-300 to-blue-400',
     glowColor: '#0ea5e9'
   },
+  '/churches/affiliate/bambang': {
+    name: 'LHGCF Bambang Church',
+    location: 'Bambang, Nueva Vizcaya',
+    pastor: 'Rev. Leonard Clemens L. Cadoy',
+    fellowship: 'Living Hope and Grace in Christ Fellowship',
+    abbreviation: 'LHGCF',
+    gradient: 'from-cyan-400 via-sky-300 to-blue-400',
+    glowColor: '#0ea5e9'
+  },
+  '/churches/affiliate/ammoweg': {
+    name: 'Ammoweg Eternal Life Fellowship Church',
+    location: 'Ammoweg, Ambaguio, Nueva Vizcaya',
+    pastor: 'Rev. Junie M. Balwang & Pastor Solomon W. Balwang',
+    fellowship: 'Eternal Life Fellowship Church',
+    abbreviation: 'ELFC',
+    gradient: 'from-blue-400 via-teal-300 to-emerald-400',
+    glowColor: '#06b6d4'
+  },
+  '/churches/affiliate/taaw': {
+    name: 'Taaw Eternal Life Fellowship Church',
+    location: 'Taaw, Ambaguio, Nueva Vizcaya',
+    pastor: 'Pastor Lito Baguiwan',
+    fellowship: 'Eternal Life Fellowship Church',
+    abbreviation: 'ELFC',
+    gradient: 'from-sky-400 via-indigo-300 to-blue-400',
+    glowColor: '#38bdf8'
+  },
   '/churches/affiliate/psalms23': {
     name: 'Psalms 23 Fellowship Church',
     location: 'San Antonio, Bambang, Nueva Vizcaya',
-    pastor: 'Church Pastor',
+    pastor: 'Pastor Jerry Litawen & Pastor Zeny B. Litawen (Assoc. Ptr. Gina S. Espiritu)',
     fellowship: 'Psalms 23 Fellowship',
     abbreviation: 'P23',
     gradient: 'from-amber-400 via-orange-300 to-yellow-400',
     glowColor: '#f59e0b'
   },
-  '/churches/affiliate/ctl/calaocan': {
-    name: 'CTL Calaocan Church',
-    location: 'Calaocan, Aurora',
-    pastor: 'Ptr. Sonny Boy',
-    fellowship: 'Christ The Lord Fellowship',
-    abbreviation: 'CTL',
-    gradient: 'from-blue-400 via-indigo-300 to-purple-400',
-    glowColor: '#3b82f6'
+  '/churches/affiliate/salazar': {
+    name: 'The Living Hope Fellowship Salazar',
+    location: 'Salazar, Carranglan, Nueva Ecija',
+    pastor: 'Pastor Maxima G. Anton & Sis. Mylene J. Padone',
+    fellowship: 'The Living Hope Fellowship',
+    abbreviation: 'LHF',
+    gradient: 'from-rose-400 via-pink-300 to-amber-400',
+    glowColor: '#f43f5e'
   },
   '/churches/affiliate/ctl/toytoyan': {
-    name: 'CTL Toytoyan Church',
-    location: 'Toytoyan, Aurora',
-    pastor: 'Ptra. Merly',
-    fellowship: 'Christ The Lord Fellowship',
-    abbreviation: 'CTL',
+    name: 'Toytoyan The Church of the Living Christ',
+    location: 'Toytoyan, Dipaculao, Aurora',
+    pastor: 'Rev. Sonny Boy B. Jacob & Assoc. Ptr. Merly S. Jacob',
+    fellowship: 'The Church of the Living Christ',
+    abbreviation: 'CLC',
     gradient: 'from-indigo-400 via-purple-300 to-pink-400',
     glowColor: '#8b5cf6'
   },
+  '/churches/affiliate/toytoyan': {
+    name: 'Toytoyan The Church of the Living Christ',
+    location: 'Toytoyan, Dipaculao, Aurora',
+    pastor: 'Rev. Sonny Boy B. Jacob & Assoc. Ptr. Merly S. Jacob',
+    fellowship: 'The Church of the Living Christ',
+    abbreviation: 'CLC',
+    gradient: 'from-indigo-400 via-purple-300 to-pink-400',
+    glowColor: '#8b5cf6'
+  },
+  '/churches/affiliate/ctl/calaocan': {
+    name: 'Calaocan Church of the Living Christ',
+    location: 'Calaocan, Dipaculao, Aurora',
+    pastor: 'Church Leadership',
+    fellowship: 'The Church of the Living Christ',
+    abbreviation: 'CLC',
+    gradient: 'from-blue-400 via-indigo-300 to-purple-400',
+    glowColor: '#3b82f6'
+  },
+  '/churches/affiliate/calaocan': {
+    name: 'Calaocan Church of the Living Christ',
+    location: 'Calaocan, Dipaculao, Aurora',
+    pastor: 'Church Leadership',
+    fellowship: 'The Church of the Living Christ',
+    abbreviation: 'CLC',
+    gradient: 'from-blue-400 via-indigo-300 to-purple-400',
+    glowColor: '#3b82f6'
+  },
   '/churches/affiliate/ctl/borlongan': {
-    name: 'CTL Borlongan Church',
+    name: 'The United Christian Mission Church',
     location: 'Borlongan, Dipaculao, Aurora',
-    pastor: 'Ptr. Teodoro',
-    fellowship: 'Christ The Lord Fellowship',
-    abbreviation: 'CTL',
+    pastor: 'Rev. Teodoro Garlit Sr.',
+    fellowship: 'The United Christian Mission Church',
+    abbreviation: 'UCMC',
+    gradient: 'from-sky-400 via-blue-300 to-indigo-400',
+    glowColor: '#0284c7'
+  },
+  '/churches/affiliate/borlongan': {
+    name: 'The United Christian Mission Church',
+    location: 'Borlongan, Dipaculao, Aurora',
+    pastor: 'Rev. Teodoro Garlit Sr.',
+    fellowship: 'The United Christian Mission Church',
+    abbreviation: 'UCMC',
     gradient: 'from-sky-400 via-blue-300 to-indigo-400',
     glowColor: '#0284c7'
   },
   '/churches/affiliate/ctl/baler': {
-    name: 'CTL Baler Church',
-    location: 'Baler, Aurora',
-    pastor: 'Ptr. Joseph',
+    name: 'Christ the Lord Fellowship',
+    location: 'Dikaluyungan, Baler, Aurora',
+    pastor: 'Rev. Joseph Soridor',
     fellowship: 'Christ The Lord Fellowship',
     abbreviation: 'CTL',
     gradient: 'from-violet-400 via-purple-300 to-pink-400',
     glowColor: '#9333ea'
+  },
+  '/churches/affiliate/baler': {
+    name: 'Christ the Lord Fellowship',
+    location: 'Dikaluyungan, Baler, Aurora',
+    pastor: 'Rev. Joseph Soridor',
+    fellowship: 'Christ The Lord Fellowship',
+    abbreviation: 'CTL',
+    gradient: 'from-violet-400 via-purple-300 to-pink-400',
+    glowColor: '#9333ea'
+  },
+  '/churches/affiliate/cmi': {
+    name: 'Challenge Ministries Churches',
+    location: 'Inter-Provincial Network',
+    pastor: 'Partner Churches & Leadership',
+    fellowship: 'Challenge Ministries International (CMI)',
+    abbreviation: 'CMI',
+    gradient: 'from-orange-400 via-amber-300 to-yellow-400',
+    glowColor: '#f97316'
   },
   '/churches/affiliate/lhgcf': {
     name: 'Living Hope & Grace in Christ Fellowship',
